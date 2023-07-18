@@ -1,6 +1,12 @@
 import React from 'react';
 import LazyLoader from '@/components/LazyLoader';
-import { UserSwitchOutlined, SolutionOutlined, TeamOutlined,AreaChartOutlined } from '@ant-design/icons';
+import {
+  UserSwitchOutlined,
+  SolutionOutlined,
+  FileMarkdownOutlined,
+  TeamOutlined,
+  AreaChartOutlined,
+} from '@ant-design/icons';
 
 export type RouteItem = {
   // 组件
@@ -18,11 +24,10 @@ export type RouteItem = {
 const iconStyle = { fontSize: 18, marginRight: 10, color: '#fff' };
 
 const routesMap: RouteItem[] = [
-
   {
     path: '/theme-map',
     label: '地图',
-    icon: <UserSwitchOutlined style={iconStyle} />,
+    icon: <FileMarkdownOutlined style={iconStyle} />,
     element: React.createElement(LazyLoader(() => import('../pages/themeMap'))),
   },
   {
@@ -42,7 +47,6 @@ const routesMap: RouteItem[] = [
         icon: <UserSwitchOutlined style={iconStyle} />,
         element: React.createElement(LazyLoader(() => import('../pages/user/roleList'))),
       },
-  
     ],
   },
 
@@ -50,7 +54,6 @@ const routesMap: RouteItem[] = [
     path: '/404',
     element: React.createElement(LazyLoader(() => import('../pages/404'))),
   },
- 
 ];
 
 export default routesMap;

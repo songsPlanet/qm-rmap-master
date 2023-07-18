@@ -76,8 +76,7 @@ export default class extends PureComponent<any, any> {
       signIn(params)
         .then((response: any) => {
           const { data, code, message: msg } = response;
-         
-          
+
           if (code === 0) {
             const { token } = data;
             message.success('登录成功');

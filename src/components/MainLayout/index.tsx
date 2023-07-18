@@ -46,11 +46,11 @@ const MainLayout: React.FC = () => {
 
     // resourceList 为用户菜单权限
     const { avatar, username: userName, resourceList } = userInfo;
-    console.log("userinfor是什么",userInfo);
-    
+    console.log('userinfor是什么', userInfo);
+
     const permissions = flatMenuTree(resourceList || []);
-    console.log("permissions是什么",permissions);
-    
+    console.log('permissions是什么', permissions);
+
     const menuItems = filterMenuTree(permissions);
     permissionsRef.current = permissions;
     menuItemsRef.current = menuItems;
@@ -58,8 +58,8 @@ const MainLayout: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log("路由",menuItemsRef);
-    
+    console.log('路由', menuItemsRef);
+
     if (endProcessRef.current) {
       message.warning('请先完成用户登录');
       navigate('/login');
@@ -68,12 +68,11 @@ const MainLayout: React.FC = () => {
 
     const { pathname } = location;
     // 每当访问 '/' 路径时，重定向到菜单的第一项。
-    if (pathname === '/' ) {
+    if (pathname === '/') {
       const firstItem = findFirstMenuItem(menuItemsRef.current);
       firstItem?.key && navigate(firstItem.key);
       return;
     }
-
 
     if (!routerGuard(permissionsRef.current, pathname)) {
       navigate('/404');
@@ -85,7 +84,6 @@ const MainLayout: React.FC = () => {
     if (regexp.exec(pathname)) openKeys = [RegExp.$1];
 
     setState({ selectedMenuKeys: [pathname], openKeys });
-    
   }, [location]);
 
   const handleSelectMenu = useCallback((event: any) => {
@@ -162,7 +160,7 @@ const MainLayout: React.FC = () => {
         <Content>
           <Outlet />
         </Content>
-        <Footer className="hn-picc-body-footer">安徽阡陌网络科技有限公司 ©2022 Created by Qianmo</Footer>
+        {/* <Footer className="hn-picc-body-footer">安徽阡陌网络科技有限公司 ©2022 Created by Qianmo</Footer> */}
       </Layout>
     </Layout>
   );
@@ -173,12 +171,11 @@ export default MainLayout;
 // 将菜单列表扁平化
 function flatMenuTree(menuList: any[]) {
   const stack = [...menuList];
- 
-  
+
   const menuMap = new Map<string, object>();
-  console.log("stack是啥",stack,menuMap);
+  console.log('stack是啥', stack, menuMap);
   while (stack.length) {
-    console.log("stack是啥2",stack,menuMap);
+    console.log('stack是啥2', stack, menuMap);
     const item = stack.shift();
     const { path, children, name } = item;
     menuMap.set(path, { path, name });

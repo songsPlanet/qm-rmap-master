@@ -21,7 +21,7 @@ Mock.mock('/v1.0/login/admin', 'post', {
     updateTime: '2022-12-12 14:44:46',
     token: '990ce234-8ba2-4da5-931e-cce302962be9',
     loginType: 'end',
-    roleIdList: ['1', '2','3','4'],
+    roleIdList: ['1', '2', '3', '4'],
     resourceList: [
       {
         id: 'user',
@@ -42,11 +42,11 @@ Mock.mock('/v1.0/login/admin', 'post', {
         path: '/home',
       },
       {
-        id:'map',
+        id: 'map',
         path: '/map',
       },
       {
-        id:'theme-map',
+        id: 'theme-map',
         path: '/theme-map',
       },
     ],
