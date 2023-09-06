@@ -83,19 +83,20 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 9999,
       open: true,
-      strictPort: true,
+      strictPort: false,
       host: 'localhost',
       proxy: {
         '/v1.0': {
-          // target: 'http://192.168.5.120:2005',
+          // target: 'http://192.168.5.120:2005'
+          // target: 'http://192.168.5.120:2005'
           // 测试
-          target: 'http://192.168.5.2:20011',
+          // target: 'http://192.168.5.2:20011',
           changeOrigin: true,
         },
         '/group1': {
           // target: 'http://192.168.5.120:2005',
           // 测试
-          target: 'http://192.168.5.2:20011',
+          // target: 'http://192.168.5.2:20011',
           changeOrigin: true,
         }
       }

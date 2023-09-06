@@ -9,7 +9,7 @@ const zwfbLyrs: TLayerOptions[] = [
     isAdd: true,
     source: {
       type: 'vector',
-      minzoom: 12,
+      minzoom: 0,
       maxzoom: 14,
       tiles: [`http://192.168.146.131:8082/data/zwfb_wandao_2022_all/{z}/{x}/{y}.pbf`],
     },

@@ -26,10 +26,11 @@ const iconStyle = { fontSize: 18, marginRight: 10, color: '#fff' };
 const routesMap: RouteItem[] = [
   {
     path: '/theme-map',
-    label: '地图',
+    label: '芜湖地图',
     icon: <FileMarkdownOutlined style={iconStyle} />,
     element: React.createElement(LazyLoader(() => import('../pages/themeMap'))),
   },
+
   {
     path: '/user',
     label: '用户管理',

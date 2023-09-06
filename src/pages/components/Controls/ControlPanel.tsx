@@ -1,6 +1,5 @@
 import { useMap } from '@/gis/context/mapContext';
 import LayerList from '@/gis/widget/LayerList';
-import Swipe from '@/gis/widget/Swipe';
 import Legend from '@/gis/widget/Legend';
 import { NavigationControl, FullscreenControl } from 'mapbox-gl';
 import { memo, useMemo, useEffect } from 'react';
@@ -14,8 +13,8 @@ const ControlPanel = () => {
     return new FullscreenControl();
   }, []);
   useEffect(() => {
-    map?.addControl(navCtrl, 'top-right');
-    map?.addControl(fullCtrl, 'top-right');
+    map?.addControl(navCtrl, 'bottom-right');
+    map?.addControl(fullCtrl, 'bottom-right');
     return () => {
       map?.removeControl(navCtrl);
       map?.removeControl(fullCtrl);
@@ -24,7 +23,6 @@ const ControlPanel = () => {
 
   return (
     <div>
-      <Swipe position={{ top: 190, right: 10 }} />
       <LayerList position={{ top: 10, left: 10 }} />
       <Legend position={{ bottom: 10, left: 10 }} />
     </div>

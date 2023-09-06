@@ -23,10 +23,8 @@ export function filterMenuTree(permissions: Map<string, object>, routes = routes
   for (let i = 0; i < routes.length; i++) {
     const route = routes[i];
     const { label, icon, path, children } = route;
-    console.log('菜单1', route, !label, !permissions.has(path));
     // 菜单项过滤，且不考虑该 Route 的子路由
     if (!label || !permissions.has(path)) continue;
-    console.log('菜单2', route);
     const item: MenuItem = { label, key: path, icon };
     if (children?.length) item.children = filterMenuTree(permissions, children);
     menuItems.push(item);

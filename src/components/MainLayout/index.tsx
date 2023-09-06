@@ -173,9 +173,7 @@ function flatMenuTree(menuList: any[]) {
   const stack = [...menuList];
 
   const menuMap = new Map<string, object>();
-  console.log('stack是啥', stack, menuMap);
   while (stack.length) {
-    console.log('stack是啥2', stack, menuMap);
     const item = stack.shift();
     const { path, children, name } = item;
     menuMap.set(path, { path, name });

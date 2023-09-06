@@ -12,7 +12,7 @@ export const field_vt: TLayerOptions = {
   },
   source: {
     type: 'vector',
-    minzoom: 12,
+    minzoom: 0,
     maxzoom: 14,
     tiles: [`http://192.168.146.131:8082/data/dk430381/{z}/{x}/{y}.pbf`],
   },
