@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import LazyLoader from '@/components/LazyLoader';
 import {
   UserSwitchOutlined,
@@ -21,16 +22,21 @@ export type RouteItem = {
   path: string;
 };
 
-const iconStyle = { fontSize: 18, marginRight: 10, color: '#fff' };
+const iconStyle = { fontSize: 18, marginRight: 10 };
 
 const routesMap: RouteItem[] = [
   {
-    path: '/theme-map',
+    path: '/theme-map-sqal',
     label: '芜湖地图',
     icon: <FileMarkdownOutlined style={iconStyle} />,
     element: React.createElement(LazyLoader(() => import('../pages/themeMap'))),
   },
-
+  {
+    path: '/theme-map-njzy',
+    label: '界首地图',
+    icon: <FileMarkdownOutlined style={iconStyle} />,
+    element: React.createElement(LazyLoader(() => import('../pages/themeMapNJZY'))),
+  },
   {
     path: '/user',
     label: '用户管理',
@@ -54,6 +60,10 @@ const routesMap: RouteItem[] = [
   {
     path: '/404',
     element: React.createElement(LazyLoader(() => import('../pages/404'))),
+  },
+  {
+    path: '/',
+    element: <Navigate to="/theme-map-sqal" />,
   },
 ];
 

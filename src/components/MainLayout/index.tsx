@@ -113,13 +113,13 @@ const MainLayout: React.FC = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider width={240} collapsible theme="dark" trigger={null} collapsed={collapsed}>
+      <Sider width={240} collapsible theme="light" trigger={null} collapsed={collapsed}>
         <div className="hn-picc-logo">
           <img src={logo} className="hn-picc-logo-img" />
-          <div className={`hn-picc-logo-title ${collapsed ? ' hide' : ''}`}>xxx中台系统</div>
+          <div className={`hn-picc-logo-title ${collapsed ? ' hide' : ''}`}>xxx系统</div>
         </div>
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           items={menuItems}
           openKeys={state.openKeys}
@@ -160,7 +160,7 @@ const MainLayout: React.FC = () => {
         <Content>
           <Outlet />
         </Content>
-        {/* <Footer className="hn-picc-body-footer">安徽阡陌网络科技有限公司 ©2022 Created by Qianmo</Footer> */}
+        <Footer className="hn-picc-body-footer">安徽阡陌网络科技有限公司 ©2022 Created by Qianmo</Footer>
       </Layout>
     </Layout>
   );

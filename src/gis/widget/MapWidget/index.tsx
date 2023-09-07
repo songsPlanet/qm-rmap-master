@@ -49,19 +49,10 @@ function MapWidget(props: TMapProps) {
       }
     };
     map.on('load', loadLayers);
-    map.showTileBoundaries = true;
+    // map.showTileBoundaries = true;
     map.on('click', (e) => {
       console.log(e.lngLat);
       console.log(map.getCenter(), map.getZoom(), map.getBounds());
-      const features = map.queryRenderedFeatures(e.point, { layers: ['wh_sy'] });
-      const features2 = map.querySourceFeatures('wh_sy-ds', { sourceLayer: 'wh_sqal_sy_2022_04' });
-      const feature = features[0];
-      console.log('feature', features, features2);
-      map.selectFeature(feature);
-      // 作物识别
-      const features_zw = map.queryRenderedFeatures(e.point, { layers: ['field_vt'] });
-      const feature_zw = features_zw[0];
-      map.selectFeature(feature_zw);
     });
     const resizeMap = debounce(() => {
       map.resize();

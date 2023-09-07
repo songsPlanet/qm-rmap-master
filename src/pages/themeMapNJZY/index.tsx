@@ -4,18 +4,19 @@ import { LngLatLike } from 'mapbox-gl';
 import MapContainer from '../components/MapContainer';
 import mapSetting from './mapSetting';
 
-const ThemeMap = (props: any) => {
+const ThemeMap2 = (props: any) => {
   const mapOptions = {
-    id: 'themeMap',
+    id: 'themeMapNJZY',
     container: '',
-    center: [118.16333303406572, 31.108394692222518] as LngLatLike, // 芜湖
-    zoom: 8.7,
+    center: [112.51767497034729, 27.73329145510668] as LngLatLike, // 湖南
+    zoom: 12,
     maxZoom: 17,
   };
+
   return (
     <div className={styles.mapContainer}>
       <MapContainer mapOptions={mapOptions} mapSetting={mapSetting} />
     </div>
   );
 };
-export default memo(ThemeMap);
+export default memo(ThemeMap2);

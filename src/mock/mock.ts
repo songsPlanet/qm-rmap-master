@@ -42,12 +42,12 @@ Mock.mock('/v1.0/login/admin', 'post', {
         path: '/home',
       },
       {
-        id: 'map',
-        path: '/map',
+        id: 'theme-map-sqal',
+        path: '/theme-map-sqal',
       },
       {
-        id: 'theme-map',
-        path: '/theme-map',
+        id: 'theme-map-njzy',
+        path: '/theme-map-njzy',
       },
     ],
   },
