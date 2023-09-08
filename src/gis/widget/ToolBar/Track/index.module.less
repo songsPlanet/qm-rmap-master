@@ -1,0 +1,73 @@
+.trackPopover {
+  min-height: 100px;
+  width: 800px;
+  position: absolute;
+  right: 10px;
+  top: 45px;
+  border: 2px solid #02080e;
+}
+
+.titlePop {
+  font-size: 15px;
+  display: flex;
+  height: 35px;
+  background-color: #02080e;
+  color: white;
+  font-family: PingFang-SC-Bold;
+
+  &:hover {
+    cursor: move;
+  }
+
+  .text {
+    line-height: 35px;
+    padding-left: 10px;
+    width: 200px;
+  }
+
+  .close {
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    font-size: 20px;
+
+    &:hover {
+      color: red !important;
+      cursor: pointer;
+    }
+  }
+}
+
+.container {
+  height: 320px;
+  box-sizing: border-box;
+  position: relative;
+  background-color: #4d4d4d;
+}
+
+:global {
+  .ant-popover-title {
+    font-size: 16px;
+    display: flex;
+    background-color: #1890ff;
+    color: white;
+    font-family: PingFang-SC-Bold;
+  }
+
+  .ant-popover-placement-bottom .ant-popover-arrow {
+    display: none;
+  }
+  .ant-popover-inner {
+    padding: 0;
+  }
+  .ant-popover .ant-popover-inner {
+    box-shadow: none;
+  }
+
+  .ant-popover .ant-popover-inner,
+  .ant-popover-inner-content,
+  .ant-popover-content {
+    background-color: #188fff00;
+    padding: 0;
+  }
+}

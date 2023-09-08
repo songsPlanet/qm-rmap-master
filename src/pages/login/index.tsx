@@ -103,7 +103,7 @@ export default class extends PureComponent<any, any> {
           <div className={classes.page_x_header}>
             <img alt="logo" src={logoUrl} className={classes.logo} />
             <div className={classes.page_x_header_title}>
-              <div className={classes.page_x_header_title_text}>大黄山中台系统</div>
+              <div className={classes.page_x_header_title_text}>中台系统</div>
               <div className={classes.page_x_header_title_subtext}>Mount Huangshan Middle Platform System</div>
             </div>
           </div>

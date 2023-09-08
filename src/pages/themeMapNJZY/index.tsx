@@ -12,10 +12,19 @@ const ThemeMap2 = (props: any) => {
     zoom: 12,
     maxZoom: 17,
   };
-
+  const toolSetting = [
+    {
+      id: 'ControlPanel',
+      name: '视图工具',
+    },
+    {
+      id: 'ToolBar',
+      name: '工具条',
+    },
+  ];
   return (
     <div className={styles.mapContainer}>
-      <MapContainer mapOptions={mapOptions} mapSetting={mapSetting} />
+      <MapContainer mapOptions={mapOptions} mapSetting={mapSetting} toolSetting={toolSetting} />
     </div>
   );
 };

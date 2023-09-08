@@ -1,0 +1,56 @@
+@bg-color: #171e26;
+@color: #3a89dd;
+@color-l: #c7e9fa;
+@font-color: @color;
+@selected-color: #409eff;
+@border-color: #e4e7ed;
+@devision-color: #dcdfe6;
+@b-radius: 4px;
+@draw-panel-width: 400px;
+@hover-color: #409eff;
+@title-height: 32px;
+@item-margin: 0 5px;
+@item-height: 40px;
+@padding: 0 5px;
+@font-size: 12px;
+
+//跟随鼠标的提示信息
+.cursorTip {
+  position: absolute;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  padding-right: 20px;
+  background-color: @bg-color;
+  color: @font-color;
+  border-radius: @b-radius;
+  pointer-events: none;
+  z-index: 999;
+  min-width: 150px;
+  font-size: @font-size;
+  left: 0;
+  top: 0;
+}
+
+.measureResult {
+  background-color: white;
+  border-radius: 3px;
+  height: 16px;
+  line-height: 16px;
+  padding: 0 3px;
+  font-size: 12px;
+  box-shadow: 0 0 0 1px #ccc;
+}
+
+.measureResultClose {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  line-height: 16px;
+  text-align: center;
+  padding: 0;
+  font-size: 12px;
+  box-shadow: 0 0 0 1px #ccc;
+  background-color: white;
+  color: red;
+}

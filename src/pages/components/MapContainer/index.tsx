@@ -1,23 +1,23 @@
 import MapWidget from '@/gis/widget/MapWidget';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
-import ControlPanel from '../Controls/ControlPanel';
-// import mapSetting from '../../themeMap/mapSetting';
-import { memo, useEffect, useRef } from 'react';
-import { Spin } from 'antd';
+import ControlPanel from '../../../gis/widget/Controls/ControlPanel';
+import { memo, useEffect, useRef, useState } from 'react';
+import MapTools from '../../../gis/widget/ToolBar';
+import { ToolPanel } from '../ToolPanel';
 
 interface TMapContainerProp {
   mapOptions: any;
   mapSetting: any;
+  toolSetting: any;
 }
-
 const MapContainer = (props: TMapContainerProp) => {
-  const { mapOptions, mapSetting } = props;
+  const { mapOptions, mapSetting, toolSetting } = props;
   const mapR = useRef<MapWrapper>();
 
   const mapLoadHandle = (map: MapWrapper) => {
-    if (!mapR.current) {
-      mapR.current = map;
-    }
+    // if (!mapR.current) {
+    mapR.current = map;
+    // }
     // 选中并高亮
     mapR?.current?.on('click', (e) => {
       const flag: any = mapR?.current?.getLayerList().map((f) => {
@@ -35,7 +35,7 @@ const MapContainer = (props: TMapContainerProp) => {
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <MapWidget mapOptions={mapOptions} mapLayerSettting={mapSetting} onMapLoad={mapLoadHandle}>
-        <ControlPanel />
+        <ToolPanel toolsSetting={toolSetting} />
       </MapWidget>
     </div>
   );
