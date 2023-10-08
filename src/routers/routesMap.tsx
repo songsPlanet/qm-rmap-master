@@ -26,16 +26,16 @@ const iconStyle = { fontSize: 18, marginRight: 10 };
 
 const routesMap: RouteItem[] = [
   {
-    path: '/theme-map-sqal',
-    label: '芜湖地图',
+    path: '/theme-map',
+    label: '专题地图',
     icon: <FileMarkdownOutlined style={iconStyle} />,
     element: React.createElement(LazyLoader(() => import('../pages/themeMap'))),
   },
   {
     path: '/theme-map-njzy',
-    label: '界首地图',
+    label: '表格地图',
     icon: <FileMarkdownOutlined style={iconStyle} />,
-    element: React.createElement(LazyLoader(() => import('../pages/themeMapNJZY'))),
+    element: React.createElement(LazyLoader(() => import('../pages/tableMap'))),
   },
   {
     path: '/user',

@@ -1,13 +1,13 @@
+import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
+import { memo, useCallback, useEffect, useState } from 'react';
+import 'mapbox-gl-compare/dist/mapbox-gl-compare.css';
 import { useMap } from '@/gis/context/mapContext';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
-import { Modal } from 'antd';
-import { memo, useCallback, useEffect, useState } from 'react';
-import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
-import MapWidget from '../MapWidget';
 import Compare from 'mapbox-gl-compare';
-import 'mapbox-gl-compare/dist/mapbox-gl-compare.css';
-import './index.less';
 import LayerList from '../LayerList';
+import MapWidget from '../MapWidget';
+import { Modal } from 'antd';
+import './index.less';
 
 const SwipeControl = (props: { position: TWidgetPosition }) => {
   const { map } = useMap();
@@ -16,7 +16,7 @@ const SwipeControl = (props: { position: TWidgetPosition }) => {
   const [afterMap, setAfterMap] = useState<MapWrapper | null>(null);
 
   const onOpenHandle = useCallback((value: boolean) => {
-    setOpen(value);
+    setOpen(!open);
   }, []);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const SwipeControl = (props: { position: TWidgetPosition }) => {
         title="卷帘对比"
         maskClosable={false}
         open={open}
-        width={1000}
+        width={1250}
         footer={null}
         onCancel={() => setOpen(false)}
         destroyOnClose

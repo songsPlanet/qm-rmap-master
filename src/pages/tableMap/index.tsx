@@ -3,6 +3,8 @@ import styles from './index.module.less';
 import { LngLatLike } from 'mapbox-gl';
 import MapContainer from '../components/MapContainer';
 import mapSetting from './mapSetting';
+import MapWidget from '@/gis/widget/MapWidget';
+import ControlPanel from '../components/Controls/ControlPanel';
 
 const ThemeMap2 = (props: any) => {
   const mapOptions = {
@@ -24,7 +26,10 @@ const ThemeMap2 = (props: any) => {
   ];
   return (
     <div className={styles.mapContainer}>
-      <MapContainer mapOptions={mapOptions} mapSetting={mapSetting} toolSetting={toolSetting} />
+      <MapWidget mapOptions={mapOptions} mapLayerSettting={mapSetting}>
+        {/* <ToolPanel toolsSetting={toolSetting} /> */}
+        <ControlPanel />
+      </MapWidget>
     </div>
   );
 };

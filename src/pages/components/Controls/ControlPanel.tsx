@@ -1,0 +1,53 @@
+import { NavigationControl, FullscreenControl } from 'mapbox-gl';
+import { memo, useMemo, useEffect, ReactElement } from 'react';
+import { MapboxExportControl } from '../../../gis/widget/Print';
+import { useMap } from '@/gis/context/mapContext';
+import LayerList from '@/gis/widget/LayerList';
+import Measure from '@/gis/widget/Measure';
+import Legend from '@/gis/widget/Legend';
+import Swipe from '@/gis/widget/Swipe';
+import Search from './Search';
+import Track from './Track';
+
+interface TControlPanel {
+  searchContent?: ReactElement;
+  trackContent?: ReactElement;
+}
+
+const ControlPanel = (props: TControlPanel) => {
+  const { searchContent, trackContent } = props;
+  const { map } = useMap();
+  const navCtrl = useMemo(() => {
+    return new NavigationControl();
+  }, []);
+  const fullCtrl = useMemo(() => {
+    return new FullscreenControl();
+  }, []);
+  const exportCtrl = useMemo(() => {
+    return new MapboxExportControl();
+  }, []);
+  useEffect(() => {
+    map?.addControl(navCtrl, 'bottom-right');
+    map?.addControl(fullCtrl, 'bottom-right');
+    map?.addControl(exportCtrl, 'bottom-right');
+    return () => {
+      map?.removeControl(navCtrl);
+      map?.removeControl(fullCtrl);
+      map?.removeControl(exportCtrl);
+    };
+  }, []);
+
+  return (
+    <div>
+      <LayerList position={{ top: 10, left: 10 }} />
+      <Legend position={{ bottom: 10, left: 10 }} />
+      <Swipe position={{ bottom: 185, right: 10 }} />
+      <Measure position={{ bottom: 225, right: 10 }} />
+      {trackContent && <Track position={{ top: 10, right: 130 }} content={trackContent} />}
+
+      {searchContent && <Search position={{ top: 10, right: 10 }} content={searchContent} />}
+    </div>
+  );
+};
+
+export default memo(ControlPanel);

@@ -1,8 +1,11 @@
-import { memo } from 'react';
+import SearchContent from '../components/Controls/Search/SearchContent';
+import ControlPanel from '../components/Controls/ControlPanel';
+import MapWidget from '@/gis/widget/MapWidget';
 import styles from './index.module.less';
 import { LngLatLike } from 'mapbox-gl';
-import MapContainer from '../components/MapContainer';
 import mapSetting from './mapSetting';
+import { memo } from 'react';
+import TrackContent from '@/gis/widget/TrackContent';
 
 const ThemeMap = (props: any) => {
   const mapOptions = {
@@ -13,19 +16,14 @@ const ThemeMap = (props: any) => {
     maxZoom: 17,
   };
 
-  const toolSetting = [
-    {
-      id: 'ControlPanel',
-      name: '视图工具',
-    },
-    {
-      id: 'ToolBar',
-      name: '工具条',
-    },
-  ];
   return (
     <div className={styles.mapContainer}>
-      <MapContainer mapOptions={mapOptions} mapSetting={mapSetting} toolSetting={toolSetting} />
+      <MapWidget mapOptions={mapOptions} mapLayerSettting={mapSetting}>
+        <ControlPanel
+          trackContent={<TrackContent />}
+          searchContent={props?.location?.pathname === '/theme-map' ? <SearchContent /> : undefined}
+        />
+      </MapWidget>
     </div>
   );
 };
