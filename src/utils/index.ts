@@ -1,5 +1,9 @@
 import tween, { TweenAttrNames } from './tween';
 
+export { default as useReducer } from './useReducer';
+export { default as events } from './events';
+export { default as downLoadFile } from './download';
+
 export function getType(data: any) {
   return Object.prototype.toString.call(data).slice(8, -1).toLowerCase();
 }

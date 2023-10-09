@@ -183,3 +183,48 @@ Mock.mock('/v1.0/xxnyjyzt/getXxjyztListDetail', 'post', {
     },
   },
 });
+
+Mock.mock('/v1.0/table/getYear', 'post', {
+  code: 0,
+  message: '操作成功',
+  data: ['2023'],
+});
+
+Mock.mock('/v1.0/table/getRegions', 'post', {
+  code: 0,
+  message: '操作成功',
+  data: [
+    {
+      value: '43',
+      label: '湖南市',
+      children: [
+        {
+          value: '4303',
+          label: '湘潭市',
+          children: [{ value: '430381', label: '湘乡市', children: [{ value: '430381102', label: '中沙镇' }] }],
+        },
+      ],
+    },
+  ],
+});
+
+Mock.mock('/v1.0/table/getCropTypeList', 'post', {
+  code: 0,
+  message: '操作成功',
+  data: [{ value: '早稻', label: 'zaodao' }],
+});
+
+Mock.mock('/v1.0/table/getRegionPageList', 'post', {
+  code: 0,
+  message: '操作成功',
+  data: {
+    pageNum: 1,
+    pageSize: 10,
+    pages: 1,
+    prePage: 0,
+    size: 1,
+    startRow: 1,
+    total: 1,
+    list: [{ xzqhmc: '西冲村', insuredCronName: '早稻', coverageRate: 0.5747 }],
+  },
+});

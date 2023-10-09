@@ -27,9 +27,9 @@ const ControlPanel = (props: TControlPanel) => {
     return new MapboxExportControl();
   }, []);
   useEffect(() => {
-    map?.addControl(navCtrl, 'bottom-right');
-    map?.addControl(fullCtrl, 'bottom-right');
-    map?.addControl(exportCtrl, 'bottom-right');
+    map?.addControl(navCtrl, 'top-right');
+    map?.addControl(fullCtrl, 'top-right');
+    map?.addControl(exportCtrl, 'top-right');
     return () => {
       map?.removeControl(navCtrl);
       map?.removeControl(fullCtrl);
@@ -41,11 +41,10 @@ const ControlPanel = (props: TControlPanel) => {
     <div>
       <LayerList position={{ top: 10, left: 10 }} />
       <Legend position={{ bottom: 10, left: 10 }} />
-      <Swipe position={{ bottom: 185, right: 10 }} />
-      <Measure position={{ bottom: 225, right: 10 }} />
-      {trackContent && <Track position={{ top: 10, right: 130 }} content={trackContent} />}
-
-      {searchContent && <Search position={{ top: 10, right: 10 }} content={searchContent} />}
+      <Swipe position={{ top: 185, right: 10 }} />
+      <Measure position={{ top: 225, right: 10 }} />
+      {trackContent && <Track position={{ top: 10, right: 170 }} content={trackContent} />}
+      {searchContent && <Search position={{ top: 10, right: 50 }} content={searchContent} />}
     </div>
   );
 };

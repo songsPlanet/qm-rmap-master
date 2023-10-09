@@ -35,7 +35,7 @@ const routesMap: RouteItem[] = [
     path: '/theme-map-njzy',
     label: '表格地图',
     icon: <FileMarkdownOutlined style={iconStyle} />,
-    element: React.createElement(LazyLoader(() => import('../pages/tableMap'))),
+    element: React.createElement(LazyLoader(() => import('../pages/tableMap/index'))),
   },
   {
     path: '/user',

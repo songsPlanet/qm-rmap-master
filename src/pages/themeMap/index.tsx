@@ -3,7 +3,7 @@ import ControlPanel from '../components/Controls/ControlPanel';
 import MapWidget from '@/gis/widget/MapWidget';
 import styles from './index.module.less';
 import { LngLatLike } from 'mapbox-gl';
-import mapSetting from './mapSetting';
+import mapSetting from '../tableMap/Chart/mapSetting';
 import { memo } from 'react';
 import TrackContent from '@/gis/widget/TrackContent';
 
