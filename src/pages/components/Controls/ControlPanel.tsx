@@ -1,6 +1,9 @@
 import { NavigationControl, FullscreenControl } from 'mapbox-gl';
 import { memo, useMemo, useEffect, ReactElement } from 'react';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import { MapboxExportControl } from '../../../gis/widget/Print';
+import StatisticControl from './StatisticControl';
 import { useMap } from '@/gis/context/mapContext';
 import LayerList from '@/gis/widget/LayerList';
 import Measure from '@/gis/widget/Measure';
@@ -11,11 +14,12 @@ import Track from './Track';
 
 interface TControlPanel {
   searchContent?: ReactElement;
+  statisticContent?: ReactElement;
   trackContent?: ReactElement;
 }
 
 const ControlPanel = (props: TControlPanel) => {
-  const { searchContent, trackContent } = props;
+  const { searchContent, statisticContent, trackContent } = props;
   const { map } = useMap();
   const navCtrl = useMemo(() => {
     return new NavigationControl();
@@ -26,10 +30,12 @@ const ControlPanel = (props: TControlPanel) => {
   const exportCtrl = useMemo(() => {
     return new MapboxExportControl();
   }, []);
+
   useEffect(() => {
     map?.addControl(navCtrl, 'top-right');
     map?.addControl(fullCtrl, 'top-right');
     map?.addControl(exportCtrl, 'top-right');
+
     return () => {
       map?.removeControl(navCtrl);
       map?.removeControl(fullCtrl);
@@ -45,6 +51,7 @@ const ControlPanel = (props: TControlPanel) => {
       <Measure position={{ top: 225, right: 10 }} />
       {trackContent && <Track position={{ top: 10, right: 170 }} content={trackContent} />}
       {searchContent && <Search position={{ top: 10, right: 50 }} content={searchContent} />}
+      {statisticContent && <StatisticControl position={{ top: 10, right: 50 }} content={statisticContent} />}
     </div>
   );
 };

@@ -58,8 +58,6 @@ const MainLayout: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log('路由', menuItemsRef);
-
     if (endProcessRef.current) {
       message.warning('请先完成用户登录');
       navigate('/login');

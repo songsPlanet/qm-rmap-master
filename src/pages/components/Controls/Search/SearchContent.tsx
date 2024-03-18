@@ -5,7 +5,7 @@ import { debounce } from '@/utils';
 import { useMap } from '@/gis/context/mapContext';
 import { getFeatureBoundingBox } from '@/gis/utils';
 import { getXxjyztListDetailApi } from '@/models/map';
-import GeoMap from '../GeoMap';
+import GeoMap from './GeoMap';
 import styles from './index.module.less';
 interface TField {
   fzr: string;

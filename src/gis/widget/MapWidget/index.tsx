@@ -44,6 +44,7 @@ function MapWidget(props: TMapProps) {
       map.load(cloneDeep(mapLayerSettting));
       setMapInit(true);
       onMapLoad?.(map);
+      // map.showTileBoundaries=true // 瓦片
       if (contextValue) {
         contextValue.map = map;
       }
@@ -51,6 +52,10 @@ function MapWidget(props: TMapProps) {
     map.on('load', loadLayers);
     // map.showTileBoundaries = true;
     map.on('click', (e) => {
+      // console.log("vecterTile1",map.getStyle().layers)
+      // const vecterTile=map.querySourceFeatures("wh_sy-ds")
+      // const vecterTile3=map.queryRenderedFeatures()
+      // console.log("vecterTile",vecterTile,vecterTile3)
       console.log(e.lngLat);
       console.log(map.getCenter(), map.getZoom(), map.getBounds());
     });

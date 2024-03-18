@@ -4,16 +4,15 @@ import { LngLatLike } from 'mapbox-gl';
 import mapSetting from './mapSetting';
 import ControlPanel from '@/pages/components/Controls/ControlPanel';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
-import { log } from 'console';
 import { delay, events } from '@/utils';
 
 function Chart() {
   const mapOptions = {
     id: 'analyseMap',
-    center: [111.75443305352513, 27.496136672739027] as LngLatLike,
+    center: [115.99604988553341, 32.93512360416358] as LngLatLike, // 阜阳市
     container: '',
-    zoom: 6,
-    maxZoom: 17,
+    zoom: 8,
+    maxZoom: 20,
   };
 
   const mapR = useRef<MapWrapper>();

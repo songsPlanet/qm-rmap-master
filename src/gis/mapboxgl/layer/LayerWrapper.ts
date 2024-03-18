@@ -1,6 +1,7 @@
 import MapWrapper from '../MapWrapper';
 import { TLayerOptions } from '../typings';
 import BaseLayer from './BaseLayer';
+import { VectorSource } from 'mapbox-gl';
 
 /**
  * 图层扩展
@@ -13,7 +14,7 @@ class LayerWrapper extends BaseLayer {
   }
 
   protected add(map: MapWrapper, beforeId?: string) {
-    const { id, source } = this._options as TLayerOptions;
+    const { id, source, canUpdate } = this._options as TLayerOptions;
     let sourceId = this._options.id + '-ds';
     // 直接传id
     if (typeof source === 'string') {
@@ -24,6 +25,11 @@ class LayerWrapper extends BaseLayer {
     if (!oldSource && source && typeof source !== 'string') {
       map.addSource(sourceId, source);
     }
+
+    if (canUpdate && oldSource?.type === 'vector') {
+      oldSource.setTiles((source as VectorSource).tiles!);
+    }
+
     // add layer
     const oldLayer = map.getLayer(id);
     const newSource = map.getSource(sourceId);

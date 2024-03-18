@@ -8,6 +8,7 @@ import './index.less';
 
 const Measure = (props: { position: TWidgetPosition }) => {
   const { map } = useMap();
+
   const polylineMeasureHandle = () => {
     if (map !== null) {
       let polylineMeasure = new PolylineMeasure(map);

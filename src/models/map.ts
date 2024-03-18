@@ -33,3 +33,8 @@ export const getXXNYZTUserListApi = (keyword: string) => {
 export const getXxjyztListDetailApi = (id: string, tableName: string) => {
   return request.post(`/v1.0/xxnyjyzt/getXxjyztListDetail`, { id, tableName });
 };
+
+// 获取统计结果
+export const queryStatisticResult = (query: any) => {
+  return request.post(`/v1.0/xxnyjyzt/getXxjyztListDetail`, query);
+};

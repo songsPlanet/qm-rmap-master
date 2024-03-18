@@ -32,10 +32,16 @@ const routesMap: RouteItem[] = [
     element: React.createElement(LazyLoader(() => import('../pages/themeMap'))),
   },
   {
-    path: '/theme-map-njzy',
+    path: '/theme-map-table',
     label: '表格地图',
     icon: <FileMarkdownOutlined style={iconStyle} />,
     element: React.createElement(LazyLoader(() => import('../pages/tableMap/index'))),
+  },
+  {
+    path: '/theme-map-edit',
+    label: '地图编辑',
+    icon: <FileMarkdownOutlined style={iconStyle} />,
+    element: React.createElement(LazyLoader(() => import('../pages/editMap/index'))),
   },
   {
     path: '/user',
@@ -63,7 +69,7 @@ const routesMap: RouteItem[] = [
   },
   {
     path: '/',
-    element: <Navigate to="/theme-map-sqal" />,
+    element: <Navigate to="/theme-map" />,
   },
 ];
 

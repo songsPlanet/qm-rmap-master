@@ -46,8 +46,12 @@ Mock.mock('/v1.0/login/admin', 'post', {
         path: '/theme-map',
       },
       {
-        id: 'theme-map-njzy',
-        path: '/theme-map-njzy',
+        id: 'theme-map-table',
+        path: '/theme-map-table',
+      },
+      {
+        id: 'theme-map-edit',
+        path: '/theme-map-edit',
       },
     ],
   },

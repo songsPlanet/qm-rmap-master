@@ -20,6 +20,7 @@ export type TLayerOptions = AnyLayer &
     legend?: TLegendControlOptions;
     LayerName?: string;
     dataResolver?: IDataResolver;
+    canUpdate?: boolean;
   };
 
 export interface TLayerGroupOptions {
