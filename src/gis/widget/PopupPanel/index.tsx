@@ -17,13 +17,15 @@ interface TPopupPanel {
 }
 
 const PopupPanel = (props: TPopupPanel) => {
+  const { map } = useMap();
   const { vector, wms } = props;
   const [popupData, setPopupData] = useState<TPouperData | undefined>();
-  const { map } = useMap();
+
   const onCloseHandle = () => {
     map?.clearSelect();
     setPopupData(undefined);
   };
+
   useEffect(() => {
     // 矢量图层添加交互效果
     vector?.forEach((d) => {

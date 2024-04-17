@@ -1,6 +1,6 @@
 import { useMap } from '@/gis/context/mapContext';
 import { LngLatLike, Popup, PopupOptions } from 'mapbox-gl';
-import { memo, ReactNode, useEffect, useMemo } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import './index.less';
 let defaultXY = {
@@ -16,7 +16,7 @@ export type PopupEvent = {
   target: Popup;
 };
 export type TPopupWrapper = PopupOptions & {
-  children: ReactNode;
+  children: React.ReactNode;
   lngLat: LngLatLike;
   enableDrag?: boolean;
   title: string;
@@ -45,14 +45,14 @@ const PopupWrapper = (props: TPopupWrapper) => {
   const popup: Popup = useMemo(() => {
     const options = { ...props, maxWidth: 'none', className: 'mapboxgl-popup-wrapper' };
     const pp = new Popup(options).setLngLat(lngLat);
-    pp.once('open', (e: PopupEvent) => {
+    pp.once('open', (e: any) => {
       onOpen?.(e as PopupEvent);
     });
     return pp;
   }, []);
 
   useEffect(() => {
-    const onCloseHandle = (e: PopupEvent) => {
+    const onCloseHandle = (e: any) => {
       onClose?.(e as PopupEvent);
     };
     popup.on('close', onCloseHandle);
@@ -90,7 +90,7 @@ const PopupWrapper = (props: TPopupWrapper) => {
       ppHeader.addEventListener('mouseup', mouseup);
     }
     return () => {
-      popup.off('close', onClose);
+      popup.off('close', onCloseHandle);
       ppHeader.removeEventListener('mousedown', mousedown);
       ppHeader.removeEventListener('mouseup', mouseup);
       if (popup.isOpen()) {
@@ -110,6 +110,6 @@ const PopupWrapper = (props: TPopupWrapper) => {
     titleElem!.innerText = title;
   }, [title]);
 
-  return createPortal(children, container);
+  return <>{createPortal(children, container)}</>;
 };
 export default memo(PopupWrapper);

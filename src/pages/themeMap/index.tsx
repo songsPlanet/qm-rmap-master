@@ -1,13 +1,16 @@
+import StatisticContent from '../components/Controls/StatisticControl/StatisticContent';
 import SearchContent from '../components/Controls/Search/SearchContent';
 import ControlPanel from '../components/Controls/ControlPanel';
+import { RegionProvider } from '@/gis/context/RegionContext';
+import { wh_sy_geo } from '@/pages/mapSetting/wh_sy_geo';
+import TrackContent from '@/gis/widget/TrackContent';
 import MapWidget from '@/gis/widget/MapWidget';
 import styles from './index.module.less';
 import { LngLatLike } from 'mapbox-gl';
 import mapSetting from './mapSetting';
-import { memo } from 'react';
-import TrackContent from '@/gis/widget/TrackContent';
-import StatisticContent from '../components/Controls/StatisticControl/StatisticContent';
-import { RegionProvider } from '@/gis/context/RegionContext';
+import { memo, useMemo } from 'react';
+import FieldPopup from './popup/FieldPopup';
+import PopupPanel from '@/gis/widget/PopupPanel';
 
 const ThemeMap = (props: any) => {
   const mapOptions = {
@@ -18,10 +21,15 @@ const ThemeMap = (props: any) => {
     maxZoom: 20,
   };
 
+  const vector = useMemo(() => {
+    return [{ id: wh_sy_geo.id, title: wh_sy_geo.name, template: <FieldPopup /> }];
+  }, []);
+
   return (
     <div className={styles.mapContainer}>
       <MapWidget mapOptions={mapOptions} mapLayerSettting={mapSetting}>
         <RegionProvider>
+          <PopupPanel vector={vector} />
           <ControlPanel
             trackContent={<TrackContent />}
             searchContent={props?.location?.pathname === '/theme-map' ? <SearchContent /> : undefined}

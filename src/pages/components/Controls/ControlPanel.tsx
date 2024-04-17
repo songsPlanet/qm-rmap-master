@@ -3,6 +3,7 @@ import { memo, useMemo, useEffect, ReactElement } from 'react';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import { MapboxExportControl } from '../../../gis/widget/Print';
+import ExportTrack from './ExportTrack';
 import StatisticControl from './StatisticControl';
 import { useMap } from '@/gis/context/mapContext';
 import LayerList from '@/gis/widget/LayerList';
@@ -45,13 +46,14 @@ const ControlPanel = (props: TControlPanel) => {
 
   return (
     <div>
+      <ExportTrack position={{ top: 10, right: 420 }} />
       <LayerList position={{ top: 10, left: 10 }} />
       <Legend position={{ bottom: 10, left: 10 }} />
       <Swipe position={{ top: 185, right: 10 }} />
       <Measure position={{ top: 225, right: 10 }} />
       {trackContent && <Track position={{ top: 10, right: 170 }} content={trackContent} />}
       {searchContent && <Search position={{ top: 10, right: 50 }} content={searchContent} />}
-      {statisticContent && <StatisticControl position={{ top: 10, right: 50 }} content={statisticContent} />}
+      {statisticContent && <StatisticControl position={{ top: 10, right: 290 }} content={statisticContent} />}
     </div>
   );
 };

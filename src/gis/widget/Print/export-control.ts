@@ -33,13 +33,13 @@ export default class MapboxExportControl implements IControl {
   private exportButton!: HTMLButtonElement;
 
   private options: Options = {
-    PageSize: Size.A4,
-    PageOrientation: PageOrientation.横向,
-    Format: Format.PDF,
-    DPI: DPI[96],
-    Crosshair: true,
-    PrintableArea: true,
-    accessToken: undefined,
+    PageSize: Size.A4, // 尺寸A4: [297, 210],
+    PageOrientation: PageOrientation.横向, // 布局横向 'landscape'
+    Format: Format.PDF, // 格式
+    DPI: DPI[96], // 96
+    Crosshair: false, // 十子管理器
+    PrintableArea: false, // 是否显示可打印区域
+    accessToken: undefined, //
   };
 
   constructor(options?: Options) {
