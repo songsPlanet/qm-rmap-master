@@ -2,17 +2,16 @@ import { TWidgetPosition } from '@/gis/widget/BaseWidget';
 import { AimOutlined } from '@ant-design/icons';
 import styles from './index.module.less';
 import { Button } from 'antd';
-import { memo, useState, useRef, ReactElement, useEffect } from 'react';
+import { memo, useState, useRef, useEffect } from 'react';
 import { Modal } from 'antd';
 import axios from '@/utils/axios';
-import { Map } from 'mapbox-gl';
-import { getFeatureBoundingBox } from '@/gis/utils';
 
 const ExportTrack = (props: { position: TWidgetPosition }) => {
   const { position } = props;
   const canvasRef = useRef<any>(null);
   const [show, setShow] = useState(false);
-  const [lineList, setLineList] = useState<any[]>([]);
+  // const [lineList, setLineList] = useState<any[]>([]);
+  const lineList = useRef<any[]>([]);
 
   const modalOpenHandle = () => {
     setShow(true);
@@ -24,25 +23,10 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
 
   // 绘制geojson
   const modalOkHandle = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    const width = canvas.offsetWidth;
-    const height = canvas.offsetHeight;
-    ctx.clearRect(0, 0, height, height);
-
-    ctx.strokeStyle = 'red';
-    ctx.fillStyle = 'rgba(255,0,0,0.6)';
-    ctx.textAlign = 'center';
-    ctx.font = '20px Helvetica, Arial';
-
-    ctx.beginPath();
-    ctx.moveTo(lineList[0][0], lineList[0][1]); // 起点
-    for (let i = 1; i < lineList.length; i++) {
-      ctx.lineTo(lineList[i][0], lineList[i][1]); // 拐点
-    }
-    // ctx.closePath();                //闭合
-    ctx.stroke();
-    // ctx.fill();
+    canvasRef.current.toBlob((blob: any) => {
+      // @ts-ignore
+      saveAs(blob, 'mapPrint');
+    });
   };
 
   const calcScale = (lonList: any[], latList: any[]) => {
@@ -95,8 +79,7 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
     const scale = calcScale(longitudes, latitudes);
     const offSet = calcOffset(longitudes, latitudes, scale);
     const newList = scaleCoordinates(coordinates, scale, offSet, longitudes, latitudes);
-
-    setLineList(newList);
+    lineList.current = newList;
   };
 
   const getGeoData = async () => {
@@ -113,7 +96,26 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
     if (show) {
       getGeoData().then((res: any) => {
         const latlon = res.geometry.coordinates;
-        if (canvasRef) getLonLat(latlon);
+        if (canvasRef) {
+          getLonLat(latlon);
+          const canvas = canvasRef.current;
+          const ctx = canvas.getContext('2d');
+          const width = canvas.offsetWidth;
+          const height = canvas.offsetHeight;
+          ctx.clearRect(0, 0, height, height);
+          ctx.strokeStyle = 'red';
+          ctx.fillStyle = 'rgba(255,0,0,0.6)';
+          ctx.textAlign = 'center';
+          ctx.font = '20px Helvetica, Arial';
+
+          ctx.beginPath();
+          ctx.moveTo(lineList.current[0][0], lineList.current[0][1]); // 起点
+          for (let i = 1; i < lineList.current.length; i++) {
+            ctx.lineTo(lineList.current[i][0], lineList.current[i][1]); // 拐点
+          }
+          // ctx.closePath();                //闭合
+          ctx.stroke();
+        }
       });
     }
   }, [show]);
@@ -134,6 +136,11 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
           onOk={modalOkHandle}
           destroyOnClose
         >
+          {/* <MapWidget
+            mapOptions={{ ...map!.options, id: 'swipeBeforeMap' }}
+            mapLayerSettting={map!.mapLayerSetting}
+            className={styles.mapContanier}
+          ></MapWidget> */}
           <canvas ref={canvasRef} id="canvas" width="400" height="600" />
         </Modal>
       ) : null}
