@@ -6,7 +6,6 @@ interface TGeoMap {
   data: GeoJSON.Feature<GeoJSON.Geometry> | GeoJSON.FeatureCollection<GeoJSON.Geometry> | string;
 }
 const GeoMap = (props: TGeoMap) => {
-  const mapDom = useRef<HTMLDivElement | null>(null);
   const { data, style } = props;
   useEffect(() => {
     const map = new Map({
