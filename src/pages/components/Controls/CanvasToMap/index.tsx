@@ -1,33 +1,31 @@
-import { TWidgetPosition } from '@/gis/widget/BaseWidget';
-import { AimOutlined } from '@ant-design/icons';
-import styles from './index.module.less';
-import { Button } from 'antd';
-import { memo, useState, useRef, useEffect } from 'react';
-import { Modal } from 'antd';
-import axios from '@/utils/axios';
-import { LngLatBoundsLike } from 'mapbox-gl';
 import { getFeatureBoundingBox, convertHexToRGB } from '@/gis/utils';
-import { useMap } from '@/gis/context/mapContext';
-import MapWidget from '@/gis/widget/MapWidget';
+import { TWidgetPosition } from '@/gis/widget/BaseWidget';
+import { memo, useState, useRef, useEffect } from 'react';
+import { basemap } from '@/pages/mapSetting/basemap';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import { AimOutlined } from '@ant-design/icons';
+import MapWidget from '@/gis/widget/MapWidget';
+import { LngLatBoundsLike } from 'mapbox-gl';
+import styles from './index.module.less';
+import { Modal, Button } from 'antd';
+import axios from '@/utils/axios';
 
-const mapOptions = {
-  id: 'lineMap',
-  container: '',
-  minZoom: 0,
-  bounds: [
-    [115.241236, 33.006001],
-    [115.528891, 33.524924],
-  ] as LngLatBoundsLike,
-};
 const CanvasToMap = (props: { position: TWidgetPosition }) => {
-  const { map } = useMap();
-  const mapR = useRef<MapWrapper>();
   const { position } = props;
+  const mapR = useRef<MapWrapper>();
   const [show, setShow] = useState(false);
-  const lineList = useRef<any>(null);
   const ctx = useRef<any>(null);
+  const lineList = useRef<any>(null);
   const canvasRef = useRef<any>(null);
+  const mapOptions = useRef<any>({
+    id: 'mapToCanvas',
+    container: '',
+    zoom: 5,
+    bounds: [
+      [115.241236, 33.006001],
+      [115.528891, 33.524924],
+    ] as LngLatBoundsLike,
+  });
 
   const modalOpenHandle = () => {
     setShow(true);
@@ -39,17 +37,16 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
     });
   };
 
-  const mapToPixel = (coords: any, map: any) => {
-    return map?.project(coords);
+  const mapToPixel = (coords: any) => {
+    return mapR.current?.project(coords) || { x: undefined, y: undefined };
   };
 
   const modalCancelHandle = () => {
     setShow(false);
   };
 
-  const showDataToMap = (map: any) => {
+  const showDataToMap = () => {
     const features = lineList.current.features;
-    // drawLine(features, map);
     const lineStyle = {
       width: 1,
       color: '#ff0000', // 红色
@@ -59,7 +56,7 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
     const coords = features[0].geometry.coordinates;
 
     const proCoords: any = coords.map((coord: any) => {
-      const { x, y } = mapToPixel(coord, map);
+      const { x, y } = mapToPixel(coord);
       return [x, y];
     });
     if (ctx) {
@@ -89,14 +86,15 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
     // 定位
     const bounds = getFeatureBoundingBox(lineList.current.features[0]);
     map?.setCenter(bounds.getCenter());
-    map?.locationFeatureByBounds(lineList.current);
+    const boundsArray = bounds.toArray();
+    map.fitBounds(bounds, { maxZoom: 15 });
 
-    const canvasExtend = map.getBoundsExtent(bounds);
+    mapOptions.current.bounds = boundsArray;
 
     map.addSource('canvas-ds', {
       type: 'canvas',
       canvas: 'mapcanvas',
-      coordinates: canvasExtend,
+      coordinates: map.getBoundsExtent(bounds),
     });
     map.addLayer({
       id: 'canvas-lyr',
@@ -112,7 +110,7 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
     });
     map.on('moveend', () => {
       map.getSource('canvas-ds').setCoordinates(map.getMapExtent());
-      showDataToMap(map);
+      showDataToMap();
     });
   };
 
@@ -131,6 +129,17 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
     getGeoData().then((res: any) => {
       lineList.current = res;
     });
+    return () => {
+      mapR.current?.on('movestart', () => {
+        ctx.current?.clearRect(0, 0, mapR.current?.getCanvas().width, mapR.current?.getCanvas().height);
+      });
+      mapR.current?.on('zoomstart', () => {
+        ctx.current?.clearRect(0, 0, mapR.current?.getCanvas().width, mapR.current?.getCanvas().height);
+      });
+      mapR.current?.on('moveend', () => {
+        showDataToMap();
+      });
+    };
   }, []);
 
   return (
@@ -138,7 +147,6 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
       <Button style={position} className={styles.btn} icon={<AimOutlined />} onClick={modalOpenHandle}>
         canvas绘制
       </Button>
-
       {show ? (
         <Modal
           title="导出预览"
@@ -151,8 +159,8 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
         >
           <div className={styles.printcontanier1}>
             <MapWidget
-              mapOptions={{ ...mapOptions, id: 'mapToCanvas' }}
-              mapLayerSettting={map!.mapLayerSetting}
+              mapOptions={mapOptions.current}
+              mapLayerSettting={[basemap]}
               className={styles.mapContanier}
               onMapLoad={handleMapLoad}
             />

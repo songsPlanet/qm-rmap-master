@@ -10,20 +10,18 @@ import { getFeatureBoundingBox } from '@/gis/utils';
 
 import { useMap } from '@/gis/context/mapContext';
 import MapWidget from '@/gis/widget/MapWidget';
-const mapOptions = {
-  id: 'lineMap',
-  container: '',
-  minZoom: 0,
-  bounds: [
-    [115.241236, 33.006001],
-    [115.528891, 33.524924],
-  ] as LngLatBoundsLike,
-};
+
 const ExportTrackMap = (props: { position: TWidgetPosition }) => {
   const { map } = useMap();
   const { position } = props;
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const lineList = useRef<any>(null);
+  const mapOptions = useRef<any>({
+    id: 'printMap',
+    container: '',
+    zoom: 5,
+  });
 
   const modalOpenHandle = () => {
     setShow(true);
@@ -47,6 +45,8 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
   };
 
   const handleMapLoad = (map: any) => {
+    setLoading(true);
+
     map.addSource('geoMap-ds', {
       type: 'geojson',
       data: lineList.current,
@@ -62,14 +62,18 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
     });
 
     const bounds = getFeatureBoundingBox(lineList.current.features[0]);
-    const center = bounds.getCenter();
-    map?.setCenter(center);
-    map?.locationFeatureByBounds(lineList.current);
+    map?.setCenter(bounds.getCenter());
+    const boundsArray = bounds.toArray();
+
+    map.fitBounds(bounds, { maxZoom: 15 });
+    mapOptions.current.bounds = boundsArray;
+
     map?.on('idle', () => {
       map?.getCanvas().toBlob((blob: any) => {
         // @ts-ignore
         saveAs(blob, 'mapPrint');
       });
+      setLoading(false);
     });
   };
 
@@ -81,33 +85,31 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
 
   return (
     <>
-      <Button style={position} className={styles.btn} icon={<AimOutlined />} onClick={modalOpenHandle}>
+      <Button
+        loading={loading}
+        style={position}
+        className={styles.btn}
+        icon={<AimOutlined />}
+        onClick={modalOpenHandle}
+      >
         mapbox出图
       </Button>
 
       {show ? (
-        // (
-        //   <div style={{ visibility: 'hidden' }} className={styles.printcontanier}>
-        //     <MapWidget
-        //       mapOptions={{ ...mapOptions, id: 'printMap' }}
-        //       mapLayerSettting={map!.mapLayerSetting}
-        //       className={styles.mapContanier}
-        //       onMapLoad={handleMapLoad}
-        //     />
-        //   </div>
-        // )
         <Modal
           title="导出预览"
-          maskClosable={true}
+          mask={false}
           open={show}
           width={520}
-          onCancel={modalCancelHandle}
-          onOk={modalOkHandle}
           destroyOnClose
+          maskClosable={false}
+          onOk={modalOkHandle}
+          onCancel={modalCancelHandle}
+          style={{ display: 'none' }}
         >
           <div className={styles.printcontanier}>
             <MapWidget
-              mapOptions={{ ...mapOptions, id: 'printMap' }}
+              mapOptions={mapOptions.current}
               mapLayerSettting={map!.mapLayerSetting}
               className={styles.mapContanier}
               onMapLoad={handleMapLoad}
