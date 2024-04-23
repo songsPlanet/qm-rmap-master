@@ -49,10 +49,8 @@ const ControlPanel = (props: TControlPanel) => {
   return (
     <div>
       {/* <ExportTrack position={{ top: 10, right: 410 }} /> */}
-      <ExportTrackMap position={{ top: 10, right: 530 }} />
-
+      <ExportTrackMap position={{ top: 10, right: 550 }} />
       <CanvasToMap position={{ top: 10, right: 410 }} />
-
       <LayerList position={{ top: 10, left: 10 }} />
       <Legend position={{ bottom: 10, left: 10 }} />
       <Swipe position={{ top: 185, right: 10 }} />

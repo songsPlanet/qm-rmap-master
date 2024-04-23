@@ -39,8 +39,7 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
   const getGeoData = async () => {
     const url = 'http://localhost:9999/src/pages/components/Controls/ExportTrack/aseest/Line.geojson';
     const rData = await axios.get(url).then((ctx: any) => {
-      lineList.current = ctx;
-      return ctx.features[0];
+      return ctx;
     });
     if (rData) {
       return rData;
@@ -76,8 +75,7 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
 
   useEffect(() => {
     getGeoData().then((res: any) => {
-      const latlon = res.geometry.coordinates;
-      const bounds = getFeatureBoundingBox(res);
+      lineList.current = res;
     });
   }, []);
 

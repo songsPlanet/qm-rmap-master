@@ -9,6 +9,7 @@ import { LngLatBoundsLike } from 'mapbox-gl';
 import { getFeatureBoundingBox, convertHexToRGB } from '@/gis/utils';
 import { useMap } from '@/gis/context/mapContext';
 import MapWidget from '@/gis/widget/MapWidget';
+import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 
 const mapOptions = {
   id: 'lineMap',
@@ -21,18 +22,29 @@ const mapOptions = {
 };
 const CanvasToMap = (props: { position: TWidgetPosition }) => {
   const { map } = useMap();
+  const mapR = useRef<MapWrapper>();
   const { position } = props;
   const [show, setShow] = useState(false);
   const lineList = useRef<any>(null);
   const ctx = useRef<any>(null);
-  const isDrawing = useRef(false);
+  const canvasRef = useRef<any>(null);
 
   const modalOpenHandle = () => {
     setShow(true);
   };
+  const modalOkHandle = () => {
+    mapR.current?.getCanvas().toBlob((blob: any) => {
+      // @ts-ignore
+      saveAs(blob, 'mapPrint');
+    });
+  };
 
   const mapToPixel = (coords: any, map: any) => {
     return map?.project(coords);
+  };
+
+  const modalCancelHandle = () => {
+    setShow(false);
   };
 
   const showDataToMap = (map: any) => {
@@ -59,12 +71,13 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
         index === 0 ? ctx.current.moveTo(coord[0], coord[1]) : ctx.current.lineTo(coord[0], coord[1]);
       });
       ctx.current.stroke();
-      isDrawing.current = false;
     }
   };
 
   const handleMapLoad = (map: any) => {
+    mapR.current = map;
     const canvas = document.createElement('canvas');
+    canvasRef.current = canvas;
     canvas.setAttribute('id', 'mapcanvas');
     const { width, height } = map.getCanvas();
     canvas.width = width;
@@ -127,7 +140,15 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
       </Button>
 
       {show ? (
-        <Modal title="导出预览" maskClosable={true} open={show} width={520} destroyOnClose>
+        <Modal
+          title="导出预览"
+          maskClosable={true}
+          open={show}
+          width={520}
+          onOk={modalOkHandle}
+          onCancel={modalCancelHandle}
+          destroyOnClose
+        >
           <div className={styles.printcontanier1}>
             <MapWidget
               mapOptions={{ ...mapOptions, id: 'mapToCanvas' }}
