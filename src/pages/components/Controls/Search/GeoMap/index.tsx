@@ -7,6 +7,8 @@ interface TGeoMap {
 }
 const GeoMap = (props: TGeoMap) => {
   const { data, style } = props;
+  const mapDom = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const map = new Map({
       pitch: 0,

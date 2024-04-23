@@ -9,55 +9,79 @@
 .panel {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.6);
-  :global {
-    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-      background-color: rgba(59, 72, 84, 0.4);
+}
+.trackPopover {
+  margin-top: 5px;
+  margin-right: 40px;
+  min-height: 100px;
+  width: 800px;
+  position: absolute;
+  right: 10px;
+  top: 45px;
+  border: 2px solid #02080e;
+}
+
+.titlePop {
+  font-size: 15px;
+  display: flex;
+  height: 35px;
+  background-color: #02080e;
+  color: white;
+  font-family: PingFang-SC-Bold;
+
+  &:hover {
+    cursor: move;
+  }
+
+  .text {
+    line-height: 35px;
+    padding-left: 10px;
+    width: 200px;
+  }
+
+  .close {
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    font-size: 20px;
+
+    &:hover {
+      color: red !important;
+      cursor: pointer;
     }
-    .ant-select-single .ant-select-selector {
-      color: #fff;
-    }
-    .ant-select {
-      color: #fff;
-    }
-    .ant-select .ant-select-selection-placeholder {
-      color: #fff;
-    }
-    .ant-select-clear {
-      background-color: rgba(59, 72, 84, 0.4);
-      color: #fff;
-    }
-    .ant-empty .ant-empty-description {
-      color: #fff;
-    }
-    .ant-descriptions {
-      color: #fff;
-    }
-    .ant-descriptions .ant-descriptions-title {
-      color: #fff;
-    }
-    .ant-descriptions.ant-descriptions-bordered .ant-descriptions-item-label {
-      color: #fff;
-    }
-    .ant-descriptions .ant-descriptions-item-content {
-      color: #fff;
-    }
-    .ant-list .ant-list-item {
-      color: #fff;
-    }
-    .ant-pagination .ant-pagination-item-active {
-      background-color: rgba(59, 72, 84, 0.4);
-    }
-    .ant-list-split.ant-list-something-after-last-item
-      .ant-spin-container
-      > .ant-list-items
-      > .ant-list-item:last-child {
-      border-block-end: 1px solid #fff;
-    }
-    .ant-select-single.ant-select-open .ant-select-selection-item {
-      color: #fff;
-    }
-    .ant-pagination .ant-pagination-item a {
-      color: #fff;
-    }
+  }
+}
+
+.container {
+  height: 320px;
+  box-sizing: border-box;
+  position: relative;
+  background-color: #4d4d4d;
+}
+
+:global {
+  .ant-popover-title {
+    font-size: 16px;
+    display: flex;
+    background-color: #1890ff;
+    color: white;
+    font-family: PingFang-SC-Bold;
+  }
+
+  .ant-popover-placement-bottom .ant-popover-arrow {
+    display: none;
+  }
+  .ant-popover-inner {
+    padding: 0;
+  }
+  .ant-popover .ant-popover-inner {
+    box-shadow: none;
+  }
+
+  .ant-popover .ant-popover-inner,
+  .ant-popover-inner-content,
+  .ant-popover-content {
+    background-color: #188fff00;
+    padding: 0;
   }
 }

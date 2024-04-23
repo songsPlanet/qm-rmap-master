@@ -124,7 +124,7 @@ const LayerList = (props: { position: TWidgetPosition }) => {
       height={keys.length * 28 < 280 ? 280 : keys.length * 28}
     >
       <Tree
-        checkable={true}
+        checkable
         checkedKeys={keys}
         onCheck={(checkedKeys: any, info: any) => checkedHandle(checkedKeys, info)}
         treeData={data}

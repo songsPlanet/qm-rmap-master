@@ -37,8 +37,8 @@ export default class MapboxExportControl implements IControl {
     PageOrientation: PageOrientation.横向, // 布局横向 'landscape'
     Format: Format.PDF, // 格式
     DPI: DPI[96], // 96
-    Crosshair: false, // 十子管理器
-    PrintableArea: false, // 是否显示可打印区域
+    Crosshair: true, // 十子管理器
+    PrintableArea: true, // 是否显示可打印区域
     accessToken: undefined, //
   };
 

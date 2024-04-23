@@ -3,7 +3,7 @@ import SearchContent from '../components/Controls/Search/SearchContent';
 import ControlPanel from '../components/Controls/ControlPanel';
 import { RegionProvider } from '@/gis/context/RegionContext';
 import { wh_sy_geo } from '@/pages/mapSetting/wh_sy_geo';
-import TrackContent from '@/gis/widget/TrackContent';
+import TrackContent from '@/pages/components/Controls/Track/TrackContent';
 import MapWidget from '@/gis/widget/MapWidget';
 import styles from './index.module.less';
 import { LngLatLike } from 'mapbox-gl';

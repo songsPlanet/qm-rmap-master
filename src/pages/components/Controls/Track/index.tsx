@@ -2,7 +2,7 @@ import { TWidgetPosition } from '@/gis/widget/BaseWidget';
 import { AimOutlined } from '@ant-design/icons';
 import { memo, useState } from 'react';
 import styles from './index.module.less';
-import TrackPanel from '@/gis/widget/TrackContent';
+import TrackPanel from './TrackContent';
 import { Button } from 'antd';
 import { ReactElement } from 'react';
 

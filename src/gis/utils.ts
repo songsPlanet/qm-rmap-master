@@ -114,10 +114,37 @@ const loopBounds = (bound: LngLatBounds, coordinates: any) => {
   }
 };
 
+/**
+ * 获取边界：
+ * return：LngLatBounds
+ */
 const getFeatureBoundingBox = (feature: any) => {
   const bounds = new LngLatBounds();
   loopBounds(bounds, feature.geometry.coordinates);
   return bounds;
+};
+
+/**
+ * 16位转换为rgba
+ * @param color
+ * @param opacity
+ * @returns {string}
+ * @private
+ */
+const convertHexToRGB = (color: any, opacity = 1) => {
+  if (color.length === 4) {
+    let extendedColor = '#';
+    for (let i = 1; i < color.length; i++) {
+      extendedColor += color.charAt(i) + color.charAt(i);
+    }
+    color = extendedColor;
+  }
+  const values = {
+    r: parseInt(color.substr(1, 2), 16),
+    g: parseInt(color.substr(3, 2), 16),
+    b: parseInt(color.substr(5, 2), 16),
+  };
+  return `rgba(${values.r}, ${values.g}, ${values.b}, ${opacity})`;
 };
 
 const unique = (arr: any[], uniId: string) => {
@@ -125,4 +152,14 @@ const unique = (arr: any[], uniId: string) => {
   return arr.filter((item) => !res.has(item[uniId]) && res.set(item[uniId], 1));
 };
 
-export { shollawEqual, deepEqual, generateUUID, debounce, throttle, transTreeToArr, getFeatureBoundingBox, unique };
+export {
+  shollawEqual,
+  deepEqual,
+  generateUUID,
+  debounce,
+  throttle,
+  transTreeToArr,
+  getFeatureBoundingBox,
+  convertHexToRGB,
+  unique,
+};

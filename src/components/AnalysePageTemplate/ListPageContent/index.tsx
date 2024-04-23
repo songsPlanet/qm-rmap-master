@@ -212,7 +212,7 @@ function ListPageContent(props: ListPageContentProps) {
               total={total}
               pageSize={pageSize}
               current={pageNum}
-              showSizeChanger={true}
+              showSizeChanger
               showTotal={paginationShowTotal}
               onShowSizeChange={onPageSizeChange}
               onChange={onPageNumChange}

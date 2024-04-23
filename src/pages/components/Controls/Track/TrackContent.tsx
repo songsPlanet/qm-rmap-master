@@ -55,14 +55,14 @@ const TrackPopover = (props: { isPopOpenHandle?: any }) => {
     <div ref={popoverRef} id="TrackPopover" className={classes.trackPopover}>
       <div className={classes.titlePop} onMouseDown={(e) => mousedown(e)} onMouseUp={(e) => mouseup()}>
         <div className={classes.text}>轨迹回放</div>
-        {/* <div
+        <div
           className={classes.close}
           onClick={() => {
             isPopOpenHandle();
           }}
         >
           x
-        </div> */}
+        </div>
       </div>
       <div className={classes.container}>
         <LineMap detailSource={{}} />

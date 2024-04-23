@@ -20,8 +20,8 @@ const StatisticControl = (props: { position: TWidgetPosition; content: ReactElem
         title="空间统计"
         mask={false}
         placement="right"
-        closable={true}
-        destroyOnClose={true}
+        closable
+        destroyOnClose
         onClose={() => setOpen(false)}
         open={open}
         width="auto"

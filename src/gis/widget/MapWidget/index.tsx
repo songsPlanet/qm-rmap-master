@@ -59,6 +59,7 @@ function MapWidget(props: TMapProps) {
       console.log(e.lngLat);
       console.log(map.getCenter(), map.getZoom(), map.getBounds());
     });
+
     const resizeMap = debounce(() => {
       map.resize();
     }, 10);

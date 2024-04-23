@@ -10,7 +10,6 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
   const { position } = props;
   const canvasRef = useRef<any>(null);
   const [show, setShow] = useState(false);
-  // const [lineList, setLineList] = useState<any[]>([]);
   const lineList = useRef<any[]>([]);
 
   const modalOpenHandle = () => {
@@ -29,6 +28,7 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
     });
   };
 
+  // 计算缩放比例
   const calcScale = (lonList: any[], latList: any[]) => {
     const lonMax = Math.max(...lonList);
     const lonMin = Math.min(...lonList);
@@ -38,10 +38,14 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
     const height = canvasRef?.current?.offsetHeight;
     const xScale = width / Math.abs(lonMax - lonMin);
     const yScale = height / Math.abs(latMax - latMin);
-
+    // 谁小用谁，因为用小的缩放比例，才能在 有限的空间下显示全
     return xScale < yScale ? xScale : yScale;
   };
+
+  // 计算偏移度
   const calcOffset = (longitudes: any[], latitudes: any[], scale: any) => {
+    // 先将经度和纬度按照scale进行缩放
+    // 再用width和height去减，分别得到要x轴和y轴需要偏移的空间
     const xOffset =
       (canvasRef.current.offsetWidth - Math.abs(Math.max(...longitudes) - Math.min(...longitudes)) * scale) / 2;
     const yOffset =
@@ -49,10 +53,16 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
     return { xOffset, yOffset };
   };
 
+  // 将coordinates进行缩放
+  // （1):每个点减去最小值，目的是为了那个点无限接近原点
+  // （2）乘上缩放比例
+  // （3)加上偏移度，得到最终的值
   const scaleCoordinates = (coordinates: any[][], scale: any, offset: any, longitudes: any[], latitudes: any[]) => {
     return coordinates
       .map((item) => {
         item[0] = item[0] - Math.min(...longitudes);
+        // 由于屏幕坐标原点左上角，地理坐标原点右下角
+        // y轴刚好相反，所以用以下公式
         item[1] = Math.max(...latitudes) - item[1];
         return item;
       })
@@ -98,6 +108,7 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
         const latlon = res.geometry.coordinates;
         if (canvasRef) {
           getLonLat(latlon);
+          // 用canvas进行绘制
           const canvas = canvasRef.current;
           const ctx = canvas.getContext('2d');
           const width = canvas.offsetWidth;
@@ -129,7 +140,7 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
       {show ? (
         <Modal
           title="导出预览"
-          maskClosable={true}
+          maskClosable
           open={show}
           width={460}
           onCancel={modalCancelHandle}

@@ -7,6 +7,7 @@ import Routers from '@/routers';
 import React from 'react';
 import './index.less';
 import '@/mock/mock';
+import '@/mock/mock-map';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

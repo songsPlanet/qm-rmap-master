@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { memo, useState, useRef, useEffect } from 'react';
 import { Modal } from 'antd';
 import axios from '@/utils/axios';
-import { GeoJSONSource, LngLatBoundsLike } from 'mapbox-gl';
+import { LngLatBoundsLike } from 'mapbox-gl';
 import { getFeatureBoundingBox } from '@/gis/utils';
 
 import { useMap } from '@/gis/context/mapContext';
@@ -19,8 +19,6 @@ const mapOptions = {
     [115.528891, 33.524924],
   ] as LngLatBoundsLike,
 };
-import { Map } from 'mapbox-gl';
-
 const ExportTrackMap = (props: { position: TWidgetPosition }) => {
   const { map } = useMap();
   const { position } = props;
@@ -36,12 +34,7 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
   };
 
   // 绘制geojson
-  const modalOkHandle = () => {
-    map?.getCanvas().toBlob((blob: any) => {
-      // @ts-ignore
-      saveAs(blob, 'mapPrint');
-    });
-  };
+  const modalOkHandle = () => {};
 
   const getGeoData = async () => {
     const url = 'http://localhost:9999/src/pages/components/Controls/ExportTrack/aseest/Line.geojson';
@@ -54,17 +47,7 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
     }
   };
 
-  useEffect(() => {
-    getGeoData().then((res: any) => {
-      const latlon = res.geometry.coordinates;
-      const bounds = getFeatureBoundingBox(res);
-      console.log('bounds', bounds);
-    });
-  }, []);
-
   const handleMapLoad = (map: any) => {
-    console.log('map', map, show);
-    console.log('bounds', lineList.current);
     map.addSource('geoMap-ds', {
       type: 'geojson',
       data: lineList.current,
@@ -80,12 +63,10 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
     });
 
     const bounds = getFeatureBoundingBox(lineList.current.features[0]);
-    // console.log('bounds', bounds.toArray());
     const center = bounds.getCenter();
-    map.setCenter(center);
-    map.setZoom(16.5);
-    map.on('idle', () => {
-      console.log('11111');
+    map?.setCenter(center);
+    map?.locationFeatureByBounds(lineList.current);
+    map?.on('idle', () => {
       map?.getCanvas().toBlob((blob: any) => {
         // @ts-ignore
         saveAs(blob, 'mapPrint');
@@ -93,40 +74,49 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
     });
   };
 
+  useEffect(() => {
+    getGeoData().then((res: any) => {
+      const latlon = res.geometry.coordinates;
+      const bounds = getFeatureBoundingBox(res);
+    });
+  }, []);
+
   return (
     <>
       <Button style={position} className={styles.btn} icon={<AimOutlined />} onClick={modalOpenHandle}>
-        轨迹出图
+        mapbox出图
       </Button>
 
       {show ? (
-        <div style={{ visibility: 'hidden' }} className={styles.printcontanier}>
-          <MapWidget
-            mapOptions={{ ...mapOptions, id: 'printMap' }}
-            mapLayerSettting={map!.mapLayerSetting}
-            className={styles.mapContanier}
-            onMapLoad={handleMapLoad}
-          />
-        </div>
-      ) : // <Modal
-      //   title="导出预览"
-      //   maskClosable={true}
-      //   open={show}
-      //   width={520}
-      //   onCancel={modalCancelHandle}
-      //   onOk={modalOkHandle}
-      //   destroyOnClose
-      // >
-      //   <div className={styles.printcontanier}>
-      //     <MapWidget
-      //       mapOptions={{ ...mapOptions, id: 'printMap' }}
-      //       mapLayerSettting={map!.mapLayerSetting}
-      //       className={styles.mapContanier}
-      //       onMapLoad={handleMapLoad}
-      //     ></MapWidget>
-      //   </div>
-      // </Modal>
-      null}
+        // (
+        //   <div style={{ visibility: 'hidden' }} className={styles.printcontanier}>
+        //     <MapWidget
+        //       mapOptions={{ ...mapOptions, id: 'printMap' }}
+        //       mapLayerSettting={map!.mapLayerSetting}
+        //       className={styles.mapContanier}
+        //       onMapLoad={handleMapLoad}
+        //     />
+        //   </div>
+        // )
+        <Modal
+          title="导出预览"
+          maskClosable={true}
+          open={show}
+          width={520}
+          onCancel={modalCancelHandle}
+          onOk={modalOkHandle}
+          destroyOnClose
+        >
+          <div className={styles.printcontanier}>
+            <MapWidget
+              mapOptions={{ ...mapOptions, id: 'printMap' }}
+              mapLayerSettting={map!.mapLayerSetting}
+              className={styles.mapContanier}
+              onMapLoad={handleMapLoad}
+            />
+          </div>
+        </Modal>
+      ) : null}
     </>
   );
 };
