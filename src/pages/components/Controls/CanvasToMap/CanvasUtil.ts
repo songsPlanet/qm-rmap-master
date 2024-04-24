@@ -37,6 +37,55 @@ class CanvasUtil {
   }
 
   /**
+   * 绘制一张图片
+   * @param image
+   * @param x
+   * @param y
+   * @param width
+   * @param height
+   */
+  drawImage(image: any, x: any, y: any, width?: number, height?: number) {
+    const that = this;
+    width = width || image.width;
+    height = height || image.height;
+    that.ctx.drawImage(image, x, y, width, height);
+  }
+
+  /**
+   * 绘制多个图片
+   * @param imgsData, [{url: '', x: '', y: ''}]
+   * @return {Promise<unknown>}
+   */
+  drawImages(imgsData: any) {
+    const that = this;
+    let promises: any = [];
+    console.log('');
+
+    imgsData.forEach((data: any) => {
+      promises.push(
+        new Promise((resolve) => {
+          // loadImage(data.url).then(img => {
+          //     resolve({
+          //       ...data,
+          //       img
+          //     })
+          // })
+          const img = new Image();
+          img.src = data.url;
+        }),
+      );
+    });
+    return new Promise((resolve) => {
+      Promise.all(promises).then((imgDatas) => {
+        imgDatas.forEach((imgData) => {
+          that.drawImage(imgData.img, imgData.x, imgData.y);
+        });
+        resolve(imgDatas);
+      });
+    });
+  }
+
+  /**
    * 获取canvas数据
    * @return {string}
    */

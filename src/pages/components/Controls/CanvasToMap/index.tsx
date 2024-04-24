@@ -12,11 +12,12 @@ import { Button } from 'antd';
 const CanvasToMap = (props: { position: TWidgetPosition }) => {
   const { position } = props;
   const tileUtil = new TileUtil();
-  const canvasUtil = new CanvasUtil();
   const mapR = useRef<MapWrapper>();
   const [show, setShow] = useState(false);
   const lineList = useRef<any>(null);
-  const z = 18;
+  const canvasUtil = useRef<any>(null);
+  const url = useRef<any>({});
+  const z = 17;
 
   const modalOpenHandle = () => {
     setShow(!show);
@@ -37,6 +38,28 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
       let linesData: any[] = [];
       const bounds = getFeatureBoundingBox(res.features[0]);
       const extent = bounds.toArray().flat();
+      const [xmin, ymin, xmax, ymax] = tileUtil.getTilesInExtent(z, extent);
+      const width = (xmax - xmin) * tileUtil.getTileSize();
+      const height = (ymax - ymin) * tileUtil.getTileSize();
+      canvasUtil.current = new CanvasUtil(width, height);
+      let urls = [];
+      for (let i = xmin; i < xmax; i++) {
+        const x = (i - xmin) * tileUtil.getTileSize();
+        for (let j = ymin; j < ymax; j++) {
+          const y = (j - ymin) * tileUtil.getTileSize();
+          const url = tileUtil.getTileUrl(i, j, z);
+          urls.push({
+            i,
+            j,
+            x,
+            y,
+            url,
+          });
+        }
+      }
+      url.current = urls;
+      console.log('urls');
+
       res.features.forEach((feature: any) => {
         const { type, coordinates } = feature.geometry;
         if (type === 'LineString') {
@@ -60,16 +83,20 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
         }
       });
       lineList.current = linesData;
-      return canvasUtil.drawLines(lineList.current);
+      return canvasUtil.current.drawLines(lineList.current);
     });
     return data;
   };
 
   useEffect(() => {
     // 获取要绘制的数据
+
     if (show) {
+      // canvasUtil.current.drawImages(url.current).then(() => {
       addLines().then(() => {
-        canvasUtil.printCanvas();
+        // canvasUtil.addTitle('中国省级区划图')
+        canvasUtil.current.printCanvas();
+        // });
       });
     }
   }, [show]);

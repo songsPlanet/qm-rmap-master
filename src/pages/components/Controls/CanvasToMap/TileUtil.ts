@@ -12,6 +12,7 @@ class TileUtil {
       this.resolutions.push(resolution);
       resolution /= 2;
     }
+    // this.tileUrl = 'https://webst0{domain}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}';
     this.tileUrl = 'https://webst0{domain}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}';
   }
 
@@ -21,7 +22,6 @@ class TileUtil {
    * @return {*}?
    */
   fromLonLat(lonlat: any): any {
-    // return proj4('EPSG:4326', 'EPSG:3857', lonlat)
     // 注意先转为为弧度制，弧度=角度*Math.PI/180，弧长=弧度*半径
     const r = 6378137;
     const x = lonlat[0] * (Math.PI / 180) * r;
@@ -46,7 +46,31 @@ class TileUtil {
     }
     return extent;
   }
+  /**
+   * 获取切片大小
+   * @return {number}
+   */
+  getTileSize() {
+    return this.tileSize;
+  }
 
+  randomNum(min = 1, max = 4) {
+    return Math.floor(Math.random() * max + min);
+  }
+
+  /**
+   * 获取切片地址
+   * @param x
+   * @param y
+   * @param z
+   * @return {string}
+   */
+  getTileUrl(x: any, y: any, z: any) {
+    let url = this.tileUrl.replace(/\{x\}/g, x);
+    url = url.replace(/\{y\}/g, y);
+    url = url.replace(/\{z\}/g, z);
+    return url.replace(/\{domain\}/g, this.randomNum() as any);
+  }
   /**
    * 获取范围内的切片的行列号的范围
    * @param zoom
