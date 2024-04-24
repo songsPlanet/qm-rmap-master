@@ -1,5 +1,4 @@
 import { TLayerGroupOptions } from '@/gis/mapboxgl/typings';
-// const tianditukey = '7271c460eedd19a02b7b7bb1b19ba7ac';
 const tianditukey = '7271c460eedd19a02b7b7bb1b19ba7ac';
 
 export const basemap: TLayerGroupOptions = {
@@ -16,7 +15,7 @@ export const basemap: TLayerGroupOptions = {
         type: 'raster',
         tileSize: 256,
         tiles: [
-          `http://t3.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${tianditukey}`,
+          `http://t2.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${tianditukey}`,
         ],
       },
     },

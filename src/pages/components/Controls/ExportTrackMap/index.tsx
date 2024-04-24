@@ -7,7 +7,6 @@ import { Modal } from 'antd';
 import axios from '@/utils/axios';
 import { LngLatBoundsLike } from 'mapbox-gl';
 import { getFeatureBoundingBox } from '@/gis/utils';
-
 import { useMap } from '@/gis/context/mapContext';
 import MapWidget from '@/gis/widget/MapWidget';
 
