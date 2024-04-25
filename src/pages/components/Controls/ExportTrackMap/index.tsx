@@ -104,7 +104,7 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
           maskClosable={false}
           onOk={modalOkHandle}
           onCancel={modalCancelHandle}
-          style={{ display: 'none' }}
+          // style={{ display: 'none' }}
         >
           <div className={styles.printcontanier}>
             <MapWidget

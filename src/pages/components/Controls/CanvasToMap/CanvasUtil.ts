@@ -49,39 +49,63 @@ class CanvasUtil {
     width = width || image.width;
     height = height || image.height;
     that.ctx.drawImage(image, x, y, width, height);
+
+    const url = 'https://webst04.is.autonavi.com/appmaptile?style=6&x=26882&y=13182&z=15';
   }
 
-  /**
-   * 绘制多个图片
-   * @param imgsData, [{url: '', x: '', y: ''}]
-   * @return {Promise<unknown>}
-   */
+  // /**
+  //  * 绘制多个图片
+  //  * @param imgsData, [{url: '', x: '', y: ''}]
+  //  * @return {Promise<unknown>}
+  //  */
+  // drawImages(imgsData: any) {
+  //   const that = this;
+  //   let promises: any = [];
+  //   console.log('imgsData', imgsData);
+
+  //   imgsData.forEach((data: any) => {
+  //     promises.push(
+  //       new Promise((resolve) => {
+  //         // loadImage(data.url).then(img => {
+  //         //     resolve({
+  //         //       ...data,
+  //         //       img
+  //         //     })
+  //         // })
+
+  //       }),
+  //     );
+  //   });
+  //   return new Promise((resolve) => {
+  //     Promise.all(promises).then((imgDatas:any) => {
+  //       console.log("promis",imgDatas);
+
+  //       imgDatas.forEach((imgData:any) => {
+  //         that.drawImage(imgData.img, imgData.x, imgData.y);
+  //       });
+  //       resolve(imgDatas);
+  //     });
+  //   });
+  // }
+
   drawImages(imgsData: any) {
     const that = this;
-    let promises: any = [];
-    console.log('');
-
-    imgsData.forEach((data: any) => {
-      promises.push(
-        new Promise((resolve) => {
-          // loadImage(data.url).then(img => {
-          //     resolve({
-          //       ...data,
-          //       img
-          //     })
-          // })
-          const img = new Image();
-          img.src = data.url;
-        }),
-      );
-    });
+    // let promises: any = [];
+    console.log('imgsData', imgsData);
     return new Promise((resolve) => {
-      Promise.all(promises).then((imgDatas) => {
-        imgDatas.forEach((imgData) => {
-          that.drawImage(imgData.img, imgData.x, imgData.y);
-        });
-        resolve(imgDatas);
-      });
+      const img = new Image();
+      img.setAttribute('crossOrigin', 'anonymouse');
+      // img.src = imgsData[0].url;
+      img.src = 'https://webst02.is.autonavi.com/appmaptile?style=6&x=26882&y=13182&z=15';
+      img.onload = () => {
+        that.ctx.drawImage(img, 0, 0, img.width, img.height);
+        resolve(img);
+      };
+      // const img = new Image();
+      // img.src="https://webst02.is.autonavi.com/appmaptile?style=6&x=26882&y=13182&z=15"
+      // img.onload = () => {
+      //   that.ctx.drawImage(img, 0, 0, img.width, img.height);
+      // };
     });
   }
 
@@ -90,7 +114,8 @@ class CanvasUtil {
    * @return {string}
    */
   getDataUrl() {
-    return this.canvas.toDataURL().replace(/^data:image\/\w+;base64,/, '');
+    // return this.canvas.toDataURL().replace(/^data:image\/\w+;base64,/, '');
+    return this.canvas.toDataURL('image/png');
   }
 
   /**
