@@ -12,7 +12,6 @@ class TileUtil {
       this.resolutions.push(resolution);
       resolution /= 2;
     }
-    // this.tileUrl = 'https://webst0{domain}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}';
     this.tileUrl = 'https://webst0{domain}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}';
   }
 
@@ -66,7 +65,7 @@ class TileUtil {
    * @return {string}
    */
   getTileUrl(x: any, y: any, z: any) {
-    let url = this.tileUrl.replace(/\{x\}/g, x);
+    let url = this.tileUrl.replace(/\{x\}/g, x + 1);
     url = url.replace(/\{y\}/g, y);
     url = url.replace(/\{z\}/g, z);
     return url.replace(/\{domain\}/g, this.randomNum() as any);

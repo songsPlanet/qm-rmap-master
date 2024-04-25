@@ -67,13 +67,13 @@ const ExportTrackMap = (props: { position: TWidgetPosition }) => {
     map.fitBounds(bounds, { maxZoom: 15 });
     mapOptions.current.bounds = boundsArray;
 
-    map?.on('idle', () => {
-      map?.getCanvas().toBlob((blob: any) => {
-        // @ts-ignore
-        saveAs(blob, 'mapPrint');
-      });
-      setLoading(false);
-    });
+    // map?.on('idle', () => {
+    //   map?.getCanvas().toBlob((blob: any) => {
+    //     // @ts-ignore
+    //     saveAs(blob, 'mapPrint');
+    //   });
+    //   setLoading(false);
+    // });
   };
 
   useEffect(() => {

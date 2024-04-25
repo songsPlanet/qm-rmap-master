@@ -4,8 +4,8 @@ import { getFeatureBoundingBox } from '@/gis/utils';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import { AimOutlined } from '@ant-design/icons';
 import styles from './index.module.less';
-import { TileUtil } from './TileUtil';
 import { CanvasUtil } from './CanvasUtil';
+import { TileUtil } from './TileUtil';
 import axios from '@/utils/axios';
 import { Button } from 'antd';
 
@@ -16,8 +16,10 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
   const [show, setShow] = useState(false);
   const lineList = useRef<any>(null);
   const canvasUtil = useRef<any>(null);
+  const dataRef = useRef<any>(null);
+  const dataExtentRef = useRef<any>(null);
   const url = useRef<any>({});
-  const z = 15;
+  const z = 16;
 
   const modalOpenHandle = () => {
     setShow(!show);
@@ -35,13 +37,6 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
 
   const addLines = (data: any) => {
     let linesData: any[] = [];
-    const bounds = getFeatureBoundingBox(data.features[0]);
-    const extent = bounds.toArray().flat();
-    const [xmin, ymin, xmax, ymax] = tileUtil.getTilesInExtent(z, extent);
-    const width = (xmax - xmin) * tileUtil.getTileSize();
-    const height = (ymax - ymin) * tileUtil.getTileSize();
-    canvasUtil.current = new CanvasUtil(width, height);
-
     data.features.forEach((feature: any) => {
       const { type, coordinates } = feature.geometry;
       if (type === 'LineString') {
@@ -49,7 +44,7 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
           width: 2,
           color: 'rgba(255,0,0,0.8)',
           coords: coordinates.map((coords: any) => {
-            return tileUtil.project(extent, z, coords);
+            return tileUtil.project(dataExtentRef.current, z, coords);
           }),
         });
       } else {
@@ -58,7 +53,7 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
             width: 2,
             color: 'rgba(255,0,0,0.8)',
             coords: coordList.map((coords: any) => {
-              return tileUtil.project(extent, z, coords);
+              return tileUtil.project(dataExtentRef.current, z, coords);
             }),
           });
         });
@@ -68,51 +63,49 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
     return canvasUtil.current.drawLines(lineList.current);
   };
 
+  const getBaseMap = () => {
+    const [xmin, ymin, xmax, ymax] = tileUtil.getTilesInExtent(z, dataExtentRef.current);
+    const width = (xmax - xmin) * tileUtil.getTileSize();
+    const height = (ymax - ymin) * tileUtil.getTileSize();
+    canvasUtil.current = new CanvasUtil(width, height);
+    let urls = [];
+    for (let i = xmin; i < xmax; i++) {
+      const x = (i - xmin) * tileUtil.getTileSize();
+      for (let j = ymin; j < ymax; j++) {
+        const y = (j - ymin) * tileUtil.getTileSize();
+        const url = tileUtil.getTileUrl(i, j, z);
+        urls.push({
+          i,
+          j,
+          x,
+          y,
+          url,
+        });
+      }
+    }
+    console.log('urls', urls);
+
+    url.current = urls;
+  };
+
+  useEffect(() => {
+    getGeoData().then((res: any) => {
+      dataRef.current = res;
+      const bounds = getFeatureBoundingBox(res.features[0]);
+      const extent = bounds.toArray().flat();
+      dataExtentRef.current = extent;
+      getBaseMap();
+    });
+  }, []);
+
   useEffect(() => {
     // 获取要绘制的数据
     if (show) {
-      getGeoData().then((res: any) => {
-        const bounds = getFeatureBoundingBox(res.features[0]);
-        const extent = bounds.toArray().flat();
-        const [xmin, ymin, xmax, ymax] = tileUtil.getTilesInExtent(z, extent);
-        const width = (xmax - xmin) * tileUtil.getTileSize();
-        const height = (ymax - ymin) * tileUtil.getTileSize();
-        canvasUtil.current = new CanvasUtil(width, height);
-        let urls = [];
-        for (let i = xmin; i < xmax; i++) {
-          const x = (i - xmin) * tileUtil.getTileSize();
-          for (let j = ymin; j < ymax; j++) {
-            const y = (j - ymin) * tileUtil.getTileSize();
-            const url = tileUtil.getTileUrl(i, j, z);
-            urls.push({
-              i,
-              j,
-              x,
-              y,
-              url,
-            });
-          }
-        }
-        url.current = urls;
-        console.log('urls', url.current);
-        // addLines(res).then(() => {
-        //   canvasUtil.current.printCanvas();
-        // });
-        canvasUtil.current.drawImages(url.current).then(() => {
-          //     const base64Data=    canvasUtil.current.getDataUrl()
-          //     console.log("base64Data",base64Data);
-          //    // / 创建一个a元素，模拟点击进行下载
-          // const link = document.createElement('a');
-          // link.href = base64Data;
-          // link.download = "123";
-          // link.click();
+      console.log('url.current', url.current);
+
+      canvasUtil.current.drawImages(url.current).then(() => {
+        addLines(dataRef.current).then(() => {
           canvasUtil.current.printCanvas();
-
-          // setTimeout(()=>{
-          //   canvasUtil.current.printCanvas();
-
-          // },1000)
-          // })
         });
       });
     }
