@@ -3,8 +3,7 @@ import { memo, useMemo, useEffect, ReactElement } from 'react';
 import { MapboxExportControl } from '../../../gis/widget/Print';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import ExportTrack from './ExportTrack';
-import CanvasToMap from './CanvasToMap';
+import CanvasToMap from './MapToCanvas';
 import ExportTrackMap from './ExportTrackMap';
 import StatisticControl from './StatisticControl';
 import { useMap } from '@/gis/context/mapContext';
@@ -48,16 +47,15 @@ const ControlPanel = (props: TControlPanel) => {
 
   return (
     <div>
-      {/* <ExportTrack position={{ top: 10, right: 550 }} /> */}
       {/* <ExportTrackMap position={{ top: 10, right: 550 }} /> */}
       <CanvasToMap position={{ top: 10, right: 410 }} />
       <LayerList position={{ top: 10, left: 10 }} />
       <Legend position={{ bottom: 10, left: 10 }} />
       <Swipe position={{ top: 185, right: 10 }} />
       <Measure position={{ top: 225, right: 10 }} />
-      {trackContent && <Track position={{ top: 10, right: 170 }} content={trackContent} />}
+      {trackContent && <Track position={{ top: 10, right: 290 }} content={trackContent} />}
       {searchContent && <Search position={{ top: 10, right: 50 }} content={searchContent} />}
-      {statisticContent && <StatisticControl position={{ top: 10, right: 290 }} content={statisticContent} />}
+      {statisticContent && <StatisticControl position={{ top: 10, right: 170 }} content={statisticContent} />}
     </div>
   );
 };
