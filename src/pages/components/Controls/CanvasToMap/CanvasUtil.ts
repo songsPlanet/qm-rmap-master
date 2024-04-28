@@ -50,22 +50,6 @@ class CanvasUtil {
     that.ctx.drawImage(image, x, y, width, height);
   }
 
-  // drawImages(imgsData: any) {
-  //   const that = this;
-  //   // let promises: any = [];
-  //   console.log('imgsData', imgsData);
-  //   return new Promise((resolve) => {
-  //     const img = new Image();
-  //     img.setAttribute('crossOrigin', 'anonymouse');
-  //     img.src = imgsData[0].url;
-  //     // img.src = 'https://webst02.is.autonavi.com/appmaptile?style=6&x=26882&y=13182&z=15';
-  //     img.onload = () => {
-  //       that.ctx.drawImage(img, 0, 0, img.width, img.height);
-  //       resolve(img);
-  //     };
-  //   });
-  // }
-
   /**
    * 绘制多个图片
    * @param imgsDatas, [{url: '', x: '', y: ''}]
@@ -73,8 +57,6 @@ class CanvasUtil {
    */
   drawImages(imgsData: any) {
     let promises: any = [];
-    console.log('imgsData111', imgsData);
-
     imgsData.forEach((data: any) => {
       promises.push(
         new Promise((resolve) => {
@@ -92,8 +74,6 @@ class CanvasUtil {
     });
     return new Promise((resolve) => {
       Promise.all(promises).then((imgDatas: any) => {
-        console.log('promis', imgDatas);
-
         imgDatas.forEach((imgData: any) => {
           this.drawImage(imgData.img, imgData.x, imgData.y);
         });

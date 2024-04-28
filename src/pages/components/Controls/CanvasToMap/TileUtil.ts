@@ -5,14 +5,15 @@ class TileUtil {
   private tileUrl: string;
   constructor() {
     this.tileSize = 256;
-    this.origin = 20037508.34;
+    this.origin = 20037508.34278925;
     this.resolutions = [];
     let resolution = (this.origin * 2) / this.tileSize;
     for (let i = 0; i < 23; i++) {
       this.resolutions.push(resolution);
       resolution /= 2;
     }
-    this.tileUrl = 'https://webst0{domain}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}';
+    this.tileUrl =
+      'http://t2.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=7271c460eedd19a02b7b7bb1b19ba7ac';
   }
 
   /**
@@ -65,7 +66,7 @@ class TileUtil {
    * @return {string}
    */
   getTileUrl(x: any, y: any, z: any) {
-    let url = this.tileUrl.replace(/\{x\}/g, x + 1);
+    let url = this.tileUrl.replace(/\{x\}/g, x);
     url = url.replace(/\{y\}/g, y);
     url = url.replace(/\{z\}/g, z);
     return url.replace(/\{domain\}/g, this.randomNum() as any);
@@ -79,14 +80,42 @@ class TileUtil {
   getTilesInExtent(zoom: number, extent: any): number[] {
     extent = this.getExtent(extent);
     const [xmin, ymin, xmax, ymax] = extent;
+    // 判断zoom，进行四舍五入
     const res = this.resolutions[zoom] * 256;
     const xOrigin = -this.origin;
     const yOrigin = this.origin;
     const _xmin = Math.floor((xmin - xOrigin) / res);
-    const _xmax = Math.ceil((xmax - xOrigin) / res);
     const _ymin = Math.floor((yOrigin - ymax) / res);
+    const _xmax = Math.ceil((xmax - xOrigin) / res);
     const _ymax = Math.ceil((yOrigin - ymin) / res);
+    console.log('1', _xmin, _ymin, _xmax, _ymax);
     return [_xmin, _ymin, _xmax, _ymax];
+  }
+
+  /**
+   * 由地理坐标获取行列号范围
+   * @param zoom
+   * @param extent
+   * @return {number[]}
+   */
+  getTilesInExtentFromLonLat(zoom: number, extent: any): number[] {
+    const _xmin = this.getTileCol(extent[0], zoom);
+    const _ymin = this.getTileRow(extent[3], zoom);
+    const _xmax = this.getTileCol(extent[2], zoom);
+    const _ymax = this.getTileRow(extent[1], zoom);
+    return [_xmin, _ymin, _xmax, _ymax];
+  }
+
+  // 纬度转行号
+  getTileRow(lat: any, zoom: number) {
+    return Math.floor(
+      ((1 - Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) / 2) *
+        Math.pow(2, zoom),
+    );
+  }
+  // 经度转列号
+  getTileCol(lon: any, zoom: number) {
+    return Math.floor(((lon + 180) / 360) * Math.pow(2, zoom));
   }
 
   /**
@@ -98,6 +127,7 @@ class TileUtil {
    */
   project(extent: any, zoom: number, lonLat: any): any[] {
     const [xmin, ymin, xmax, ymax] = this.getTilesInExtent(zoom, extent);
+    // const res=scale*0.0254/dpi
     const res = this.resolutions[zoom];
     const resMap = this.tileSize * res;
     const topLeft = [resMap * xmin - this.origin, this.origin - resMap * ymin];
