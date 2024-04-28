@@ -22,7 +22,6 @@ const EditMap = (props: any) => {
 
   const updateArea = () => {
     const data = draw.current?.getAll();
-    console.log('draw', data);
   };
 
   const mapLoadHandle = (map: MapWrapper) => {

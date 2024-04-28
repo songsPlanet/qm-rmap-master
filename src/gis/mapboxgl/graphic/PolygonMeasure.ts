@@ -104,8 +104,6 @@ class PolygonMeasure {
     pts = pts.concat([this.points[0]]);
     let plg: any = polygon([pts]);
     let parea: any = area(plg);
-    console.log('parea', parea);
-
     if (parea < 1000) {
       parea = Math.round(parea) + 'm²';
     } else {

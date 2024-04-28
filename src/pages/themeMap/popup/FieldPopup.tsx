@@ -2,8 +2,6 @@ import { Descriptions } from 'antd';
 import { memo, useMemo } from 'react';
 
 const FieldPopup = (props: { data?: any }) => {
-  console.log('data', 1111);
-
   const { data } = props;
   const fieldMap = useMemo(() => {
     return [

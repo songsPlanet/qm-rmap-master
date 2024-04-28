@@ -29,8 +29,6 @@ export function filterMenuTree(permissions: Map<string, object>, routes = routes
     if (children?.length) item.children = filterMenuTree(permissions, children);
     menuItems.push(item);
   }
-  console.log('菜单', menuItems);
-
   return menuItems;
 }
 

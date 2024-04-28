@@ -126,14 +126,6 @@ const ExportTrack = (props: { position: TWidgetPosition }) => {
           }
           // ctx.closePath();                //闭合
           ctx.stroke();
-
-          // const img = new Image();
-          // img.setAttribute('crossOrigin', 'anonymouse');
-          // img.src="https://webst04.is.autonavi.com/appmaptile?style=6&x=26882&y=13182&z=15"
-          // img.onload = () => {
-          //   console.log('img', img, img.width, img.height);
-          //   ctx.drawImage(img, 0, 0, img.width, img.height);
-          // };
         }
       });
     }

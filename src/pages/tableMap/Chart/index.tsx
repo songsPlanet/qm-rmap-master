@@ -36,8 +36,6 @@ function Chart() {
 
   useEffect(() => {
     const recordChangedHandle = (record: any) => {
-      console.log('定位按钮');
-
       // const bm = record?.xzqhdm;
       // if (bm) {
       //   locationRegionFeature(bm);

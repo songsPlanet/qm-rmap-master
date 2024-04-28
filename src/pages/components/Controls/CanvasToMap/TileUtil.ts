@@ -1,8 +1,12 @@
 class TileUtil {
   private tileSize: number;
+
   private origin: number;
+
   private resolutions: any[];
+
   private tileUrl: string;
+
   constructor() {
     this.tileSize = 256;
     this.origin = 20037508.34278925;
@@ -13,13 +17,13 @@ class TileUtil {
       resolution /= 2;
     }
     this.tileUrl =
+      // 天地图卫星底图
       'http://t2.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=7271c460eedd19a02b7b7bb1b19ba7ac';
   }
 
   /**
    * 4326转3857
-   * @param lonlat
-   * @return {*}?
+   * @param lonlat [lon,lat]
    */
   fromLonLat(lonlat: any): any {
     // 注意先转为为弧度制，弧度=角度*Math.PI/180，弧长=弧度*半径
@@ -88,7 +92,6 @@ class TileUtil {
     const _ymin = Math.floor((yOrigin - ymax) / res);
     const _xmax = Math.ceil((xmax - xOrigin) / res);
     const _ymax = Math.ceil((yOrigin - ymin) / res);
-    console.log('1', _xmin, _ymin, _xmax, _ymax);
     return [_xmin, _ymin, _xmax, _ymax];
   }
 
@@ -125,7 +128,7 @@ class TileUtil {
    * @param lonLat
    * @return {*[]}
    */
-  project(extent: any, zoom: number, lonLat: any): any[] {
+  project(extent: number[], zoom: number, lonLat: number[]): any[] {
     const [xmin, ymin, xmax, ymax] = this.getTilesInExtent(zoom, extent);
     // const res=scale*0.0254/dpi
     const res = this.resolutions[zoom];
@@ -135,6 +138,18 @@ class TileUtil {
     const x = (coords[0] - topLeft[0]) / res;
     const y = (topLeft[1] - coords[1]) / res;
     return [x, y];
+  }
+
+  /**
+   * 判断是否在范围内
+   * @param extent
+   * @param lonLat
+   * @return {boolean}
+   */
+  isInExtent(extent: number[], lonLat: number[]) {
+    const [xmin, ymin, xmax, ymax] = extent;
+    const [lon, lat] = lonLat;
+    return lon >= xmin && lon <= xmax && lat >= ymin && lat <= ymax;
   }
 }
 
