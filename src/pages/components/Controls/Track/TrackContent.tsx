@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import classes from './index.module.less';
-import LineMap from '@/pages/components/LineMap';
+import LineMap from './LineMap';
+import { Spin } from 'antd';
+import axios from '@/utils/axios';
+import { getFeatureBoundingBox } from '@/gis/utils';
 
 let defaultXY = {
   x: 0,
@@ -11,10 +14,11 @@ let divOffset = {
   t: 0,
 };
 
-const TrackPopover = (props: { isPopOpenHandle?: any }) => {
+const TrackContent = (props: { isPopOpenHandle?: any }) => {
   const { isPopOpenHandle } = props;
   const [container, setContainer] = useState(undefined as any);
   const popoverRef = useRef<HTMLDivElement>(null);
+  const [LineFeatCol, setLineFeatCol] = useState<any>(null);
 
   const mousemove = (e: any) => {
     // 判断鼠标是否按住
@@ -51,6 +55,25 @@ const TrackPopover = (props: { isPopOpenHandle?: any }) => {
     setContainer(popoverRef.current);
   }, []);
 
+  const getGeoData = async () => {
+    const url = 'http://localhost:9999/src/pages/components/Controls/MapToCanvas/aseest/Line.geojson';
+    const rData = await axios.get(url).then((ctx: any) => {
+      return ctx;
+    });
+    if (rData) {
+      return rData;
+    }
+  };
+
+  useEffect(() => {
+    getGeoData().then((res: any) => {
+      console.log('res', res);
+      const bounds = getFeatureBoundingBox(res.features[0]);
+      const extent = bounds.toArray().flat();
+      setLineFeatCol(res);
+    });
+  }, []);
+
   return (
     <div ref={popoverRef} id="TrackPopover" className={classes.trackPopover}>
       <div className={classes.titlePop} onMouseDown={(e) => mousedown(e)} onMouseUp={(e) => mouseup()}>
@@ -65,9 +88,9 @@ const TrackPopover = (props: { isPopOpenHandle?: any }) => {
         </div>
       </div>
       <div className={classes.container}>
-        <LineMap detailSource={{}} />
+        <LineMap trackSource={LineFeatCol} />
       </div>
     </div>
   );
 };
-export default memo(TrackPopover);
+export default memo(TrackContent);

@@ -278,6 +278,25 @@ class MapWrapper extends Map {
       [xmin, ymin],
     ];
   };
+
+  /**
+   * 根据坐标点数据创建线矢量
+   * @returns {{}}
+   */
+  createLineFeatureCollection = (coordinates: any) => {
+    return {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: coordinates,
+          },
+        },
+      ],
+    };
+  };
 }
 
 export default MapWrapper;

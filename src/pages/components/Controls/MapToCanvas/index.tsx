@@ -8,7 +8,6 @@ import axios from '@/utils/axios';
 import { Button } from 'antd';
 
 const CanvasToMap = (props: { position: TWidgetPosition }) => {
-  const [show, setShow] = useState(false);
   const mapUtil = useRef<any>(null);
 
   const getGeoData = async () => {
@@ -35,15 +34,6 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
   }, []);
 
   return (
-    //   <BaseWidget name="图片导出" position={{ ...props.position }} icon={ControlICONS.Print} width={130} height={80}>
-    //   <div className="main">
-    //     <Space direction="vertical">
-    //       <Button onClick={btnClickHandle} >
-    //         导出轨迹
-    //       </Button>
-    //     </Space>
-    //   </div>
-    // </BaseWidget>
     <Button style={props.position} className={styles.btn} icon={<AimOutlined />} onClick={btnClickHandle}>
       导出轨迹
     </Button>

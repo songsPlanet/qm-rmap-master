@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { PlayCircleOutlined, PauseOutlined, RedoOutlined } from '@ant-design/icons';
 import { GeoJSONSource, LngLatBoundsLike } from 'mapbox-gl';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
@@ -6,7 +6,7 @@ import { getFeatureBoundingBox } from '@/gis/utils';
 import MapWidget from '@/gis/widget/MapWidget';
 import trackIcon from './assets/trackIcon.png';
 import classes from './index.module.less';
-import { Button, Space } from 'antd';
+import { Button, Space, Spin } from 'antd';
 import mapSetting from './mapSetting';
 
 interface PatrolLineProps {
@@ -31,8 +31,9 @@ let times: any = []; // 定时器标识集合
 let index = 0; // 当前geometry下标
 let map: MapWrapper;
 
-function MapContainer(props: { detailSource: any }) {
-  const { detailSource } = props;
+function MapContainer(props: { trackSource: any }) {
+  const { trackSource } = props;
+  const interval = useRef<number>();
 
   const geojson: any = {
     type: 'FeatureCollection',
@@ -52,29 +53,6 @@ function MapContainer(props: { detailSource: any }) {
     features: [],
   };
 
-  const addLine = () => {
-    const lineSource: any = {
-      type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: detailSource?.points?.features?.map((d: any) => [
-              d.properties.longitude,
-              d.properties.latitude,
-            ]),
-          },
-        },
-      ],
-    };
-    (map.getSource('line') as GeoJSONSource).setData(lineSource);
-    let bounds = getFeatureBoundingBox(lineSource.features[0]);
-    if (bounds) {
-      map.fitBounds(bounds, { maxZoom: 15 });
-    }
-  };
-
   const resetData = () => {
     index = 0;
     geojson.features[0].geometry.coordinates = [];
@@ -88,31 +66,33 @@ function MapContainer(props: { detailSource: any }) {
 
   const getIndex = () => {
     if (pointGeojson.features.length !== 0) {
-      index = detailSource.points.features.findIndex((value: any) => {
+      index = trackSource.features[0].geometry.coordinates.findIndex((value: any) => {
         return value.id === pointGeojson.features[0].id;
       });
     }
   };
 
   const animateLine = (index: number) => {
-    if (index === detailSource.points.features.length) {
+    const coords = trackSource.features[0].geometry.coordinates;
+
+    if (index === coords.length) {
       resetData();
     }
-    for (let i = index; i < detailSource.points.features.length; i++) {
+    for (let i = index; i < coords.length; i++) {
       let task: any = null;
       (function (t: number, data: PatrolLineProps) {
         task = setTimeout(() => {
-          geojson.features[0].geometry.coordinates.push(data.geometry.coordinates);
+          geojson.features[0].geometry.coordinates.push(data);
           pointGeojson = {
             type: 'FeatureCollection',
             features: [
               {
                 id: data.id,
                 type: 'Feature',
-                properties: data.properties,
+                // properties: data.properties,
                 geometry: {
                   type: 'Point',
-                  coordinates: data.geometry.coordinates,
+                  coordinates: data,
                 },
               },
             ],
@@ -122,7 +102,7 @@ function MapContainer(props: { detailSource: any }) {
             (map.getSource('point') as GeoJSONSource).setData(pointGeojson);
           }
         }, 100 * t);
-      })(i, detailSource.points.features[i]);
+      })(i, coords[i]);
 
       times.push(task);
     }
@@ -144,21 +124,12 @@ function MapContainer(props: { detailSource: any }) {
     animateLine(index);
   };
 
-  const onMapLoadedHandle = (mapWrapper: MapWrapper) => {
-    map = mapWrapper;
+  const addLine = () => {
+    // 静态线
     map.addSource('line', {
       type: 'geojson',
-      data: geojson,
+      data: trackSource,
     });
-    map.addSource('line-animate', {
-      type: 'geojson',
-      data: geojson,
-    });
-    map.addSource('point', {
-      type: 'geojson',
-      data: pointGeojson,
-    });
-
     map.addLayer({
       id: 'line',
       type: 'line',
@@ -172,6 +143,34 @@ function MapContainer(props: { detailSource: any }) {
         'line-width': 3,
         'line-opacity': 0.5,
       },
+    });
+    map.locationFeatureByBounds(trackSource);
+  };
+
+  const onMapLoadedHandle = (mapWrapper: MapWrapper) => {
+    map = mapWrapper;
+    // 动态点
+    map.addSource('point', {
+      type: 'geojson',
+      data: pointGeojson,
+    });
+    map.addLayer({
+      id: 'point-animation',
+      type: 'symbol',
+      source: 'point',
+      layout: {
+        'icon-image': 'trackIcon',
+        'icon-size': 1,
+        'icon-rotation-alignment': 'map',
+        'icon-allow-overlap': true,
+        'icon-offset': [0, -10],
+      },
+    });
+    // 动态线
+
+    map.addSource('line-animate', {
+      type: 'geojson',
+      data: geojson,
     });
 
     map.addLayer({
@@ -188,25 +187,15 @@ function MapContainer(props: { detailSource: any }) {
         'line-opacity': 1,
       },
     });
+
+    // 静态轨迹
+    addLine();
+
     map.loadImage(trackIcon, (error: any, image: any) => {
       if (!error) {
         if (!map.hasImage('trackIcon')) map.addImage('trackIcon', image);
       }
     });
-    map.addLayer({
-      id: 'point-animation',
-      type: 'symbol',
-      source: 'point',
-      layout: {
-        'icon-image': 'trackIcon',
-        'icon-size': 1,
-        'icon-rotation-alignment': 'map',
-        'icon-allow-overlap': true,
-        'icon-offset': [0, -10],
-      },
-    });
-    // 静态轨迹
-    addLine();
   };
 
   useEffect(() => {
@@ -216,24 +205,24 @@ function MapContainer(props: { detailSource: any }) {
       }
     };
   }, []);
-
   return (
     <div style={{ width: '100%', height: '100%' }} className={classes.trackContainer}>
       <div className={classes.buttonBar}>
         <Space.Compact block>
           <Button size="small" icon={<PlayCircleOutlined />} onClick={playClickHandle} />
-
           <Button size="small" icon={<PauseOutlined />} onClick={pauseClickHandle} />
-
           <Button size="small" icon={<RedoOutlined />} onClick={replayClickHandle} />
         </Space.Compact>
       </div>
-
-      <MapWidget
-        mapOptions={mapOptions}
-        mapLayerSettting={mapSetting}
-        onMapLoad={(map: MapWrapper) => onMapLoadedHandle(map)}
-      />
+      {trackSource ? (
+        <MapWidget
+          mapOptions={mapOptions}
+          mapLayerSettting={mapSetting}
+          onMapLoad={(map: MapWrapper) => onMapLoadedHandle(map)}
+        />
+      ) : (
+        <Spin />
+      )}
     </div>
   );
 }

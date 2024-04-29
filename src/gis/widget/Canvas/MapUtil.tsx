@@ -55,6 +55,24 @@ class MapUtil {
     this.baseLayerUrls = urls;
   }
 
+  // 添加点数据
+  addCapitals(featCol: any) {
+    let pointsData: any = [];
+    featCol.features.forEach((feature: any) => {
+      const coords = feature.geometry.coordinates;
+      if (!this.dataExtent || tileUtil.isInExtent(this.dataExtent, coords)) {
+        const [x, y] = tileUtil.project(this.dataExtent, zoom, coords);
+        const { name } = feature.properties;
+        if (name === '北京') {
+          pointsData.push({ type: 'marker', size: 0.35, x, y, icon: './icons/icon-star.png' });
+        } else {
+          pointsData.push({ type: 'rect', size: 4, x, y, color: '#ff0' });
+        }
+      }
+    });
+    return canvasUtil.drawPoints(pointsData);
+  }
+
   /**
    * 添加线矢量
    * @param featCol 线要素的geojson
@@ -87,6 +105,47 @@ class MapUtil {
     return canvasUtil.drawLines(linesData);
   }
 
+  // 添加面数据
+  addPolygons(featCol: any) {
+    let polygonsData: any = [];
+    featCol.features.forEach((feature: any) => {
+      const { name } = feature.properties;
+      const { type, coordinates } = feature.geometry;
+      if (type === 'Polygon') {
+        const coords = coordinates[0].map((coords: any) => {
+          return tileUtil.project(this.dataExtent, zoom, coords);
+        });
+        polygonsData.push({
+          isStroke: true,
+          isFill: true,
+          lineWidth: 1,
+          lineDash: [5, 5],
+          strokeStyle: 'rgb(240,240,240)',
+          fillColor: 'rgba(255, 0, 0,  0.1)',
+          coords,
+          name,
+        });
+      } else {
+        coordinates[0].forEach((_coordinates: any) => {
+          const coords = _coordinates.map((coords: any) => {
+            return tileUtil.project(this.dataExtent, zoom, coords);
+          });
+          polygonsData.push({
+            isStroke: true,
+            isFill: true,
+            lineWidth: 1,
+            lineDash: [5, 5],
+            strokeStyle: 'rgb(240,240,240)',
+            fillStyle: 'rgba(255, 0, 0,  0.1)',
+            coords,
+            name,
+          });
+        });
+      }
+    });
+    return canvasUtil.drawPolygons(polygonsData);
+  }
+
   /**
    * canvas地图绘制:底图→矢量
    * @param
@@ -97,6 +156,16 @@ class MapUtil {
         canvasUtil.printCanvas();
       });
     });
+    // canvasUtil.drawImages(this.baseLayerUrls).then(() => {
+    //   this.addPolygons(this.data).then(() => {
+    //     this.addCapitals(this.data).then(() => {
+    //       this.addLines(this.data).then(() => {
+    //         canvasUtil.addTitle('中国省级区划图');
+    //         canvasUtil.printCanvas();
+    //       });
+    //     });
+    //   });
+    // });
   }
 }
 
