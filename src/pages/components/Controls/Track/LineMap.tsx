@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { PlayCircleOutlined, PauseOutlined, RedoOutlined } from '@ant-design/icons';
 import { GeoJSONSource, LngLatBoundsLike } from 'mapbox-gl';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
@@ -18,12 +18,13 @@ const mapOptions = {
   ] as LngLatBoundsLike,
 };
 
-let times: any = []; // 定时器标识集合
 let pauseIndex = 0; // 当前geometry下标
 let map: MapWrapper;
 
 function MapContainer(props: { trackSource: any }) {
   const { trackSource } = props;
+  const pauseStatus = useRef(false);
+  const interval = useRef<number>();
 
   const geojson: any = {
     type: 'FeatureCollection',
@@ -49,8 +50,8 @@ function MapContainer(props: { trackSource: any }) {
   };
 
   const resetTime = () => {
-    for (let i = 0; i < times.length; i++) {
-      clearTimeout(times[i]);
+    if (interval.current) {
+      cancelAnimationFrame(interval.current);
     }
   };
 
@@ -62,43 +63,42 @@ function MapContainer(props: { trackSource: any }) {
     }
   };
 
-  const animateLine = (index: number) => {
+  const animateLine = () => {
+    let idx = 0;
     const coords = trackSource.features[0].geometry.coordinates;
-    if (index === coords.length) {
-      resetData();
+    loop();
+    function loop() {
+      let newIndex = pauseStatus.current === false ? idx : pauseIndex;
+      task(newIndex);
+      idx++;
+      pauseIndex++;
+      interval.current = requestAnimationFrame(loop);
     }
 
-    for (let i = index; i < coords.length; i++) {
-      let task: any = null;
-      (function (t: number, data: any) {
-        task = setTimeout(() => {
-          geojson.features[0].geometry.coordinates.push(data);
-          pointGeojson = {
-            type: 'FeatureCollection',
-            features: [
-              {
-                id: data[0],
-                type: 'Feature',
-                // properties: data.properties,
-                geometry: {
-                  type: 'Point',
-                  coordinates: data,
-                },
-              },
-            ],
-          };
-          if (map) {
-            (map.getSource('line-animate') as GeoJSONSource).setData(geojson);
-            (map.getSource('point') as GeoJSONSource).setData(pointGeojson);
-          }
-        }, 100 * t);
-      })(i, coords[i]);
-
-      times.push(task);
+    function task(index: any) {
+      geojson.features[0].geometry.coordinates.push(coords[index]);
+      pointGeojson = {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            id: coords[index][0],
+            geometry: {
+              type: 'Point',
+              coordinates: coords[index],
+            },
+          },
+        ],
+      };
+      if (map) {
+        (map.getSource('line-animate') as GeoJSONSource).setData(geojson);
+        (map.getSource('point') as GeoJSONSource).setData(pointGeojson);
+      }
     }
   };
 
   const pauseClickHandle = () => {
+    pauseStatus.current = true;
     getIndex();
     resetTime();
   };
@@ -106,12 +106,12 @@ function MapContainer(props: { trackSource: any }) {
   const replayClickHandle = () => {
     resetData();
     resetTime();
-    animateLine(pauseIndex);
+    animateLine();
   };
 
   const playClickHandle = () => {
     getIndex();
-    animateLine(pauseIndex);
+    animateLine();
   };
 
   const addLine = () => {
