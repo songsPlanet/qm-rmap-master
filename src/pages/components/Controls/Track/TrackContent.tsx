@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, memo } from 'react';
 import classes from './index.module.less';
 import LineMap from './LineMap';
-import { Spin } from 'antd';
 import axios from '@/utils/axios';
 import { getFeatureBoundingBox } from '@/gis/utils';
 
@@ -75,7 +74,7 @@ const TrackContent = (props: { isPopOpenHandle?: any }) => {
   }, []);
 
   return (
-    <div ref={popoverRef} id="TrackPopover" className={classes.trackPopover}>
+    <div ref={popoverRef} id="trackContent" className={classes.trackContent}>
       <div className={classes.titlePop} onMouseDown={(e) => mousedown(e)} onMouseUp={(e) => mouseup()}>
         <div className={classes.text}>轨迹回放</div>
         <div

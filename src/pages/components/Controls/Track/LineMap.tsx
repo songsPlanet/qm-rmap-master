@@ -9,7 +9,7 @@ import { Button, Space, Spin } from 'antd';
 import { basemap } from '@/pages/mapSetting/basemap';
 
 const mapOptions = {
-  id: 'lineMap',
+  id: 'trackMap',
   container: '',
   minZoom: 0,
   bounds: [
