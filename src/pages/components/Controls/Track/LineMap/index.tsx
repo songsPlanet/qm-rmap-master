@@ -2,20 +2,11 @@ import React, { memo, useEffect, useRef } from 'react';
 import { PlayCircleOutlined, PauseOutlined, RedoOutlined } from '@ant-design/icons';
 import { GeoJSONSource, LngLatBoundsLike } from 'mapbox-gl';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
-import { getFeatureBoundingBox } from '@/gis/utils';
 import MapWidget from '@/gis/widget/MapWidget';
 import trackIcon from './assets/trackIcon.png';
 import classes from './index.module.less';
 import { Button, Space, Spin } from 'antd';
-import mapSetting from './mapSetting';
-
-interface PatrolLineProps {
-  id: string;
-  geometry: {
-    coordinates: [longitude: number, latitude: number];
-  };
-  properties: {};
-}
+import { basemap } from '@/pages/mapSetting/basemap';
 
 const mapOptions = {
   id: 'lineMap',
@@ -28,12 +19,11 @@ const mapOptions = {
 };
 
 let times: any = []; // 定时器标识集合
-let index = 0; // 当前geometry下标
+let pauseIndex = 0; // 当前geometry下标
 let map: MapWrapper;
 
 function MapContainer(props: { trackSource: any }) {
   const { trackSource } = props;
-  const interval = useRef<number>();
 
   const geojson: any = {
     type: 'FeatureCollection',
@@ -54,7 +44,7 @@ function MapContainer(props: { trackSource: any }) {
   };
 
   const resetData = () => {
-    index = 0;
+    pauseIndex = 0;
     geojson.features[0].geometry.coordinates = [];
   };
 
@@ -66,28 +56,28 @@ function MapContainer(props: { trackSource: any }) {
 
   const getIndex = () => {
     if (pointGeojson.features.length !== 0) {
-      index = trackSource.features[0].geometry.coordinates.findIndex((value: any) => {
-        return value.id === pointGeojson.features[0].id;
+      pauseIndex = trackSource.features[0].geometry.coordinates.findIndex((value: any) => {
+        return value[0] === pointGeojson.features[0].id;
       });
     }
   };
 
   const animateLine = (index: number) => {
     const coords = trackSource.features[0].geometry.coordinates;
-
     if (index === coords.length) {
       resetData();
     }
+
     for (let i = index; i < coords.length; i++) {
       let task: any = null;
-      (function (t: number, data: PatrolLineProps) {
+      (function (t: number, data: any) {
         task = setTimeout(() => {
           geojson.features[0].geometry.coordinates.push(data);
           pointGeojson = {
             type: 'FeatureCollection',
             features: [
               {
-                id: data.id,
+                id: data[0],
                 type: 'Feature',
                 // properties: data.properties,
                 geometry: {
@@ -116,12 +106,12 @@ function MapContainer(props: { trackSource: any }) {
   const replayClickHandle = () => {
     resetData();
     resetTime();
-    animateLine(index);
+    animateLine(pauseIndex);
   };
 
   const playClickHandle = () => {
     getIndex();
-    animateLine(index);
+    animateLine(pauseIndex);
   };
 
   const addLine = () => {
@@ -149,6 +139,9 @@ function MapContainer(props: { trackSource: any }) {
 
   const onMapLoadedHandle = (mapWrapper: MapWrapper) => {
     map = mapWrapper;
+    // 静态轨迹
+    addLine();
+
     // 动态点
     map.addSource('point', {
       type: 'geojson',
@@ -188,9 +181,6 @@ function MapContainer(props: { trackSource: any }) {
       },
     });
 
-    // 静态轨迹
-    addLine();
-
     map.loadImage(trackIcon, (error: any, image: any) => {
       if (!error) {
         if (!map.hasImage('trackIcon')) map.addImage('trackIcon', image);
@@ -200,11 +190,10 @@ function MapContainer(props: { trackSource: any }) {
 
   useEffect(() => {
     return () => {
-      for (let i = 0; i < times.length; i++) {
-        clearTimeout(times[i]);
-      }
+      resetTime();
     };
   }, []);
+
   return (
     <div style={{ width: '100%', height: '100%' }} className={classes.trackContainer}>
       <div className={classes.buttonBar}>
@@ -217,7 +206,7 @@ function MapContainer(props: { trackSource: any }) {
       {trackSource ? (
         <MapWidget
           mapOptions={mapOptions}
-          mapLayerSettting={mapSetting}
+          mapLayerSettting={[basemap]}
           onMapLoad={(map: MapWrapper) => onMapLoadedHandle(map)}
         />
       ) : (
