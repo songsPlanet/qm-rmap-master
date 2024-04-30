@@ -67,34 +67,30 @@ const TrackContent = (props: { isPopOpenHandle?: any }) => {
 
   useEffect(() => {
     getGeoData().then((res: any) => {
-      const bounds = getFeatureBoundingBox(res.features[0]);
-      const extent = bounds.toArray().flat();
       setLineFeatCol(res);
     });
   }, []);
 
-  if (!LineFeatCol) {
-    return <Spin />;
-  } else {
-    return (
-      <div ref={popoverRef} id="trackContent" className={classes.trackContent}>
-        <div className={classes.titlePop} onMouseDown={(e) => mousedown(e)} onMouseUp={(e) => mouseup()}>
-          <div className={classes.text}>轨迹回放</div>
-          <div
-            className={classes.close}
-            onClick={() => {
-              isPopOpenHandle();
-            }}
-          >
-            x
-          </div>
-        </div>
-
-        <div className={classes.container}>
-          <LineMap trackSource={LineFeatCol} />
+  return LineFeatCol ? (
+    <div ref={popoverRef} id="trackContent" className={classes.trackContent}>
+      <div className={classes.titlePop} onMouseDown={(e) => mousedown(e)} onMouseUp={(e) => mouseup()}>
+        <div className={classes.text}>轨迹回放</div>
+        <div
+          className={classes.close}
+          onClick={() => {
+            isPopOpenHandle();
+          }}
+        >
+          x
         </div>
       </div>
-    );
-  }
+
+      <div className={classes.container}>
+        <LineMap trackSource={LineFeatCol} />
+      </div>
+    </div>
+  ) : (
+    <Spin />
+  );
 };
 export default memo(TrackContent);

@@ -11,6 +11,7 @@ import mapSetting from './mapSetting';
 import { memo, useMemo, useEffect, useState } from 'react';
 import FieldPopup from './popup/FieldPopup';
 import PopupPanel from '@/gis/widget/PopupPanel';
+import OffsetContent from '../components/Controls/OffSetControl/OffsetContent';
 
 const mapOptions = {
   id: 'themeMap',
@@ -31,6 +32,7 @@ const ThemeMap = (props: any) => {
         <RegionProvider>
           <PopupPanel vector={vector} />
           <ControlPanel
+            offsetContent={<OffsetContent />}
             trackContent={<TrackContent />}
             searchContent={props?.location?.pathname === '/theme-map' ? <SearchContent /> : undefined}
             statisticContent={props?.location?.pathname === '/theme-map' ? <StatisticContent /> : undefined}

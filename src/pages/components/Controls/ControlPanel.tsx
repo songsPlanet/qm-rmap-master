@@ -13,16 +13,20 @@ import Legend from '@/gis/widget/Legend';
 import Swipe from '@/gis/widget/Swipe';
 import Search from './Search';
 import Track from './Track';
-
+import { useLocation } from 'react-router-dom';
+import OffsetPanel from '@/gis/widget/OffsetPanel';
 interface TControlPanel {
   searchContent?: ReactElement;
   statisticContent?: ReactElement;
   trackContent?: ReactElement;
+  offsetContent?: ReactElement;
 }
 
 const ControlPanel = (props: TControlPanel) => {
-  const { searchContent, statisticContent, trackContent } = props;
+  const { searchContent, statisticContent, trackContent, offsetContent } = props;
   const { map } = useMap();
+  const location = useLocation();
+
   const navCtrl = useMemo(() => {
     return new NavigationControl();
   }, []);
@@ -48,11 +52,12 @@ const ControlPanel = (props: TControlPanel) => {
   return (
     <div>
       {/* <ExportTrackMap position={{ top: 10, right: 550 }} /> */}
-      <CanvasToMap position={{ top: 10, right: 410 }} />
+      {offsetContent && <OffsetPanel content={offsetContent} />}
       <LayerList position={{ top: 10, left: 10 }} />
       <Legend position={{ bottom: 10, left: 10 }} />
       <Swipe position={{ top: 185, right: 10 }} />
       <Measure position={{ top: 225, right: 10 }} />
+      {location.pathname === '/theme-map' ? <CanvasToMap position={{ top: 10, right: 410 }} /> : undefined}
       {trackContent && <Track position={{ top: 10, right: 290 }} content={trackContent} />}
       {searchContent && <Search position={{ top: 10, right: 50 }} content={searchContent} />}
       {statisticContent && <StatisticControl position={{ top: 10, right: 170 }} content={statisticContent} />}
