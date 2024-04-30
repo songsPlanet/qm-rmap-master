@@ -82,6 +82,7 @@ class MapWrapper extends Map {
 
   addLayerWrapper(layer: LayerWrapper | LayerGroupWrapper, beforeId?: string) {
     layer.onAdd(this, beforeId);
+
     // 图层变化事件
     this.fire(MapEvent.MAPLAYERCHANGED, { map: this, layer: layer });
   }
@@ -280,7 +281,55 @@ class MapWrapper extends Map {
   };
 
   /**
-   * 根据坐标点数据创建线矢量
+   * 给线矢量添加动态效果
+   * @param sourceid 线矢量sourceid
+   */
+
+  addDashLayer(sourceid: string) {
+    const that = this;
+    this.addLayer({
+      id: 'line-dashed',
+      type: 'line',
+      source: sourceid,
+      paint: {
+        'line-color': '#3FB2BF',
+        'line-width': 3,
+        'line-dasharray': [0, 4, 3],
+      },
+    });
+    const dashArraySequence = [
+      [0, 4, 3],
+      [0.5, 4, 2.5],
+      [1, 4, 2],
+      [1.5, 4, 1.5],
+      [2, 4, 1],
+      [2.5, 4, 0.5],
+      [3, 4, 0],
+      [0, 0.5, 3, 3.5],
+      [0, 1, 3, 3],
+      [0, 1.5, 3, 2.5],
+      [0, 2, 3, 2],
+      [0, 2.5, 3, 1.5],
+      [0, 3, 3, 1],
+      [0, 3.5, 3, 0.5],
+    ];
+    let step = 0;
+    const animateDashArray = (timestamp: any) => {
+      const newStep = parseInt(((timestamp / 80) % dashArraySequence.length) as any);
+
+      if (newStep !== step) {
+        that.setPaintProperty('line-dashed', 'line-dasharray', dashArraySequence[step]);
+        step = newStep;
+      }
+
+      // Request the next frame of the animation.
+      requestAnimationFrame(animateDashArray);
+    };
+    animateDashArray(0);
+  }
+
+  /**
+   *创建lineString的geojson 数据
    * @returns {{}}
    */
   createLineFeatureCollection = (coordinates: any) => {

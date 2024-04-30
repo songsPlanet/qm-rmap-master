@@ -14,6 +14,7 @@ export const wh_sy_geo: TLayerOptions = {
     'fill-color': '#0000ff',
     'fill-opacity': 0.6,
     'fill-outline-color': '#0000ff',
+    'fill-opacity-transition': { duration: 1000 }, // 500 milliseconds = 1/2 seconds
   },
   source: {
     type: 'geojson',

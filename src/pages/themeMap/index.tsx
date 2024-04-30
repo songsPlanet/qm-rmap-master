@@ -1,4 +1,5 @@
 import StatisticContent from '../components/Controls/StatisticControl/StatisticContent';
+import OffsetContent from '../components/Controls/OffSetControl/OffsetContent';
 import SearchContent from '../components/Controls/Search/SearchContent';
 import ControlPanel from '../components/Controls/ControlPanel';
 import { RegionProvider } from '@/gis/context/RegionContext';
@@ -11,7 +12,6 @@ import mapSetting from './mapSetting';
 import { memo, useMemo, useEffect, useState } from 'react';
 import FieldPopup from './popup/FieldPopup';
 import PopupPanel from '@/gis/widget/PopupPanel';
-import OffsetContent from '../components/Controls/OffSetControl/OffsetContent';
 
 const mapOptions = {
   id: 'themeMap',

@@ -16,8 +16,8 @@ let divOffset = {
 
 const TrackContent = (props: { isPopOpenHandle?: any }) => {
   const { isPopOpenHandle } = props;
-  const [container, setContainer] = useState(undefined as any);
   const popoverRef = useRef<HTMLDivElement>(null);
+  const [container, setContainer] = useState(undefined as any);
   const [LineFeatCol, setLineFeatCol] = useState<any>(null);
 
   const mousemove = (e: any) => {
@@ -41,8 +41,8 @@ const TrackContent = (props: { isPopOpenHandle?: any }) => {
       y: e.clientY,
     };
     divOffset = {
-      l: container.offsetLeft,
-      t: container.offsetTop,
+      l: container?.offsetLeft,
+      t: container?.offsetTop,
     };
     window.addEventListener('mousemove', mousemove);
   };
@@ -53,7 +53,7 @@ const TrackContent = (props: { isPopOpenHandle?: any }) => {
 
   useEffect(() => {
     setContainer(popoverRef.current);
-  }, []);
+  }, [LineFeatCol]);
 
   const getGeoData = async () => {
     const url = 'http://localhost:9999/src/pages/components/Controls/MapToCanvas/aseest/Line.geojson';
@@ -69,6 +69,9 @@ const TrackContent = (props: { isPopOpenHandle?: any }) => {
     getGeoData().then((res: any) => {
       setLineFeatCol(res);
     });
+    return () => {
+      window.removeEventListener('mousemove', mousemove);
+    };
   }, []);
 
   return LineFeatCol ? (

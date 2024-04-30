@@ -60,6 +60,8 @@ const LayerList = (props: { position: TWidgetPosition }) => {
       } else if (lyr) {
         lyr.options.isAdd = true;
         map?.addLayerWrapper(lyr);
+        // 淡入淡出效果，同时图层需要配置对应属性
+        // map?.setPaintProperty(lyr.options.id, 'fill-opacity', 0.6);
       }
     });
 
@@ -73,6 +75,7 @@ const LayerList = (props: { position: TWidgetPosition }) => {
       } else if (lyr) {
         lyr.options.isAdd = false;
         map?.removeLayerWrapper(lyr);
+        // map?.setPaintProperty(lyr.options.id, 'fill-opacity', 0);
       }
     });
 

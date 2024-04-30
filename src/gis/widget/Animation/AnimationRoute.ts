@@ -25,7 +25,7 @@ let pointGeojson: any = {
 };
 
 class AnimationRoute {
-  private map: MapWrapper | Map;
+  private map: MapWrapper;
   private route: any; // 目标路径geojson
   private pauseIndex: number; // 暂停geometry下标
   private pauseStatus: boolean; // 暂停状
@@ -86,6 +86,11 @@ class AnimationRoute {
       },
     });
     this.addImageLayer();
+    // if (this.isStyle) this.addDashLayer();
+  }
+
+  addDashLayer() {
+    this.map.addDashLayer('line-ds');
   }
 
   addImageLayer() {
