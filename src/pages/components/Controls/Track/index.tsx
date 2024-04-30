@@ -3,8 +3,8 @@ import { PlayCircleOutlined } from '@ant-design/icons';
 import { memo, useState } from 'react';
 import styles from './index.module.less';
 import TrackContent from './TrackContent';
-import { Button } from 'antd';
 import { ReactElement } from 'react';
+import { Button } from 'antd';
 
 const TrackControl = (props: { position: TWidgetPosition; content: ReactElement }) => {
   const { position, content } = props;

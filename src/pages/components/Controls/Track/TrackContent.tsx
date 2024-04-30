@@ -3,6 +3,7 @@ import classes from './index.module.less';
 import LineMap from './LineMap';
 import axios from '@/utils/axios';
 import { getFeatureBoundingBox } from '@/gis/utils';
+import { Spin } from 'antd';
 
 let defaultXY = {
   x: 0,
@@ -66,30 +67,34 @@ const TrackContent = (props: { isPopOpenHandle?: any }) => {
 
   useEffect(() => {
     getGeoData().then((res: any) => {
-      console.log('res', res);
       const bounds = getFeatureBoundingBox(res.features[0]);
       const extent = bounds.toArray().flat();
       setLineFeatCol(res);
     });
   }, []);
 
-  return (
-    <div ref={popoverRef} id="trackContent" className={classes.trackContent}>
-      <div className={classes.titlePop} onMouseDown={(e) => mousedown(e)} onMouseUp={(e) => mouseup()}>
-        <div className={classes.text}>轨迹回放</div>
-        <div
-          className={classes.close}
-          onClick={() => {
-            isPopOpenHandle();
-          }}
-        >
-          x
+  if (!LineFeatCol) {
+    return <Spin />;
+  } else {
+    return (
+      <div ref={popoverRef} id="trackContent" className={classes.trackContent}>
+        <div className={classes.titlePop} onMouseDown={(e) => mousedown(e)} onMouseUp={(e) => mouseup()}>
+          <div className={classes.text}>轨迹回放</div>
+          <div
+            className={classes.close}
+            onClick={() => {
+              isPopOpenHandle();
+            }}
+          >
+            x
+          </div>
+        </div>
+
+        <div className={classes.container}>
+          <LineMap trackSource={LineFeatCol} />
         </div>
       </div>
-      <div className={classes.container}>
-        <LineMap trackSource={LineFeatCol} />
-      </div>
-    </div>
-  );
+    );
+  }
 };
 export default memo(TrackContent);
