@@ -1,7 +1,7 @@
 // https://docs.mapbox.com/mapbox-gl-js/example/offset-vanishing-point-with-padding/
 
-import { useMap } from '@/gis/context/mapContext';
 import { cloneElement, memo, useState } from 'react';
+import { useMap } from '@/gis/context/mapContext';
 import type { ReactElement } from 'react';
 import './index.less';
 
@@ -11,7 +11,6 @@ interface TPanelOptions {
 
 const OffsetPanel = (props: TPanelOptions) => {
   const { content } = props;
-
   const { map } = useMap();
   const [open, setOpen] = useState(false);
 

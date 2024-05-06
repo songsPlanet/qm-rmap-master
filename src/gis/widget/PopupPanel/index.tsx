@@ -1,8 +1,8 @@
+import { cloneElement, memo, ReactElement, useEffect, useState } from 'react';
 import { useMap } from '@/gis/context/mapContext';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import PopupWrapper from '@/gis/widget/PopupWrapper';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
-import { cloneElement, memo, ReactElement, useEffect, useState } from 'react';
 
 interface TPouperData {
   properties: any;

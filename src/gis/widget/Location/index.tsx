@@ -225,7 +225,7 @@ const Location = (props: { position: TWidgetPosition }) => {
             </div>
           )}
 
-          <Form.Item wrapperCol={{ offset: 8 }}>
+          <Form.Item wrapperCol={{ offset: 6 }}>
             <Space>
               <Button type="primary" size="small" onClick={initialLocation}>
                 初始位置

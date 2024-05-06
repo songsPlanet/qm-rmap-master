@@ -1,21 +1,22 @@
 import { NavigationControl, FullscreenControl } from 'mapbox-gl';
 import { memo, useMemo, useEffect, ReactElement } from 'react';
 import { MapboxExportControl } from '../../../gis/widget/Print';
+import InitialLocation from '@/gis/widget/InitialLocation';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import CanvasToMap from './MapToCanvas';
-import ExportTrackMap from './ExportTrackMap';
+import OffsetPanel from '@/gis/widget/OffsetPanel';
 import StatisticControl from './StatisticControl';
 import { useMap } from '@/gis/context/mapContext';
 import LayerList from '@/gis/widget/LayerList';
+import { useLocation } from 'react-router-dom';
+import Location from '@/gis/widget/Location';
 import Measure from '@/gis/widget/Measure';
 import Legend from '@/gis/widget/Legend';
+import CanvasToMap from './MapToCanvas';
 import Swipe from '@/gis/widget/Swipe';
 import Search from './Search';
 import Track from './Track';
-import { useLocation } from 'react-router-dom';
-import OffsetPanel from '@/gis/widget/OffsetPanel';
-import Location from '@/gis/widget/Location';
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
+import ExportTrackMap from './ExportTrackMap';
 interface TControlPanel {
   searchContent?: ReactElement;
   statisticContent?: ReactElement;
@@ -56,9 +57,10 @@ const ControlPanel = (props: TControlPanel) => {
       {offsetContent && <OffsetPanel content={offsetContent} />}
       <LayerList position={{ top: 10, left: 10 }} />
       <Legend position={{ bottom: 10, left: 10 }} />
-      <Swipe position={{ top: 185, right: 10 }} />
-      <Measure position={{ top: 225, right: 10 }} />
+      <InitialLocation position={{ top: 185, right: 10 }} />
+      <Swipe position={{ top: 225, right: 10 }} />
       <Location position={{ top: 265, right: 10 }} />
+      <Measure position={{ top: 305, right: 10 }} />
       {location.pathname === '/theme-map' ? <CanvasToMap position={{ top: 10, right: 410 }} /> : undefined}
       {trackContent && <Track position={{ top: 10, right: 290 }} content={trackContent} />}
       {searchContent && <Search position={{ top: 10, right: 50 }} content={searchContent} />}
