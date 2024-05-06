@@ -369,7 +369,7 @@ class MapWrapper extends Map {
    *十进制转度分秒
    * @returns {{}}
    */
-  decimalToDMS = (decimal: any) => {
+  decimalToDms = (decimal: any) => {
     // 提取整数部分
     const degrees = Math.floor(decimal);
     // 计算小数部分并转换为百分比
@@ -380,6 +380,15 @@ class MapWrapper extends Map {
     const seconds = Math.round((minutesAndSeconds - minutes) * 60);
 
     return { degrees, minutes, seconds };
+  };
+
+  /**
+   *度分秒转十进制
+   *
+   */
+  dmsToDecimal = (degrees: string, minutes: string, seconds: string) => {
+    const decimal = parseFloat(degrees) + parseFloat(minutes) / 60 + parseFloat(seconds) / 3600;
+    return decimal.toFixed(6);
   };
 }
 

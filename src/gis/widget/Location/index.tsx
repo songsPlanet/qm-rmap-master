@@ -1,7 +1,7 @@
 import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
 import { Button, Radio, Form, Input, Space } from 'antd';
 import { useMap } from '@/gis/context/mapContext';
-import { memo, useCallback, useRef } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { LngLatLike } from 'mapbox-gl';
 import './index.less';
 
@@ -12,36 +12,75 @@ const initialPosition = {
   zoom: 8.7,
 };
 
-interface TDecimalPosition {
-  lon: any;
-  lat: any;
-}
-
-interface TDMSPosition {
-  degrees: any;
-  minutes: any;
-  seconds: any;
+interface TPosition {
+  longitude: number;
+  latitude: number;
+  dmsLonDegrees: number;
+  dmsLonMinutes: number;
+  dmsLonSeconds: number;
+  dmsLatDegrees: number;
+  dmsLatMinutes: number;
+  dmsLatSeconds: number;
 }
 
 const Location = (props: { position: TWidgetPosition }) => {
   const { map } = useMap();
   const [form] = Form.useForm();
-  const decimal = useRef<TDecimalPosition>({ lon: null, lat: null });
-  const lonDMS = useRef<TDMSPosition>({ degrees: null, minutes: null, seconds: null });
-  const latDMS = useRef<TDMSPosition>({ degrees: null, minutes: null, seconds: null });
+  const [ifDecimal, setIfDecimal] = useState(true);
+  const [positionList, setPositionList] = useState<TPosition>();
+
+  const conversionDecimalDms = (values: any) => {
+    const {
+      longitude,
+      latitude,
+      dmsLonDegrees,
+      dmsLonMinutes,
+      dmsLonSeconds,
+      dmsLatDegrees,
+      dmsLatMinutes,
+      dmsLatSeconds,
+    } = values;
+    if (dmsLonDegrees && dmsLonMinutes && dmsLonSeconds && dmsLatDegrees && dmsLatMinutes && dmsLatSeconds) {
+      const lon = map?.dmsToDecimal(dmsLonDegrees, dmsLonMinutes, dmsLonSeconds);
+      const lat = map?.dmsToDecimal(dmsLatDegrees, dmsLatMinutes, dmsLatSeconds);
+      form.setFieldsValue({
+        longitude: lon,
+        latitude: lat,
+      });
+      return [lon, lat];
+    }
+    if (longitude && latitude) {
+      const lon = map?.decimalToDms(longitude);
+      const lat = map?.decimalToDms(latitude);
+      form.setFieldsValue({
+        dmsLonDegrees: lon?.degrees,
+        dmsLonMinutes: lon?.minutes,
+        dmsLonSeconds: lon?.seconds,
+        dmsLatDegrees: lat?.degrees,
+        dmsLatMinutes: lat?.minutes,
+        dmsLatSeconds: lat?.seconds,
+      });
+      return [longitude, latitude];
+    }
+    return [longitude, latitude];
+  };
 
   const onFinish = (values: any) => {
-    const { longitude, latitude } = values;
-    if (longitude && latitude) {
-      map?.flyTo({
-        duration: 5000,
-        bearing: 0,
-        center: [longitude, latitude],
-        zoom: 15.5,
-        pitch: 20,
-      });
-      addLocationIcon([longitude, latitude]);
-    }
+    setPositionList(values);
+    const location: any = conversionDecimalDms(values);
+
+    locationHandle(location);
+  };
+
+  const locationHandle = (lonlat: LngLatLike) => {
+    map?.flyTo({
+      duration: 5000,
+      bearing: 0,
+      center: lonlat,
+      zoom: 15.5,
+      pitch: 20,
+    });
+    addLocationIcon(lonlat as number[]);
   };
 
   const clearIcon = () => {
@@ -88,26 +127,24 @@ const Location = (props: { position: TWidgetPosition }) => {
     }
   };
 
-  const initialLocation = () => {
+  const resetForm = () => {
     clearIcon();
+    form.resetFields();
+  };
+
+  const initialLocation = () => {
+    resetForm();
     map?.flyTo(initialPosition);
   };
 
   const onOpenHandle = useCallback((value: boolean) => {
-    clearIcon();
-    form.resetFields();
+    resetForm();
+    setIfDecimal(true);
   }, []);
 
   const onRadioChange = (e: any) => {
-    lonDMS.current = map?.decimalToDMS(decimal.current.lon) as any;
-    latDMS.current = map?.decimalToDMS(decimal.current.lon) as any;
-  };
-
-  const onLonChange = (e: any) => {
-    decimal.current.lon = e.target.value;
-  };
-  const onLatChange = (e: any) => {
-    decimal.current.lat = e.target.value;
+    setIfDecimal(e.target.value === '1' ? true : false);
+    conversionDecimalDms(form.getFieldsValue());
   };
 
   return (
@@ -115,14 +152,14 @@ const Location = (props: { position: TWidgetPosition }) => {
       name="坐标定位"
       position={{ ...props.position }}
       icon={ControlICONS.Location}
-      width={350}
+      width={300}
       height={180}
       openHandle={onOpenHandle}
     >
       <div className="location-main">
         <Form
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 16 }}
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 18 }}
           layout="horizontal"
           style={{ maxWidth: 600 }}
           form={form}
@@ -134,26 +171,59 @@ const Location = (props: { position: TWidgetPosition }) => {
               <Radio value="2"> 度分秒 </Radio>
             </Radio.Group>
           </Form.Item>
-
-          <Form.Item label="经度" name="longitude">
-            <Input placeholder="请输入经度" onChange={onLonChange} />
-          </Form.Item>
-          <Form.Item label="纬度" name="latitude">
-            <Input placeholder="请输入纬度" onChange={onLatChange} />
-          </Form.Item>
-
-          {/* <Form.Item label="经度" name="lonDms" > 
-          <Space>
-            <Input placeholder="度" onChange={onLonChange} addonAfter="°"/>
-            <Input placeholder="分" onChange={onLonChange} addonAfter="′"/>
-            <Input placeholder="秒" onChange={onLonChange} addonAfter="″"/>
-            </Space>
-          </Form.Item> */}
-          {/* <Form.Item label="纬度" name="latDms">
-            <Input placeholder="度" onChange={onLonChange} />
-            <Input placeholder="分" onChange={onLonChange} />
-            <Input placeholder="秒" onChange={onLonChange} />
-          </Form.Item> */}
+          {ifDecimal ? (
+            <div>
+              <Form.Item label="经度" name="longitude">
+                <Input placeholder="请输入经度" value={positionList?.longitude} />
+              </Form.Item>
+              <Form.Item label="纬度" name="latitude">
+                <Input placeholder="请输入纬度" value={positionList?.latitude} />
+              </Form.Item>
+            </div>
+          ) : (
+            <div>
+              <Form.Item label="经度" style={{ marginBottom: 0 }}>
+                <Form.Item
+                  name="dmsLonDegrees"
+                  style={{ display: 'inline-block', width: 'calc(34% - 8px)', marginRight: '6px' }}
+                >
+                  <Input placeholder="度" suffix="°" value={positionList?.dmsLonDegrees} />
+                </Form.Item>
+                <Form.Item
+                  name="dmsLonMinutes"
+                  style={{ display: 'inline-block', width: 'calc(34% - 8px)', marginRight: '6px' }}
+                >
+                  <Input placeholder="分" suffix="′" value={positionList?.dmsLonMinutes} />
+                </Form.Item>
+                <Form.Item
+                  name="dmsLonSeconds"
+                  style={{ display: 'inline-block', width: 'calc(34% - 8px)', marginRight: '6px' }}
+                >
+                  <Input placeholder="秒" suffix="″" value={positionList?.dmsLonSeconds} />
+                </Form.Item>
+              </Form.Item>
+              <Form.Item label="经度" style={{ marginBottom: 0 }}>
+                <Form.Item
+                  name="dmsLatDegrees"
+                  style={{ display: 'inline-block', width: 'calc(34% - 8px)', marginRight: '6px' }}
+                >
+                  <Input placeholder="度" suffix="°" value={positionList?.dmsLatDegrees} />
+                </Form.Item>
+                <Form.Item
+                  name="dmsLatMinutes"
+                  style={{ display: 'inline-block', width: 'calc(34% - 8px)', marginRight: '6px' }}
+                >
+                  <Input placeholder="分" suffix="′" value={positionList?.dmsLatMinutes} />
+                </Form.Item>
+                <Form.Item
+                  name="dmsLatSeconds"
+                  style={{ display: 'inline-block', width: 'calc(34% - 8px)', marginRight: '6px' }}
+                >
+                  <Input placeholder="秒" suffix="″" value={positionList?.dmsLatSeconds} />
+                </Form.Item>
+              </Form.Item>
+            </div>
+          )}
 
           <Form.Item wrapperCol={{ offset: 8 }}>
             <Space>
