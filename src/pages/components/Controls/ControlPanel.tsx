@@ -15,6 +15,7 @@ import Search from './Search';
 import Track from './Track';
 import { useLocation } from 'react-router-dom';
 import OffsetPanel from '@/gis/widget/OffsetPanel';
+import Location from '@/gis/widget/Location';
 interface TControlPanel {
   searchContent?: ReactElement;
   statisticContent?: ReactElement;
@@ -57,6 +58,7 @@ const ControlPanel = (props: TControlPanel) => {
       <Legend position={{ bottom: 10, left: 10 }} />
       <Swipe position={{ top: 185, right: 10 }} />
       <Measure position={{ top: 225, right: 10 }} />
+      <Location position={{ top: 265, right: 10 }} />
       {location.pathname === '/theme-map' ? <CanvasToMap position={{ top: 10, right: 410 }} /> : undefined}
       {trackContent && <Track position={{ top: 10, right: 290 }} content={trackContent} />}
       {searchContent && <Search position={{ top: 10, right: 50 }} content={searchContent} />}

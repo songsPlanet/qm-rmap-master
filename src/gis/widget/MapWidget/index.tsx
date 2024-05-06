@@ -3,10 +3,11 @@ import { TMapLayerSettting } from '@/gis/mapboxgl/typings/TLayerOptions';
 import { MapboxOptions } from 'mapbox-gl';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import React, { useRef, useEffect, memo, useState } from 'react';
-import './index.less';
 import { MapContext, TMapContext } from '@/gis/context/mapContext';
+import { getPulsingDot } from '@/gis/assets/pulsingDot';
 import { debounce } from '@/gis/utils';
 import { cloneDeep } from 'lodash';
+import './index.less';
 interface TMapProps {
   mapOptions: MapboxOptions & {
     id: string;
@@ -45,6 +46,9 @@ function MapWidget(props: TMapProps) {
       setMapInit(true);
       onMapLoad?.(map);
       // map.showTileBoundaries=true // 瓦片
+      // 添加一级预警图标
+      const redAnimationImg = getPulsingDot(map);
+      map.addImage('redAnimationImg', redAnimationImg, { pixelRatio: 2 });
       if (contextValue) {
         contextValue.map = map;
       }

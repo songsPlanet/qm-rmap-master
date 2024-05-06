@@ -346,6 +346,41 @@ class MapWrapper extends Map {
       ],
     };
   };
+  /**
+   *创建Point的geojson 数据
+   * @returns {{}}
+   */
+  createPointFeatureCollection = () => {
+    return {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [0, 0], // icon position [lng, lat]
+          },
+        },
+      ],
+    };
+  };
+
+  /**
+   *十进制转度分秒
+   * @returns {{}}
+   */
+  decimalToDMS = (decimal: any) => {
+    // 提取整数部分
+    const degrees = Math.floor(decimal);
+    // 计算小数部分并转换为百分比
+    const minutesAndSeconds = (decimal - degrees) * 60;
+    // 提取分钟部分
+    const minutes = Math.floor(minutesAndSeconds);
+    // 计算秒钟部分
+    const seconds = Math.round((minutesAndSeconds - minutes) * 60);
+
+    return { degrees, minutes, seconds };
+  };
 }
 
 export default MapWrapper;

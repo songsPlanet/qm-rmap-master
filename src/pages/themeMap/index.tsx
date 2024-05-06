@@ -3,15 +3,15 @@ import OffsetContent from '../components/Controls/OffSetControl/OffsetContent';
 import SearchContent from '../components/Controls/Search/SearchContent';
 import ControlPanel from '../components/Controls/ControlPanel';
 import { RegionProvider } from '@/gis/context/RegionContext';
-import { wh_sy_geo } from '@/pages/mapSetting/wh_sy_geo';
 import TrackContent from '@/pages/components/Controls/Track/TrackContent';
-import MapWidget from '@/gis/widget/MapWidget';
-import styles from './index.module.less';
-import { LngLatLike } from 'mapbox-gl';
-import mapSetting from './mapSetting';
 import { memo, useMemo, useEffect, useState } from 'react';
-import FieldPopup from './popup/FieldPopup';
+import { wh_sy_geo } from '@/pages/mapSetting/wh_sy_geo';
 import PopupPanel from '@/gis/widget/PopupPanel';
+import MapWidget from '@/gis/widget/MapWidget';
+import FieldPopup from './popup/FieldPopup';
+import styles from './index.module.less';
+import mapSetting from './mapSetting';
+import { LngLatLike } from 'mapbox-gl';
 
 const mapOptions = {
   id: 'themeMap',
