@@ -46,7 +46,7 @@ function MapWidget(props: TMapProps) {
       setMapInit(true);
       onMapLoad?.(map);
       // map.showTileBoundaries=true // 瓦片
-      // 添加一级预警图标
+      // 添加动态点图标
       const redAnimationImg = getPulsingDot(map);
       map.addImage('redAnimationImg', redAnimationImg, { pixelRatio: 2 });
       if (contextValue) {

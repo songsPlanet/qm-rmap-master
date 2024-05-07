@@ -1,7 +1,7 @@
 import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Button, Radio, Form, Input, Space } from 'antd';
 import { useMap } from '@/gis/context/mapContext';
-import { memo, useCallback, useState } from 'react';
 import { LngLatLike } from 'mapbox-gl';
 import './index.less';
 
@@ -147,6 +147,11 @@ const Location = (props: { position: TWidgetPosition }) => {
     conversionDecimalDms(form.getFieldsValue());
   };
 
+  useEffect(() => {
+    resetForm();
+    setIfDecimal(true);
+  }, []);
+
   return (
     <BaseWidget
       name="坐标定位"
@@ -156,7 +161,7 @@ const Location = (props: { position: TWidgetPosition }) => {
       height={180}
       openHandle={onOpenHandle}
     >
-      <div className="location-main">
+      <div className="locationMain">
         <Form
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 18 }}

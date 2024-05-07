@@ -42,8 +42,10 @@ const BaseWidget = (props: TWidgetOptions) => {
   const onClickHandle = () => {
     if (openHandle) {
       openHandle(true);
+      setOpen(!open);
+    } else {
+      setOpen(!open);
     }
-    setOpen(!open);
   };
 
   return (
