@@ -5,8 +5,9 @@ import mapSetting from './mapSetting';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import MapWidget from '@/gis/widget/MapWidget';
 import styles from './index.module.less';
-import { LngLatLike } from 'mapbox-gl';
+import { LngLatLike, Marker } from 'mapbox-gl';
 import { memo, useRef } from 'react';
+import { getFeatureBoundingBox } from '@/gis/utils';
 
 const EditMap = (props: any) => {
   const mapR = useRef<MapWrapper>();
@@ -19,9 +20,33 @@ const EditMap = (props: any) => {
     zoom: 8.7,
     maxZoom: 17,
   };
+  const clearHandle = () => {
+    let type = 'simple_select';
+    draw.current?.deleteAll();
+    draw.current?.changeMode(type);
+  };
 
-  const updateArea = () => {
-    const data = draw.current?.getAll();
+  const updateArea = (e: any) => {
+    let features = e.features;
+    let box = getFeatureBoundingBox(features[0]);
+    // 添加关闭按钮
+    let _ele = document.createElement('div');
+    _ele.setAttribute('class', styles.measureResultClose);
+    _ele.innerHTML = '×';
+    if (mapR.current) {
+      let closeMarker = new Marker({
+        element: _ele,
+        anchor: 'bottom-left',
+        offset: [-5, -10],
+      })
+        .setLngLat(box.getCenter())
+        .addTo(mapR.current);
+      _ele.onclick = (e) => {
+        e.stopPropagation();
+        clearHandle();
+        closeMarker.remove();
+      };
+    }
   };
 
   const mapLoadHandle = (map: MapWrapper) => {
