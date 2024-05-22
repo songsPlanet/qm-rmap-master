@@ -25,16 +25,18 @@ const LayerList = (props: { position: TWidgetPosition }) => {
           children: loop(layer.layers, keys),
         };
       } else {
-        nodeData = {
-          title: layer.options.name,
-          key: layer.options.id,
-          selectable: false,
-        };
+        if (!layer.options.isTemporary) {
+          nodeData = {
+            title: layer.options.name,
+            key: layer.options.id,
+            selectable: false,
+          };
+        }
       }
       if (nodeData) {
         treeData.push(nodeData);
       }
-      if (layer.options.isAdd && layer.options.type !== 'logicGroup') {
+      if (layer.options.isAdd && layer.options.type !== 'logicGroup' && !layer.options.isTemporary) {
         keys.push(layer.options.id);
       }
     });

@@ -13,6 +13,8 @@ import { LngLatLike } from 'mapbox-gl';
 import axios from '@/utils/axios';
 import { AnimationLine } from '@/gis/widget/Animation/AnimationLine';
 import MapContainer from '../components/MapContainer';
+import { insurance_field_wms } from '../mapSetting/insurance_field_wms';
+import InsurancePopup from './popup/InsurancePopup';
 
 const mapOptions = {
   id: 'themeMap',
@@ -31,8 +33,28 @@ const ThemeMap = (props: any) => {
     return [{ id: wh_sy_geo.id, title: wh_sy_geo.name, template: <FieldPopup /> }];
   }, []);
 
+  const wms = {
+    baseUrl: '/geoserver/hn_picc_two/ows',
+    layers: [
+      {
+        id: 'analyse_insurance_field_wms',
+        title: insurance_field_wms.name,
+        layerName: insurance_field_wms.LayerName!,
+        template: <InsurancePopup />,
+      },
+      {
+        id: insurance_field_wms.id,
+        title: insurance_field_wms.name,
+        layerName: insurance_field_wms.LayerName!,
+        template: <InsurancePopup />,
+      },
+    ],
+  };
+
   const onMapLoad = (map: any) => {
-    const animation = new AnimationLine(map, LineFeatCol);
+    if (LineFeatCol) {
+      const animation = new AnimationLine(map, LineFeatCol);
+    }
   };
 
   const getGeoData = async () => {
@@ -54,7 +76,7 @@ const ThemeMap = (props: any) => {
   return LineFeatCol ? (
     <MapContainer mapOptions={mapOptions} mapSetting={mapSetting} onMapLoad={onMapLoad}>
       <RegionProvider>
-        <PopupPanel vector={vector} />
+        <PopupPanel vector={vector} wms={wms} />
         <ControlPanel
           offsetContent={<OffsetContent />}
           trackContent={<TrackContent />}

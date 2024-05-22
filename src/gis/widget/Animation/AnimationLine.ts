@@ -32,7 +32,7 @@ class AnimationLine {
   constructor(map: MapWrapper, route: any) {
     this.map = map;
     this.route = route;
-    this.steps = 120;
+    this.steps = 130;
     if (!map) return;
     this.init();
   }
@@ -53,7 +53,7 @@ class AnimationLine {
       },
       paint: {
         'line-color': 'orange',
-        'line-width': 3,
+        'line-width': 6,
         'line-opacity': 1,
         'line-opacity-transition': { duration: 1000 }, // 500 milliseconds = 1/2 seconds
       },

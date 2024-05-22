@@ -3,6 +3,7 @@ import { useMap } from '@/gis/context/mapContext';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import PopupWrapper from '@/gis/widget/PopupWrapper';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
+import { axios } from '@/utils';
 
 interface TPouperData {
   properties: any;
@@ -62,36 +63,36 @@ const PopupPanel = (props: TPopupPanel) => {
     };
 
     const restLayerClicked = async (map: MapWrapper, e: mapboxgl.MapMouseEvent & mapboxgl.EventData) => {
-      // if (wms) {
-      //   const url = wms.baseUrl;
-      //   const params = {
-      //     service: 'WFS',
-      //     version: '1.0.0',
-      //     request: 'GetFeature',
-      //     maxFeatures: 50,
-      //     outputFormat: 'application/json',
-      //     CQL_FILTER: `INTERSECTS(smgeometry,Point(${e.lngLat.lng} ${e.lngLat.lat}))`,
-      //   };
-      //   const lyrIds = map
-      //     .getLayerList()
-      //     .filter((d) => d.options.isAdd)
-      //     .map((l) => l.options.id);
-      //   const openLys = wms!.layers.filter((d) => lyrIds.findIndex((f) => f === d.id) > -1);
-      //   for (let i = 0; i < openLys.length; i++) {
-      //     const rData = await axios.get(url, { ...params, typeName: openLys[i].layerName }).then((ctx: any) => {
-      //       const temp = ctx || {};
-      //       const flag = temp?.features?.length > 0;
-      //       if (flag) {
-      //         return { layerId: openLys[i].id, data: temp.features[0], lngLat: e.lngLat };
-      //       } else {
-      //         return undefined;
-      //       }
-      //     });
-      //     if (rData) {
-      //       return rData;
-      //     }
-      //   }
-      // }
+      if (wms) {
+        const url = wms.baseUrl;
+        const params = {
+          service: 'WFS',
+          version: '1.0.0',
+          request: 'GetFeature',
+          maxFeatures: 50,
+          outputFormat: 'application/json',
+          CQL_FILTER: `INTERSECTS(smgeometry,Point(${e.lngLat.lng} ${e.lngLat.lat}))`,
+        };
+        const lyrIds = map
+          .getLayerList()
+          .filter((d) => d.options.isAdd)
+          .map((l) => l.options.id);
+        const openLys = wms!.layers.filter((d) => lyrIds.findIndex((f) => f === d.id) > -1);
+        for (let i = 0; i < openLys.length; i++) {
+          const rData = await axios.get(url, { ...params, typeName: openLys[i].layerName }).then((ctx: any) => {
+            const temp = ctx || {};
+            const flag = temp?.features?.length > 0;
+            if (flag) {
+              return { layerId: openLys[i].id, data: temp.features[0], lngLat: e.lngLat };
+            } else {
+              return undefined;
+            }
+          });
+          if (rData) {
+            return rData;
+          }
+        }
+      }
       return undefined;
     };
 
@@ -101,18 +102,18 @@ const PopupPanel = (props: TPopupPanel) => {
       const rData = await restLayerClicked(map, e);
       if (!rData) {
         vectorLayerClicked(map, e);
-        // } else {
-        //   const feature = rData.data;
-        //   const layerId = rData.layerId;
-        //   const title = wms!.layers.find((d) => layerId === d.id)!.title;
-        //   const template = wms!.layers.find((d) => layerId === d.id)!.template;
-        //   map.selectFeature(feature);
-        //   setPopupData({
-        //     properties: feature.properties,
-        //     lngLat: rData.lngLat,
-        //     title,
-        //     template,
-        //   });
+      } else {
+        const feature = rData.data;
+        const layerId = rData.layerId;
+        const title = wms!.layers.find((d) => layerId === d.id)!.title;
+        const template = wms!.layers.find((d) => layerId === d.id)!.template;
+        map.selectFeature(feature);
+        setPopupData({
+          properties: feature.properties,
+          lngLat: rData.lngLat,
+          title,
+          template,
+        });
       }
     });
   }, []);

@@ -93,6 +93,26 @@ class MapWrapper extends Map {
     this.fire(MapEvent.MAPLAYERCHANGED, { map: this, layer: layer });
   }
 
+  addTemporaryWrapper(mapLayerSettting: TMapLayerSettting) {
+    mapLayerSettting.forEach((layerOption) => {
+      let lyrWrapper;
+      if ('layers' in layerOption) {
+        lyrWrapper = new LayerGroupWrapper(layerOption);
+      } else {
+        lyrWrapper = new LayerWrapper(layerOption);
+      }
+      const flag = this.getLayer(layerOption.id);
+      if (flag) {
+        // remove layer
+        this.removeLayer(layerOption.id);
+        this.removeSource(layerOption.id + '-ds');
+        this.layers.pop();
+      }
+      this.addLayerWrapper(lyrWrapper);
+      this.layers.push(lyrWrapper);
+    });
+  }
+
   load(mapLayerSettting: TMapLayerSettting) {
     this._mapLayerSetting = mapLayerSettting;
     mapLayerSettting.forEach((layerOption) => {
