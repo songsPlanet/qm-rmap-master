@@ -15,8 +15,6 @@ import CanvasToMap from './MapToCanvas';
 import Swipe from '@/gis/widget/Swipe';
 import Search from './Search';
 import Track from './Track';
-import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import ExportTrackMap from './ExportTrackMap';
 interface TControlPanel {
   searchContent?: ReactElement;
   statisticContent?: ReactElement;

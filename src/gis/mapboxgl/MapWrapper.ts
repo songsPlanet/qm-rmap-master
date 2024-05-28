@@ -48,6 +48,15 @@ class MapWrapper extends Map {
     return this._images;
   }
 
+  // 绘制工具
+  private _drawTool: any;
+  get drawTool() {
+    return this._drawTool;
+  }
+  set drawTool(value) {
+    this._drawTool = value;
+  }
+
   private _layers: Array<LayerWrapper | LayerGroupWrapper> = [];
 
   public get layers() {
