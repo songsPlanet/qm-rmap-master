@@ -1,5 +1,5 @@
 import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
-import { mapOptions, useMap } from '@/gis/context/mapContext';
+import { useMap } from '@/gis/context/mapContext';
 import { memo } from 'react';
 import './index.less';
 
@@ -7,12 +7,7 @@ const Location = (props: { position: TWidgetPosition }) => {
   const { map } = useMap();
 
   const onOpenHandle = () => {
-    const { center, zoom } = mapOptions;
-    map?.flyTo({
-      duration: 2000,
-      center,
-      zoom,
-    });
+    map?.zoomHome();
   };
 
   return (

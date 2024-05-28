@@ -1,4 +1,4 @@
-import { Map, LngLatBounds, StyleFunction, Expression } from 'mapbox-gl';
+import { Map, LngLatBounds, LngLatLike, StyleFunction, Expression } from 'mapbox-gl';
 import { transTreeToArr, getFeatureBoundingBox } from '../utils';
 import LayerGroupWrapper from './layer/LayerGroupWrapper';
 import LayerWrapper from './layer/LayerWrapper';
@@ -6,7 +6,6 @@ import { MapEvent } from './typings/TEvent';
 import { TMapLayerSettting } from './typings/TLayerOptions';
 import { TMapOptions } from './typings/TMapOptions';
 import type { FeatureCollection } from '@turf/turf';
-
 /**
  * 地图扩展类
  */
@@ -70,6 +69,19 @@ class MapWrapper extends Map {
     this._mapLayerSetting = [];
     // 地图初始化
     this.fire(MapEvent.MAPINITED, { map: this });
+  }
+
+  /**
+   * 返回初始地图位置
+   */
+  zoomHome() {
+    const center = this._options.center;
+    const zoom = this._options.zoom;
+    this.flyTo({
+      duration: 2000,
+      center,
+      zoom,
+    });
   }
 
   getLayerWrapper(

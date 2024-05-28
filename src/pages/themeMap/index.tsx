@@ -15,8 +15,9 @@ import { AnimationLine } from '@/gis/widget/Animation/AnimationLine';
 import MapContainer from '../components/MapContainer';
 import { insurance_field_wms } from '../mapSetting/insurance_field_wms';
 import InsurancePopup from './popup/InsurancePopup';
+import { TMapOptions } from '@/gis/mapboxgl/typings';
 
-const mapOptions = {
+const mapOptions: TMapOptions = {
   id: 'themeMap',
   container: '',
   // center: [118.16333303406572, 31.108394692222518] as LngLatLike, // 芜湖
