@@ -113,6 +113,9 @@ class MapWrapper extends Map {
     this.fire(MapEvent.MAPLAYERCHANGED, { map: this, layer: layer });
   }
 
+  /**
+   * 添加临时图层-和图层关联
+   */
   addTemporaryWrapper(mapLayerSettting: TMapLayerSettting) {
     mapLayerSettting.forEach((layerOption) => {
       let lyrWrapper;
@@ -198,8 +201,7 @@ class MapWrapper extends Map {
    * 要素注记
    * geo：目标要素geometry
    * id：指定id，区分与一般高亮要素
-   * filter：标注过滤条件
-   * filter-example ['concat','保单号:  ',['get', 'policyNo'],'\n','险种:  ',['get', 'seedCodeNames']]
+   * filter：标注过滤条件：如['concat','保单号:  ',['get', 'policyNo'],'\n','险种:  ',['get', 'seedCodeNames']]
    */
   selectSymbolFeature(
     geo: GeoJSON.Feature<GeoJSON.Geometry> | GeoJSON.FeatureCollection<GeoJSON.Geometry> | string,
@@ -283,6 +285,19 @@ class MapWrapper extends Map {
     const bds = new LngLatBounds();
     featCol.features.forEach((d: any) => {
       bds.extend(getFeatureBoundingBox(d));
+    });
+    this.fitBounds(bds, { maxZoom: 16 });
+  }
+
+  /**
+   * 多个要素的地图定位
+   */
+  locationFeatures(featCols: FeatureCollection[]) {
+    const bds = new LngLatBounds();
+    featCols.forEach((featCol: any) => {
+      featCol.features.forEach((d: any) => {
+        bds.extend(getFeatureBoundingBox(d));
+      });
     });
     this.fitBounds(bds, { maxZoom: 16 });
   }
@@ -386,6 +401,7 @@ class MapWrapper extends Map {
       ],
     };
   };
+
   /**
    *创建Point的geojson 数据
    * @returns {{}}
