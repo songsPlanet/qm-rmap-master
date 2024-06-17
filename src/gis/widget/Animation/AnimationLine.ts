@@ -53,7 +53,7 @@ class AnimationLine {
       },
       paint: {
         'line-color': 'orange',
-        'line-width': 6,
+        'line-width': 3,
         'line-opacity': 1,
         'line-opacity-transition': { duration: 1000 }, // 500 milliseconds = 1/2 seconds
       },
@@ -76,7 +76,10 @@ class AnimationLine {
   }
   animateLine() {
     const that = this;
-    that.map.setPaintProperty('jieshou_xian', 'line-opacity', 0);
+    // that.map.setPaintProperty('xzqh_zhen', 'line-opacity', 0);
+    const lyr: any = that.map.getLayerWrapper(that?.map.layers, 'xzqh_zhen');
+    // that.map.removeLayerWrapper(lyr);
+
     let idx = 0;
     loop();
     function loop() {
@@ -88,9 +91,18 @@ class AnimationLine {
         const source = that.map.getSource('line-animate-ds');
 
         if (source) {
+          // fill-opacity-transition 更改图层的 opacity 可设置淡出淡入
+          that.map.setPaintProperty('line-animation', 'line-opacity-transition', { duration: 500 });
           that.map.setPaintProperty('line-animation', 'line-opacity', 0);
-          that.map.setPaintProperty('jieshou_xian', 'line-opacity-transition', { duration: 500 });
-          that.map.setPaintProperty('jieshou_xian', 'line-opacity', 1);
+
+          // 从layerlist中添加region图层
+          lyr.options.isAdd = true;
+          that.map.addLayerWrapper(lyr);
+
+          // that.map.setPaintProperty('xzqh_zhen', 'line-opacity-transition', { duration: 1000 });
+          // that.map.setPaintProperty('xzqh_zhen', 'line-opacity', 1);
+
+          // 移除淡出淡入效果会消失
           that.map.removeLayer('line-animation');
           that.map.removeSource('line-animate-ds');
         }

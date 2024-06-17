@@ -18,12 +18,12 @@ export default defineConfig(({ mode }) => {
     define,
     publicDir: 'public',
     resolve: {
-      extensions: [ '.tsx', '.ts', '.jsx', '.js' ],
+      extensions: ['.tsx', '.ts', '.jsx', '.js'],
       alias: {
         '@': path.resolve('src'),
-      }
+      },
     },
-    plugins: [ react(), legacy(), splitVendorChunkPlugin() ],
+    plugins: [react(), legacy(), splitVendorChunkPlugin()],
     build: {
       outDir: 'build',
       cssMinify: true,
@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
         compress: {
           drop_console: true,
           drop_debugger: true,
-        }
+        },
       },
       rollupOptions: {
         output: {
@@ -56,14 +56,14 @@ export default defineConfig(({ mode }) => {
           entryFileNames: 'js/[name].[hash].js',
           chunkFileNames: 'js/[name].[hash].chunk.js',
           manualChunks: {
-            'vendor-react': [ 'react', 'react-dom' ]
-          }
-        }
-      }
+            'vendor-react': ['react', 'react-dom'],
+          },
+        },
+      },
     },
     css: {
       postcss: {
-        plugins: [ postcssPresetEnv ]
+        plugins: [postcssPresetEnv],
       },
       // modules: {
       //   scopeBehaviour: 'local',
@@ -78,7 +78,7 @@ export default defineConfig(({ mode }) => {
           globalVars: {},
           additionalData: '',
           javascriptEnable: true,
-        }
+        },
       },
       devSourcemap: false,
     },
@@ -100,8 +100,14 @@ export default defineConfig(({ mode }) => {
           // 测试
           // target: 'http://192.168.5.2:20011',
           changeOrigin: true,
-        }
-      }
-    }
+        },
+        '/tileserver': {
+          target: 'http://120.26.225.92:8090/',
+          // 测试
+          // target: 'http://192.168.5.2:20011',
+          changeOrigin: true,
+        },
+      },
+    },
   };
-})
+});

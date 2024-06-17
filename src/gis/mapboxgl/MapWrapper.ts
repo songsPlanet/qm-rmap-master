@@ -103,7 +103,6 @@ class MapWrapper extends Map {
 
   addLayerWrapper(layer: LayerWrapper | LayerGroupWrapper, beforeId?: string) {
     layer.onAdd(this, beforeId);
-
     // 图层变化事件
     this.fire(MapEvent.MAPLAYERCHANGED, { map: this, layer: layer });
   }

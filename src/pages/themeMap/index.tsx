@@ -16,14 +16,14 @@ import MapContainer from '../components/MapContainer';
 import { insurance_field_wms } from '../mapSetting/insurance_field_wms';
 import InsurancePopup from './popup/InsurancePopup';
 import { TMapOptions } from '@/gis/mapboxgl/typings';
+import TimeSliderContent from '../components/Controls/SliderControl/TimeSliderContent';
 
 const mapOptions: TMapOptions = {
   id: 'themeMap',
   container: '',
   // center: [118.16333303406572, 31.108394692222518] as LngLatLike, // 芜湖
-  center: [115.345459, 33.220307] as LngLatLike, // 界首市
-
-  zoom: 8.7,
+  center: [115.345459, 33.260307] as LngLatLike, // 界首市
+  zoom: 9.6,
   maxZoom: 20,
 };
 
@@ -59,7 +59,8 @@ const ThemeMap = (props: any) => {
   };
 
   const getGeoData = async () => {
-    const url = 'http://localhost:9999/src/pages/mapSetting/assets/jieshou-xian.geojson';
+    // const url = 'http://localhost:9999/src/pages/mapSetting/assets/jieshou-xian.geojson';
+    const url = './src/pages/mapSetting/assets/jieshou-xian.geojson';
     const rData = await axios.get(url).then((ctx: any) => {
       return ctx;
     });
@@ -81,6 +82,7 @@ const ThemeMap = (props: any) => {
         <ControlPanel
           offsetContent={<OffsetContent />}
           trackContent={<TrackContent />}
+          timeSliderContent={<TimeSliderContent />}
           searchContent={props?.location?.pathname === '/theme-map' ? <SearchContent /> : undefined}
           statisticContent={props?.location?.pathname === '/theme-map' ? <StatisticContent /> : undefined}
         />

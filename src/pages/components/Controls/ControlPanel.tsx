@@ -15,15 +15,17 @@ import CanvasToMap from './MapToCanvas';
 import Swipe from '@/gis/widget/Swipe';
 import Search from './Search';
 import Track from './Track';
+import SliderControl from './SliderControl';
 interface TControlPanel {
   searchContent?: ReactElement;
   statisticContent?: ReactElement;
   trackContent?: ReactElement;
   offsetContent?: ReactElement;
+  timeSliderContent?: ReactElement;
 }
 
 const ControlPanel = (props: TControlPanel) => {
-  const { searchContent, statisticContent, trackContent, offsetContent } = props;
+  const { searchContent, timeSliderContent, statisticContent, trackContent, offsetContent } = props;
   const { map } = useMap();
   const location = useLocation();
 
@@ -51,7 +53,9 @@ const ControlPanel = (props: TControlPanel) => {
 
   return (
     <div>
-      {/* <ExportTrackMap position={{ top: 10, right: 550 }} /> */}
+      {/* <ExportTrackMap position={{ top: 10, right: 550 }} /> 
+      
+    */}
       {offsetContent && <OffsetPanel content={offsetContent} />}
       <LayerList position={{ top: 10, left: 10 }} />
       <Legend position={{ bottom: 10, left: 10 }} />
@@ -59,6 +63,7 @@ const ControlPanel = (props: TControlPanel) => {
       <Swipe position={{ top: 225, right: 10 }} />
       <Location position={{ top: 265, right: 10 }} />
       <Measure position={{ top: 305, right: 10 }} />
+      {timeSliderContent && <SliderControl position={{ top: 10, right: 530 }} content={timeSliderContent} />}
       {location.pathname === '/theme-map' ? <CanvasToMap position={{ top: 10, right: 410 }} /> : undefined}
       {trackContent && <Track position={{ top: 10, right: 290 }} content={trackContent} />}
       {searchContent && <Search position={{ top: 10, right: 50 }} content={searchContent} />}

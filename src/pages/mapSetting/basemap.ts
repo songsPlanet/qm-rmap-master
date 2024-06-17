@@ -45,5 +45,19 @@ export const basemap: TLayerGroupOptions = {
         ],
       },
     },
+    {
+      id: 'raster_png',
+      name: '遥感底图',
+      type: 'raster',
+      isAdd: false,
+      source: {
+        type: 'raster',
+        tileSize: 256,
+        minzoom: 0,
+        maxzoom: 18,
+        tiles: [`http://120.26.225.92:8090/data/jieshou_img_0to16/{z}/{x}/{y}.png`],
+        // tiles: [`http://${window.location.host}/tileserver/data/jieshou_img_0to16/{z}/{x}/{y}.png`],
+      },
+    },
   ],
 };

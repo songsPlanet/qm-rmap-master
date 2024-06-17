@@ -104,11 +104,12 @@ class PolygonMeasure {
     pts = pts.concat([this.points[0]]);
     let plg: any = polygon([pts]);
     let parea: any = area(plg);
-    if (parea < 1000) {
-      parea = Math.round(parea) + 'm²';
-    } else {
-      parea = (parea / 1000000).toFixed(4) + 'km²';
-    }
+    // if (parea < 1000) {
+    //   parea = Math.round(parea) + 'm²';
+    // } else {
+    //   parea = (parea / 1000000).toFixed(4) + 'km²';
+    // }
+    parea = (parea * 0.0015).toFixed(4) + '亩';
     return parea;
   };
 

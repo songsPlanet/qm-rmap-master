@@ -25,27 +25,6 @@ regionConfig.forEach((d) => {
       data: './src/pages/mapSetting/assets/jieshou-xian.geojson',
     },
   });
-  // 图层标注
-  // regionLyrs.push({
-  //   id: `${d.lyr}-label`,
-  //   name: `${d.name}-标注`,
-  //   type: 'symbol',
-  //   minzoom: d.minzoom,
-  //   maxzoom: d.maxzoom,
-  //   source: `${d.lyr}-ds`,
-  //   'source-layer': d.lyr,
-  //   layout: {
-  //     'text-field': ['get', d.lbField],
-  //     'text-font': ['Open Sans Regular'],
-  //     'text-size': 14,
-  //     'symbol-placement': 'point',
-  //   },
-  //   paint: {
-  //     'text-color': 'blue',
-  //     'text-halo-width': 2,
-  //     'text-halo-color': 'white',
-  //   },
-  // });
 });
 
 export const region: TLayerGroupOptions = {
