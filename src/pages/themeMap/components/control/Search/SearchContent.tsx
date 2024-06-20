@@ -1,12 +1,13 @@
-import { Descriptions, List, Space, Select, Spin, Empty, Result } from 'antd';
-import { memo, useEffect, useState, useCallback } from 'react';
+import { Descriptions, List, Space, Select, Spin, Empty } from 'antd';
 import { getXXNYZTUserListApi, getSearchLayerListApi } from '@/models/map';
-import { debounce } from '@/utils';
+import { memo, useEffect, useState } from 'react';
+import { getXxjyztListDetailApi } from '@/models/map';
 import { useMap } from '@/gis/context/mapContext';
 import { getFeatureBoundingBox } from '@/gis/utils';
-import { getXxjyztListDetailApi } from '@/models/map';
-import GeoMap from './GeoMap';
 import styles from './index.module.less';
+import { debounce } from '@/utils';
+import GeoMap from './GeoMap';
+
 interface TField {
   fzr: string;
   zjhm: string;
@@ -28,14 +29,14 @@ interface TUser {
   zjhm: string;
 }
 const SearchDetail = () => {
+  const { map } = useMap();
+  const [type, setType] = useState<string>();
   const [field, setField] = useState<TField>();
-  const [fieldSearching, setFieldSearching] = useState<boolean>(false);
+  const [layerList, setLayerList] = useState<any>();
+  const [objectID, setObjectID] = useState<string>();
   const [userList, setUserList] = useState<TUser[]>([]);
   const [userSearching, setUserSearching] = useState<boolean>(false);
-  const [objectID, setObjectID] = useState<string>();
-  const [type, setType] = useState<string>();
-  const [layerList, setLayerList] = useState<any>();
-  const { map } = useMap();
+  const [fieldSearching, setFieldSearching] = useState<boolean>(false);
 
   const getXXNYZTUserList: any = debounce((keyWord: string) => {
     setUserSearching(true);
@@ -48,8 +49,6 @@ const SearchDetail = () => {
   const getFieldList = (objectID: string, type: string) => {
     setFieldSearching(true);
     getXxjyztListDetailApi(objectID, type).then((ctx: any) => {
-      console.log('数据', ctx);
-
       const flag: any = type.split('_')[0];
       const data = ctx?.data || undefined;
       const dkList = (data?.dkSpatials.features || []).map((d: any) => {

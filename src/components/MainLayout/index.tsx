@@ -1,6 +1,6 @@
+import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
 import React, { useLayoutEffect, useCallback, useEffect, useRef } from 'react';
 import { useNavigate, useLocation, Outlet, matchPath } from 'react-router-dom';
-import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
 import { Popover, Layout, Avatar, Menu, message } from 'antd';
 import avatarURL from '@/assets/images/avatar.png';
 import useReducer from '@/utils/useReducer';
@@ -10,7 +10,6 @@ import type { MenuItem } from '@/routers';
 import { getLocalStorage } from '@/utils';
 import { signOut } from '@/models/login';
 import './index.less';
-import { log } from 'console';
 
 const { Content, Sider, Header, Footer } = Layout;
 

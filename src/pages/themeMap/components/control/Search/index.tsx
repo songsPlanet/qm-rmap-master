@@ -5,6 +5,7 @@ import styles from './index.module.less';
 import SearchPanel from './SearchContent';
 import { Button } from 'antd';
 import { ReactElement } from 'react';
+
 const SearchControl = (props: { position: TWidgetPosition; content: ReactElement }) => {
   const { position, content } = props;
   const [show, setShow] = useState(false);

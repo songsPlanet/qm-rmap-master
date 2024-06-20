@@ -8,8 +8,8 @@ import './index.less';
 const initialPosition = {
   bearing: 0,
   pitch: 0,
-  center: [118.16333303406572, 31.108394692222518] as LngLatLike,
   zoom: 8.7,
+  center: [118.16333303406572, 31.108394692222518] as LngLatLike,
 };
 
 interface TPosition {

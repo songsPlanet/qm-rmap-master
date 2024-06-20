@@ -1,4 +1,4 @@
-import ControlPanel from '../components/Controls/ControlPanel';
+import ControlPanel from '../themeMap/components/control/ControlPanel';
 import mapSetting from './mapSetting';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import MapWidget from '@/gis/widget/MapWidget';

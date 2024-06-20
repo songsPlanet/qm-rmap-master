@@ -1,10 +1,12 @@
+import { CSSProperties, memo, useEffect, useRef } from 'react';
 import { getFeatureBoundingBox } from '@/gis/utils';
 import { Map } from 'mapbox-gl';
-import { CSSProperties, memo, useEffect, useRef } from 'react';
+
 interface TGeoMap {
   style: CSSProperties;
   data: GeoJSON.Feature<GeoJSON.Geometry> | GeoJSON.FeatureCollection<GeoJSON.Geometry> | string;
 }
+
 const GeoMap = (props: TGeoMap) => {
   const { data, style } = props;
   const mapDom = useRef<HTMLDivElement | null>(null);
@@ -54,4 +56,5 @@ const GeoMap = (props: TGeoMap) => {
   }, []);
   return <div ref={mapDom} style={style} />;
 };
+
 export default memo(GeoMap);

@@ -13,17 +13,18 @@ regionConfig.forEach((d) => {
     type: 'line',
     minzoom: d.minzoom,
     maxzoom: d.maxzoom,
-    isAdd: false,
+    isAdd: true,
     paint: {
       'line-color': 'blue',
       'line-width': 2,
-      'line-opacity-transition': { duration: 1000 },
+      // 'line-opacity-transition': { duration: 1000 },
     },
     source: {
       type: 'vector',
+      minzoom: 0,
       maxzoom: 14,
       bounds: [115.241236, 33.006001, 115.528891, 33.524924],
-      tiles: [`http://192.168.146.131:8090/data/jieshou_region/{z}/{x}/{y}.pbf`],
+      tiles: [`http://120.26.225.92:8090/data/jieshou_region/{z}/{x}/{y}.pbf`],
     },
     'source-layer': d.lyr,
   });
@@ -42,9 +43,10 @@ regionConfig.forEach((d) => {
     },
     source: {
       type: 'vector',
+      minzoom: 0,
       maxzoom: 14,
       bounds: [115.241236, 33.006001, 115.528891, 33.524924],
-      tiles: [`http://192.168.146.131:8090/data/jieshou_region/{z}/{x}/{y}.pbf`],
+      tiles: [`http://120.26.225.92:8090/data/jieshou_region/{z}/{x}/{y}.pbf`],
     },
     'source-layer': d.lyr,
   });

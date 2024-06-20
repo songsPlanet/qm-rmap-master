@@ -11,7 +11,8 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
   const mapUtil = useRef<any>(null);
 
   const getGeoData = async () => {
-    const url = 'http://localhost:9999/src/pages/components/Controls/MapToCanvas/aseest/Line.geojson';
+    // const url = 'http://localhost:9999/src/pages/themeMap/components/control/MapToCanvas/aseest/Line.geojson';
+    const url = 'http://localhost:9999/src/gis/assets/Line.geojson';
     const rData = await axios.get(url).then((ctx: any) => {
       return ctx;
     });

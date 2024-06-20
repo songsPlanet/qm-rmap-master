@@ -18,6 +18,6 @@ export const wh_sy_geo: TLayerOptions = {
   },
   source: {
     type: 'geojson',
-    data: './src/pages/mapSetting/assets/wh_sqal_sy_2022_04.geojson',
+    data: './src/gis/assets/wh_sqal_sy_2022_04.geojson',
   },
 };

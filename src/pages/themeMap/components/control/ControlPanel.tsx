@@ -1,6 +1,6 @@
 import { NavigationControl, FullscreenControl } from 'mapbox-gl';
 import { memo, useMemo, useEffect, ReactElement } from 'react';
-import { MapboxExportControl } from '../../../gis/widget/Print';
+import { MapboxExportControl } from '../../../../gis/widget/Print';
 import InitialLocation from '@/gis/widget/InitialLocation';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import OffsetPanel from '@/gis/widget/OffsetPanel';
@@ -53,16 +53,13 @@ const ControlPanel = (props: TControlPanel) => {
 
   return (
     <div>
-      {/* <ExportTrackMap position={{ top: 10, right: 550 }} /> 
-      
-    */}
-      {offsetContent && <OffsetPanel content={offsetContent} />}
       <LayerList position={{ top: 10, left: 10 }} />
       <Legend position={{ bottom: 10, left: 10 }} />
-      <InitialLocation position={{ top: 185, right: 10 }} />
       <Swipe position={{ top: 225, right: 10 }} />
       <Location position={{ top: 265, right: 10 }} />
       <Measure position={{ top: 305, right: 10 }} />
+      <InitialLocation position={{ top: 185, right: 10 }} />
+      {offsetContent && <OffsetPanel content={offsetContent} />}
       {timeSliderContent && <SliderControl position={{ top: 10, right: 530 }} content={timeSliderContent} />}
       {location.pathname === '/theme-map' ? <CanvasToMap position={{ top: 10, right: 410 }} /> : undefined}
       {trackContent && <Track position={{ top: 10, right: 290 }} content={trackContent} />}

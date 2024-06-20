@@ -1,10 +1,11 @@
 /*
  * 轨迹线追踪:含播放、暂停、重播
- * map：地图
- * route：目标路径geojson[LineString]
- * isStyle:false默认，true开启动态样式，使用map.addDashLayer
- * stepPoint?：通过turf.js重新划分线，会导致轨迹线的折点不真实
+ * map：            地图
+ * route：          轨迹geojson，类型LineString
+ * isStyle:         动态样式，默认false，true需使用map.addDashLayer
+ * stepPoint?：     通过turf.js重新划分线，会导致轨迹线的折点不真实
  */
+
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import { GeoJSONSource } from 'mapbox-gl';
 

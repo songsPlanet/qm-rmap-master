@@ -1,6 +1,6 @@
 import { PlayCircleOutlined, PauseOutlined, RedoOutlined } from '@ant-design/icons';
 import { AnimationRoute } from '@/gis/widget/Animation/AnimationRoute';
-import { basemap } from '@/pages/mapSetting/basemap';
+import { basemap } from '@/pages/themeMap/mapSetting/basemap';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import { memo, useEffect, useRef } from 'react';
 import { LngLatBoundsLike } from 'mapbox-gl';

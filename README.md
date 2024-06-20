@@ -12,21 +12,32 @@ env.json 文件未项目提供环境变量，你可以通过 `import.meta.env[ke
 # 项目结构
 
 ```shell
-├─babel.config.cjs     babel 配置
 ├─index.html           index.html 是 vite 入口文件
+├── public
+│   ├── font           mapbox字体库
+│   └── favicon.ico    
+│
 └─src
-│   ├─components       组件
-│   ├─pages            页面
+│   ├─assets           
+│   │   ├── images          存放图片静态资源
+│   ├─components            组件
+│   │   ├── MainLayout      网页布局
+│   ├─gis                 地图工具箱
+│   │   ├── assets        地图图标资源
+│   │   ├── context       地图全局数据
+│   │   ├── mapboxgl      mapbox自定义扩展类
+│   │   ├── widget        通用gis工具
+│   ├─mock                mock 数据
+│   ├─models
+│   │   ├──login           login页面的数据
+│   │   ├──map             地图页面数据
+│   │   ├──table           表格页面数据
+│   ├─pages                 页面
 │   │  user              案例1
 │   │  │  ├─user-list
 │   │  │  └─role-list
 │   │  └─login           登录页面
-│   ├─models
-│   │  └─login           login页面的数据
 │   ├─routers          项目路由
-│   ├─assets           静态文件
-│   │  └─images
-│   ├─mock             mock 数据
 │   ├─vite-env.d.ts    公共ts类型定义
 │   └─utils            基础工具包
 ├─ .env              环境变量定义文件

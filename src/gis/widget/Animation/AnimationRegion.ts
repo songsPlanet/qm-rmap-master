@@ -1,10 +1,11 @@
 /*
- * 动态线路：初始化出现，渲染完成淡出
- * map：地图
- * line：目标路径geojson[LineString]
- * stepPoint：通过turf.js平滑线路
- * steps：步长，越小平滑程度越大
+ * 区域边界动态样式：渲染完成淡出
+ * map：            地图
+ * line：           边界的geojson，类型LineString
+ * steps：          步长，越小平滑程度越大
+ * stepPoint：      通过turf.js平滑线路
  */
+
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import { GeoJSONSource } from 'mapbox-gl';
 import { along, length, polygonToLine } from '@turf/turf';
@@ -22,7 +23,7 @@ const geojson: any = {
   ],
 };
 
-class AnimationLine {
+class AnimationRegion {
   private map: MapWrapper;
   private interval: number | undefined;
   private route: any; // 目标路径geojson
@@ -121,4 +122,4 @@ class AnimationLine {
   }
 }
 
-export { AnimationLine };
+export { AnimationRegion };
