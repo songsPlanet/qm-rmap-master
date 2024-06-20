@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, memo } from 'react';
+import { queryTrackLineResult } from '@/models/map';
 import classes from './index.module.less';
 import LineMap from './LineMap';
-import axios from '@/utils/axios';
 import { Spin } from 'antd';
 
 let defaultXY = {
@@ -54,21 +54,9 @@ const TrackContent = (props: { isPopOpenHandle?: any }) => {
     setContainer(popoverRef.current);
   }, [LineFeatCol]);
 
-  const getGeoData = async () => {
-    // const url = 'http://localhost:9999/src/pages/components/Controls/MapToCanvas/aseest/Line.geojson';
-    const url = 'http://localhost:9999/src/gis/assets/Line.geojson';
-
-    const rData = await axios.get(url).then((ctx: any) => {
-      return ctx;
-    });
-    if (rData) {
-      return rData;
-    }
-  };
-
   useEffect(() => {
-    getGeoData().then((res: any) => {
-      setLineFeatCol(res);
+    queryTrackLineResult().then((res: any) => {
+      setLineFeatCol(res.data);
     });
     return () => {
       window.removeEventListener('mousemove', mousemove);

@@ -38,3 +38,13 @@ export const getXxjyztListDetailApi = (id: string, tableName: string) => {
 export const queryStatisticResult = (query: any) => {
   return request.post(`/v1.0/xxnyjyzt/getXxjyztListDetail`, query);
 };
+
+// 获取轨迹数据
+export const queryTrackLineResult = () => {
+  return request.post(`/v1.0/geojson/getTrackLineGeo`);
+};
+
+// 获取行政区域geojson
+export const queryRegionFeature = () => {
+  return request.post(`/v1.0/geojson/getqueryRegionFeature`);
+};

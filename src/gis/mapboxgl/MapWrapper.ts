@@ -220,10 +220,13 @@ class MapWrapper extends Map {
       type: 'symbol',
       minzoom: 10,
       layout: {
-        'text-field': filter ?? '',
-        'text-font': ['Open Sans Regular'],
         'text-size': 14,
+        'text-field': filter ?? '',
         'symbol-placement': 'point',
+        'text-font': ['Open Sans Regular'],
+        'text-justify': 'auto',
+        'text-radial-offset': 0.5,
+        'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
       },
       paint: {
         'text-color': '#F320BE', // 玫红

@@ -63,7 +63,7 @@ const StatisticContent = (props: { date?: any }) => {
   }, [currentRegion, layers, date]);
 
   const getLyrState = () => {
-    const statisticLayer = ['filed', 'insurance_field', 'double_insurance_field'];
+    const statisticLayer = ['field_vt', 'insurance_field', 'double_insurance_field'];
     const lyrs = statisticLayer.filter((d) => {
       const id = d;
       const flag = map?.getLayerList().find((f) => f.options.id === id && f.options.isAdd);
