@@ -3,8 +3,8 @@ import { UserOutlined } from '@ant-design/icons';
 import { memo, useState } from 'react';
 import styles from './index.module.less';
 import SearchPanel from './SearchContent';
-import { Button } from 'antd';
 import { ReactElement } from 'react';
+import { Button } from 'antd';
 
 const SearchControl = (props: { position: TWidgetPosition; content: ReactElement }) => {
   const { position, content } = props;

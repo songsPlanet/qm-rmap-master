@@ -152,14 +152,42 @@ const unique = (arr: any[], uniId: string) => {
   return arr.filter((item) => !res.has(item[uniId]) && res.set(item[uniId], 1));
 };
 
+/**
+ *度分秒转十进制
+ *
+ */
+const dmsToDecimal = (degrees: string, minutes: string, seconds: string) => {
+  const decimal = parseFloat(degrees) + parseFloat(minutes) / 60 + parseFloat(seconds) / 3600;
+  return decimal.toFixed(6);
+};
+
+/**
+ *十进制转度分秒
+ * @returns {{}}
+ */
+const decimalToDms = (decimal: any) => {
+  // 提取整数部分
+  const degrees = Math.floor(decimal);
+  // 计算小数部分并转换为百分比
+  const minutesAndSeconds = (decimal - degrees) * 60;
+  // 提取分钟部分
+  const minutes = Math.floor(minutesAndSeconds);
+  // 计算秒钟部分
+  const seconds = Math.round((minutesAndSeconds - minutes) * 60);
+
+  return { degrees, minutes, seconds };
+};
+
 export {
-  shollawEqual,
-  deepEqual,
-  generateUUID,
+  unique,
   debounce,
   throttle,
+  deepEqual,
+  decimalToDms,
+  dmsToDecimal,
+  generateUUID,
+  shollawEqual,
   transTreeToArr,
-  getFeatureBoundingBox,
   convertHexToRGB,
-  unique,
+  getFeatureBoundingBox,
 };

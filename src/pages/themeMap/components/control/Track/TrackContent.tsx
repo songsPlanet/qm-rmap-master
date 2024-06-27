@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, memo } from 'react';
-import { queryTrackLineResult } from '@/models/map';
+import { queryTrackLineResult } from '@/api/map';
 import classes from './index.module.less';
 import LineMap from './LineMap';
 import { Spin } from 'antd';

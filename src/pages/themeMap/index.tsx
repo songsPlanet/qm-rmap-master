@@ -4,7 +4,7 @@ import SearchContent from './components/control/Search/SearchContent';
 import ControlPanel from './components/control/ControlPanel';
 import { RegionProvider } from '@/gis/context/RegionContext';
 import TrackContent from '@/pages/themeMap/components/control/Track/TrackContent';
-import { memo, useMemo, useEffect, useState } from 'react';
+import { memo, useMemo, useEffect, useState, useRef } from 'react';
 import { wh_sy_geo } from '@/pages/themeMap/mapSetting/wh_sy_geo';
 import PopupPanel from '@/gis/widget/PopupPanel';
 import FieldPopup from './components/popup/FieldPopup';
@@ -17,6 +17,12 @@ import MapContainer from '../../gis/widget/MapContainer';
 import InsurancePopup from './components/popup/InsurancePopup';
 import { TMapOptions } from '@/gis/mapboxgl/typings';
 import TimeSliderContent from './components/control/SliderControl/TimeSliderContent';
+import { useRegion } from '@/gis/context/RegionContext';
+import { RegionContext } from '@/gis/context/RegionContext';
+import type { TRegionContext } from '@/gis/context/RegionContext';
+import { isEmpty } from '@/utils';
+import { mainActions } from '@/models';
+import { useModel, useActions } from '@/redux';
 
 const mapOptions: TMapOptions = {
   id: 'themeMap',
@@ -29,6 +35,13 @@ const mapOptions: TMapOptions = {
 
 const ThemeMap = (props: any) => {
   const [LineFeatCol, setLineFeatCol] = useState<any>(null);
+  const { regionList } = useModel('main');
+  const { queryRegionList } = useActions(mainActions);
+  const { current: data } = useRef<TRegionContext>(null);
+  const {
+    state: { regions },
+    dispatch,
+  } = useRegion();
 
   const vector = useMemo(() => {
     return [{ id: wh_sy_geo.id, title: wh_sy_geo.name, template: <FieldPopup /> }];
@@ -75,6 +88,13 @@ const ThemeMap = (props: any) => {
     // });
   }, []);
 
+  useEffect(() => {
+    if (isEmpty(regionList)) queryRegionList({ level: 5 });
+    else {
+      dispatch({ type: 'changeRegion', payload: { regions: regionList } });
+    }
+  }, [regionList, queryRegionList]);
+
   // return LineFeatCol ? (
   //   <MapContainer mapOptions={mapOptions} mapSetting={mapSetting} onMapLoad={onMapLoad}>
   //     <RegionProvider>
@@ -89,19 +109,18 @@ const ThemeMap = (props: any) => {
   //     </RegionProvider>
   //   </MapContainer>
   // ) : null;
+
   return (
     <MapContainer mapOptions={mapOptions} mapSetting={mapSetting} onMapLoad={onMapLoad}>
-      <RegionProvider>
-        {/* <PopupPanel vector={vector} wms={wms} /> */}
-        <PopupPanel vector={vector} />
-        <ControlPanel
-          offsetContent={<OffsetContent />}
-          trackContent={<TrackContent />}
-          timeSliderContent={<TimeSliderContent />}
-          searchContent={props?.location?.pathname === '/theme-map' ? <SearchContent /> : undefined}
-          statisticContent={props?.location?.pathname === '/theme-map' ? <StatisticContent /> : undefined}
-        />
-      </RegionProvider>
+      {/* <PopupPanel vector={vector} wms={wms} /> */}
+      <PopupPanel vector={vector} />
+      <ControlPanel
+        offsetContent={<OffsetContent />}
+        trackContent={<TrackContent />}
+        timeSliderContent={<TimeSliderContent />}
+        searchContent={props?.location?.pathname === '/theme-map' ? <SearchContent /> : undefined}
+        statisticContent={props?.location?.pathname === '/theme-map' ? <StatisticContent /> : undefined}
+      />
     </MapContainer>
   );
 };

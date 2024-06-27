@@ -4,11 +4,17 @@ import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import MapWidget from '@/gis/widget/MapWidget';
 import styles from './index.module.less';
 import { LngLatLike } from 'mapbox-gl';
-import { memo, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import DrawWidget from '@/gis/widget/DrawWidget';
+import { isEmpty } from '@/utils';
+import { mainActions } from '@/models';
+import { useModel, useActions } from '@/redux';
+import { RegionProvider } from '@/gis/context/RegionContext';
 
 const EditMap = (props: any) => {
   const [map, setMap] = useState<MapWrapper>();
+  const { regionList } = useModel('main');
+  const { queryRegionList } = useActions(mainActions);
 
   const mapOptions = {
     id: 'EditMap',
@@ -21,6 +27,10 @@ const EditMap = (props: any) => {
   const mapLoadHandle = (map: MapWrapper) => {
     setMap(map);
   };
+
+  useEffect(() => {
+    if (isEmpty(regionList)) queryRegionList({ level: 5 });
+  }, [regionList, queryRegionList]);
 
   return (
     <div className={styles.mapContainer}>

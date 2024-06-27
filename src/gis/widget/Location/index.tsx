@@ -1,6 +1,7 @@
 import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Button, Radio, Form, Input, Space } from 'antd';
+import { decimalToDms, dmsToDecimal } from '@/gis/utils';
 import { useMap } from '@/gis/context/mapContext';
 import { LngLatLike } from 'mapbox-gl';
 import './index.less';
@@ -41,8 +42,8 @@ const Location = (props: { position: TWidgetPosition }) => {
       dmsLatSeconds,
     } = values;
     if (dmsLonDegrees && dmsLonMinutes && dmsLonSeconds && dmsLatDegrees && dmsLatMinutes && dmsLatSeconds) {
-      const lon = map?.dmsToDecimal(dmsLonDegrees, dmsLonMinutes, dmsLonSeconds);
-      const lat = map?.dmsToDecimal(dmsLatDegrees, dmsLatMinutes, dmsLatSeconds);
+      const lon = dmsToDecimal(dmsLonDegrees, dmsLonMinutes, dmsLonSeconds);
+      const lat = dmsToDecimal(dmsLatDegrees, dmsLatMinutes, dmsLatSeconds);
       form.setFieldsValue({
         longitude: lon,
         latitude: lat,
@@ -50,8 +51,8 @@ const Location = (props: { position: TWidgetPosition }) => {
       return [lon, lat];
     }
     if (longitude && latitude) {
-      const lon = map?.decimalToDms(longitude);
-      const lat = map?.decimalToDms(latitude);
+      const lon = decimalToDms(longitude);
+      const lat = decimalToDms(latitude);
       form.setFieldsValue({
         dmsLonDegrees: lon?.degrees,
         dmsLonMinutes: lon?.minutes,

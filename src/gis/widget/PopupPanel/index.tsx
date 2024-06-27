@@ -3,7 +3,7 @@ import { useMap } from '@/gis/context/mapContext';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import PopupWrapper from '@/gis/widget/PopupWrapper';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
-import { axios } from '@/utils';
+import axios from '@/utils/axios';
 
 interface TPouperData {
   properties: any;

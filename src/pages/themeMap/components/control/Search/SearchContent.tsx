@@ -1,7 +1,7 @@
 import { Descriptions, List, Space, Select, Spin, Empty } from 'antd';
-import { getXXNYZTUserListApi, getSearchLayerListApi } from '@/models/map';
+import { getXXNYZTUserListApi, getSearchLayerListApi } from '@/api/map';
 import { memo, useEffect, useState } from 'react';
-import { getXxjyztListDetailApi } from '@/models/map';
+import { getXxjyztListDetailApi } from '@/api/map';
 import { useMap } from '@/gis/context/mapContext';
 import { getFeatureBoundingBox } from '@/gis/utils';
 import styles from './index.module.less';

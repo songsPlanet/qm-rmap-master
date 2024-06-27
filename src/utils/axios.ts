@@ -1,8 +1,8 @@
-import { createPath } from 'react-router-dom';
+import axios from 'axios';
+import { message } from 'antd';
 import { getLocalStorage } from '@/utils';
 import history from '@/utils/history';
-import { message } from 'antd';
-import axios from 'axios';
+import { createPath } from 'react-router-dom';
 import type { InternalAxiosRequestConfig, AxiosRequestConfig, AxiosResponse, AxiosInstance, AxiosError } from 'axios';
 
 let abortController = new AbortController();
@@ -160,6 +160,10 @@ class Request<AxiosRequestConfig> {
 
   getBlob(url: string, params?: RequestParams): Promise<ResponseData> {
     return this.instance.get(url, { params, responseType: 'blob' });
+  }
+
+  postBlob(url: string, params?: RequestParams): Promise<ResponseData> {
+    return this.instance.post(url, params, { responseType: 'blob' });
   }
 
   delete(url: string, params?: RequestParams): Promise<ResponseData> {

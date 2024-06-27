@@ -6,7 +6,7 @@ import { MapEvent } from '@/gis/mapboxgl/typings';
 import { useMap } from '@/gis/context/mapContext';
 import StatisticDetail from './Detail';
 import { debounce, isEmpty } from '@/utils';
-import { queryStatisticResult } from '@/models/map';
+import { queryStatisticResult } from '@/api/map';
 
 const StatisticContent = (props: { date?: any }) => {
   const { date } = props;

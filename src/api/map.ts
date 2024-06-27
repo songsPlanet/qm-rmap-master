@@ -5,10 +5,6 @@
 
 import request from '@/utils/axios';
 
-export const signIn = (query: any) => request.post('/v1.0/login/admin', query);
-
-export const signOut = () => request.post('/v1.0/logout');
-
 /**
  * 获取分类
  *
@@ -45,6 +41,6 @@ export const queryTrackLineResult = () => {
 };
 
 // 获取行政区域geojson
-export const queryRegionFeature = () => {
-  return request.post(`/v1.0/geojson/getqueryRegionFeature`);
+export const queryRegionFeature = (code: any) => {
+  return request.post(`/v1.0/geojson/getqueryRegionFeature`, code);
 };

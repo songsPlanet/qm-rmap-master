@@ -1,7 +1,7 @@
 import { TWidgetPosition } from '@/gis/widget/BaseWidget';
 import { MapUtil } from '@/gis/widget/Canvas/MapUtil';
 import { getFeatureBoundingBox } from '@/gis/utils';
-import { queryTrackLineResult } from '@/models/map';
+import { queryTrackLineResult } from '@/api/map';
 import { memo, useRef, useEffect } from 'react';
 import { AimOutlined } from '@ant-design/icons';
 import styles from './index.module.less';

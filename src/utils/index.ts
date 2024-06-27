@@ -1,6 +1,7 @@
 import tween, { TweenAttrNames } from './tween';
 
-export { default as axios } from './axios';
+// export { default as axios } from './axios';
+export { default as request } from '@/utils/axios';
 export { default as useReducer } from './useReducer';
 export { default as events } from './events';
 export { default as downLoadFile } from './download';

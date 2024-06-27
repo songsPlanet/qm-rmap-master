@@ -153,10 +153,14 @@ class MapWrapper extends Map {
   /**
    * 高亮要素-面/线
    */
-  selectFeature(geo: GeoJSON.Feature<GeoJSON.Geometry> | GeoJSON.FeatureCollection<GeoJSON.Geometry> | string) {
-    this.clearSelect();
-    const dsId = 'location-ds';
-    const lyrId = 'location-lyr';
+  selectFeature(
+    geo: GeoJSON.Feature<GeoJSON.Geometry> | GeoJSON.FeatureCollection<GeoJSON.Geometry> | string,
+    id?: string,
+    color?: string,
+  ) {
+    id ? this.clearSelect(id) : this.clearSelect();
+    const dsId = id ? `${id}-location-ds` : 'location-ds';
+    const lyrId = id ? `${id}-location-lyr` : 'location-lyr';
     this.addSource(dsId, {
       type: 'geojson',
       data: geo,
@@ -165,13 +169,12 @@ class MapWrapper extends Map {
       id: lyrId,
       type: 'line',
       paint: {
-        'line-color': '#00ffff',
-        'line-width': 2,
+        'line-color': color ?? '#00ffff',
+        'line-width': 3,
       },
       source: dsId,
     });
   }
-
   /**
    * 高亮要素-点
    */
@@ -205,12 +208,13 @@ class MapWrapper extends Map {
    */
   selectSymbolFeature(
     geo: GeoJSON.Feature<GeoJSON.Geometry> | GeoJSON.FeatureCollection<GeoJSON.Geometry> | string,
-    id?: string,
+    id: string,
+    color?: string,
     filter?: string | StyleFunction | Expression | undefined,
   ) {
-    id ? this.clearSelect(id) : this.clearSelect();
-    const dsId = id ? `${id}-location-ds` : 'location-ds';
-    const lyrId = id ? `${id}-location-lyr` : 'location-lyr';
+    this.clearSelect(id);
+    const dsId = `${id}-location-ds`;
+    const lyrId = `${id}-location-lyr`;
     this.addSource(dsId, {
       type: 'geojson',
       data: geo,
@@ -221,15 +225,15 @@ class MapWrapper extends Map {
       minzoom: 10,
       layout: {
         'text-size': 14,
-        'text-field': filter ?? '',
-        'symbol-placement': 'point',
-        'text-font': ['Open Sans Regular'],
+        'text-field': filter ?? 'test',
         'text-justify': 'auto',
+        'symbol-placement': 'point',
         'text-radial-offset': 0.5,
+        'text-font': ['Open Sans Regular'],
         'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
       },
       paint: {
-        'text-color': '#F320BE', // 玫红
+        'text-color': color ? color : '#F320BE', // 玫红
         'text-halo-width': 2,
         'text-halo-color': 'white',
       },
@@ -282,9 +286,9 @@ class MapWrapper extends Map {
   }
 
   /**
-   * 地图定位
+   * 单个要素地图定位
    */
-  locationFeatureByBounds(featCol: FeatureCollection) {
+  locationFeature(featCol: FeatureCollection) {
     const bds = new LngLatBounds();
     featCol.features.forEach((d: any) => {
       bds.extend(getFeatureBoundingBox(d));
@@ -342,7 +346,6 @@ class MapWrapper extends Map {
    * 给线矢量添加动态效果
    * @param sourceid 线矢量sourceid
    */
-
   addDashLayer(sourceid: string) {
     const that = this;
     this.addLayer({
@@ -387,29 +390,12 @@ class MapWrapper extends Map {
   }
 
   /**
-   *创建lineString的geojson 数据
+   * 创建Point的FeatureCollection
+   * lon：经度
+   * lat: 纬度
    * @returns {{}}
    */
-  createLineFeatureCollection = (coordinates: any) => {
-    return {
-      type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: coordinates,
-          },
-        },
-      ],
-    };
-  };
-
-  /**
-   *创建Point的geojson 数据
-   * @returns {{}}
-   */
-  createPointFeatureCollection = () => {
+  createPointFeatureCollection = (lon: number, lat: number) => {
     return {
       type: 'FeatureCollection',
       features: [
@@ -417,7 +403,7 @@ class MapWrapper extends Map {
           type: 'Feature',
           geometry: {
             type: 'Point',
-            coordinates: [0, 0], // icon position [lng, lat]
+            coordinates: [lon, lat],
           },
         },
       ],
@@ -425,29 +411,43 @@ class MapWrapper extends Map {
   };
 
   /**
-   *十进制转度分秒
+   *创建lineString的geojson 数据
+   * coordinates ：[[],[],...]
    * @returns {{}}
    */
-  decimalToDms = (decimal: any) => {
-    // 提取整数部分
-    const degrees = Math.floor(decimal);
-    // 计算小数部分并转换为百分比
-    const minutesAndSeconds = (decimal - degrees) * 60;
-    // 提取分钟部分
-    const minutes = Math.floor(minutesAndSeconds);
-    // 计算秒钟部分
-    const seconds = Math.round((minutesAndSeconds - minutes) * 60);
-
-    return { degrees, minutes, seconds };
+  createLineFeatureCollection = (coords: any) => {
+    return {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: coords,
+          },
+        },
+      ],
+    };
   };
 
   /**
-   *度分秒转十进制
-   *
+   *创建Polygon的geojson 数据
+   * coords ：[[],[],...]
+   * @returns {{}}
    */
-  dmsToDecimal = (degrees: string, minutes: string, seconds: string) => {
-    const decimal = parseFloat(degrees) + parseFloat(minutes) / 60 + parseFloat(seconds) / 3600;
-    return decimal.toFixed(6);
+  createPolygonFeatureCollection = (coords: any) => {
+    return {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [coords],
+          },
+        },
+      ],
+    };
   };
 }
 

@@ -23,7 +23,7 @@ interface TAction {
   payload: Partial<TRegionInfo>;
 }
 
-interface TRegionContext {
+export interface TRegionContext {
   state: TRegionInfo;
   dispatch: (params: TAction) => void;
 }

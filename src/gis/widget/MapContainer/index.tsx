@@ -1,3 +1,4 @@
+import { RegionProvider } from '@/gis/context/RegionContext';
 import { TMapLayerSettting } from '@/gis/mapboxgl/typings';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import { memo, useEffect, useRef } from 'react';

@@ -147,7 +147,7 @@ class AnimationRoute {
         'line-opacity': 1,
       },
     });
-    // this.map.locationFeatureByBounds(this.route);
+    // this.map.locationFeature(this.route);
     this.map.jumpTo({ center: this.route.features[0].geometry.coordinates[0], zoom: 17 });
   }
 
