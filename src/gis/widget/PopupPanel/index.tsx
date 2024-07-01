@@ -65,6 +65,8 @@ const PopupPanel = (props: TPopupPanel) => {
     const restLayerClicked = async (map: MapWrapper, e: mapboxgl.MapMouseEvent & mapboxgl.EventData) => {
       if (wms) {
         const url = wms.baseUrl;
+        console.log('url', url);
+
         const params = {
           service: 'WFS',
           version: '1.0.0',
@@ -80,6 +82,8 @@ const PopupPanel = (props: TPopupPanel) => {
         const openLys = wms!.layers.filter((d) => lyrIds.findIndex((f) => f === d.id) > -1);
         for (let i = 0; i < openLys.length; i++) {
           const rData = await axios.get(url, { ...params, typeName: openLys[i].layerName }).then((ctx: any) => {
+            console.log('1111', ctx);
+
             const temp = ctx || {};
             const flag = temp?.features?.length > 0;
             if (flag) {

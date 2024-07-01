@@ -25,28 +25,16 @@ const StatisticContent = (props: { date?: any }) => {
     setLoading(true);
     Promise.all(
       layers.map((d: any) => {
-        if (d === 'insurance_field') {
-          if (isEmpty(date)) {
-            message.error('请选择日期范围以查看承保区域统计');
-            return null;
-          } else {
-            const type = 2;
-            const regionCode = currentRegion!.value;
-            const startDate = date[0];
-            const endDate = date[1];
-            return queryStatisticResult({ type, regionCode, startDate, endDate });
-          }
-        } else {
-          const type = 1;
-          const regionCode = currentRegion!.value;
-          return queryStatisticResult({ type, regionCode });
-        }
+        // if (d === 'field_vt') {
+        const query = { type: 1, regionCode: currentRegion!.value };
+        return queryStatisticResult(query);
+        // }
       }),
     ).then((ctx) => {
       const temp = ctx || [];
       setData(
         temp.map((f: any) => ({
-          regionName: f?.data?.regionName || '',
+          regionName: f?.data?.regionName || currentRegion!.label,
           area: f?.data?.area || 0,
           chartData: f?.data?.areaList || [],
           name: f?.data?.queryType || '',
@@ -57,6 +45,8 @@ const StatisticContent = (props: { date?: any }) => {
   };
 
   useEffect(() => {
+    console.log('currentRegion', currentRegion?.value);
+
     if (currentRegion?.value) {
       getChartData();
     }

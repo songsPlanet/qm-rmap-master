@@ -32,7 +32,7 @@ export const getXxjyztListDetailApi = (id: string, tableName: string) => {
 
 // 获取统计结果
 export const queryStatisticResult = (query: any) => {
-  return request.post(`/v1.0/xxnyjyzt/getXxjyztListDetail`, query);
+  return request.post(`/v1.0/statistic/getStatistic`, query);
 };
 
 // 获取轨迹数据

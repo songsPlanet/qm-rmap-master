@@ -5,7 +5,7 @@ import { queryRegionFeature } from '@/api/map';
 import { useMap } from '@/gis/context/mapContext';
 import styles from './index.module.less';
 import { Cascader } from 'antd';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 const RegionControl = (props: { position: TWidgetPosition; regionList?: any }) => {
   const { position } = props;

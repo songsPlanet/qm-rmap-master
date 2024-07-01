@@ -5,6 +5,7 @@ import LayerWrapper from './layer/LayerWrapper';
 import { MapEvent } from './typings/TEvent';
 import { TMapLayerSettting } from './typings/TLayerOptions';
 import { TMapOptions } from './typings/TMapOptions';
+import { featureCollection, lineString, lineStringToPolygon } from '@turf/turf';
 import type { FeatureCollection } from '@turf/turf';
 /**
  * 地图扩展类
@@ -448,6 +449,18 @@ class MapWrapper extends Map {
         },
       ],
     };
+  };
+
+  /**
+   *通过turf.js创建Polygon的FeatureCollection数据(首尾不闭合也可成面)
+   * coords ：[[],[],...]
+   * @returns {{}}
+   */
+  createPolygonFeatureCollectionByLine = (lineCoords: any) => {
+    const lineFeats = lineString(lineCoords);
+    const polygons: any = lineStringToPolygon(lineFeats);
+    const collection: any = featureCollection(polygons);
+    return collection;
   };
 }
 

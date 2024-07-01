@@ -1,7 +1,7 @@
 /*
  * 区域边界动态样式：渲染完成淡出
  * map：            地图
- * line：           边界的geojson，类型LineString
+ * route           边界的geojson，类型LineString
  * steps：          步长，越小平滑程度越大
  * stepPoint：      通过turf.js平滑线路
  */

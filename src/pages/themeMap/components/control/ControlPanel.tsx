@@ -64,7 +64,6 @@ const ControlPanel = (props: TControlPanel) => {
       {location.pathname === '/theme-map' ? (
         <RegionSearch position={{ top: 10, right: 640 }} regionList={regionList} />
       ) : undefined}
-
       {offsetContent && <OffsetPanel content={offsetContent} />}
       {timeSliderContent && <SliderControl position={{ top: 10, right: 530 }} content={timeSliderContent} />}
       {location.pathname === '/theme-map' ? <CanvasToMap position={{ top: 10, right: 410 }} /> : undefined}

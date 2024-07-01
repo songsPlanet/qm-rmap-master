@@ -7,23 +7,23 @@ export interface TCBDK {
   fillOpacity: number;
 }
 
-export const cbdkConfig: TCBDK[] = [
+export const dwlxConfig: TCBDK[] = [
   {
-    name: '早稻',
-    fillColor: '#3aa786',
-    outlineColor: '#3aa786',
+    name: '绿地',
+    fillColor: '#36e559',
+    outlineColor: '#36e559',
     fillOpacity: 0.6,
   },
   {
-    name: '中稻',
-    fillColor: '#103dc1',
-    outlineColor: '#103dc1',
+    name: '空地、建筑、道路等',
+    fillColor: '#f1e503',
+    outlineColor: '#f1e503',
     fillOpacity: 0.6,
   },
   {
-    name: '晚稻',
-    fillColor: '#9267ee',
-    outlineColor: '#9267ee',
+    name: '水',
+    fillColor: '#3c7db7',
+    outlineColor: '#3c7db7',
     fillOpacity: 0.6,
   },
 ];
@@ -34,16 +34,16 @@ export const wh_sqal_sdbhq_wms: TLayerOptions = {
   type: 'raster',
   isAdd: true,
   minzoom: 0,
-  // legend: {
-  //   title: '芜湖保护区',
-  //   items: [
-  //     ...cbdkConfig.map((d) => ({
-  //       style: { backgroundColor: d.fillColor, opacity: d.fillOpacity },
-  //       text: d.name,
-  //     })),
-  //     { text: '其他', style: { backgroundColor: '#e77d53', opacity: 0.6 } },
-  //   ],
-  // },
+  legend: {
+    title: '芜湖湿地保护区',
+    items: [
+      ...dwlxConfig.map((d) => ({
+        style: { backgroundColor: d.fillColor, opacity: d.fillOpacity },
+        text: d.name,
+      })),
+      { text: '其他', style: { backgroundColor: '#232323', opacity: 0.6 } },
+    ],
+  },
   LayerName: 'wh_sqal_work:wh_sqal_sdbhq_2024_01',
   source: {
     type: 'raster',

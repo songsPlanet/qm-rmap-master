@@ -32,24 +32,22 @@ Mock.mock('/v1.0/statistic/getStatistic', 'post', {
   code: 0,
   message: '操作成功',
   data: {
-    region: '界首市',
-    regionCode: '430381202',
+    regionName: '安徽省',
+    regionCode: '34',
     area: 200.11,
-    label: '承保地块',
-    childList: [
+    queryType: '确权地块',
+    areaList: [
       {
-        region: '永乐镇',
-
+        regionName: '永乐镇',
         regionCode: '430381202',
         area: 80.11,
-        childList: [],
+        areaList: [],
       },
       {
-        region: '芦村镇',
-
+        regionName: '芦村镇',
         regionCode: '430381203',
         area: 120,
-        childList: [],
+        areaList: [],
       },
     ],
   },
