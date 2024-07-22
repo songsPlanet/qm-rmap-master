@@ -1,5 +1,6 @@
 // import { getInsuranceListApi } from '@/services/piccClaimsAnalyse';
 import { Descriptions, List } from 'antd';
+import React from 'react';
 import { memo, useEffect, useMemo, useState } from 'react';
 const ProtectionPopup = (props: { data?: any }) => {
   const { data } = props;
@@ -17,7 +18,7 @@ const ProtectionPopup = (props: { data?: any }) => {
       {
         name: 'dwmj',
         text: '地物面积',
-        func: () => `${data['dwmj']}-${data['xjxzqh']}`,
+        func: () => `${data['dwmj']}- 亩`,
       },
 
       {
@@ -26,20 +27,20 @@ const ProtectionPopup = (props: { data?: any }) => {
         func: () => `${data['sjxzqh']}-${data['xjxzqh']}`,
       },
     ];
-  }, []);
+  }, [data]);
 
-  const getInsuranceList = (value: string) => {
-    // getInsuranceListApi(value).then((ctx: any) => {
-    //   const temp = ctx?.data || [];
-    //   setList(temp);
-    // });
-  };
+  // const getInsuranceList = (value: string) => {
+  //   getInsuranceListApi(value).then((ctx: any) => {
+  //     const temp = ctx?.data || [];
+  //     setList(temp);
+  //   });
+  // };
 
-  useEffect(() => {
-    if (data?.dkbm) {
-      getInsuranceList(data?.dkbm);
-    }
-  }, [data?.dkbm]);
+  // useEffect(() => {
+  //   if (data?.dkbm) {
+  //     getInsuranceList(data?.dkbm);
+  //   }
+  // }, [data?.dkbm]);
   return (
     <Descriptions column={1} layout="horizontal" bordered size="small">
       {fieldMap.map((d) => (

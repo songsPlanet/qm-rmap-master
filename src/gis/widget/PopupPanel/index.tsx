@@ -65,7 +65,6 @@ const PopupPanel = (props: TPopupPanel) => {
     const restLayerClicked = async (map: MapWrapper, e: mapboxgl.MapMouseEvent & mapboxgl.EventData) => {
       if (wms) {
         const url = wms.baseUrl;
-        console.log('url', url);
 
         const params = {
           service: 'WFS',
@@ -73,7 +72,7 @@ const PopupPanel = (props: TPopupPanel) => {
           request: 'GetFeature',
           maxFeatures: 50,
           outputFormat: 'application/json',
-          CQL_FILTER: `INTERSECTS(smgeometry,Point(${e.lngLat.lng} ${e.lngLat.lat}))`,
+          CQL_FILTER: `INTERSECTS(the_geom,Point(${e.lngLat.lng} ${e.lngLat.lat}))`,
         };
         const lyrIds = map
           .getLayerList()
@@ -82,8 +81,6 @@ const PopupPanel = (props: TPopupPanel) => {
         const openLys = wms!.layers.filter((d) => lyrIds.findIndex((f) => f === d.id) > -1);
         for (let i = 0; i < openLys.length; i++) {
           const rData = await axios.get(url, { ...params, typeName: openLys[i].layerName }).then((ctx: any) => {
-            console.log('1111', ctx);
-
             const temp = ctx || {};
             const flag = temp?.features?.length > 0;
             if (flag) {
