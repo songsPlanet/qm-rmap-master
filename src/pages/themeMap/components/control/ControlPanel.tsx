@@ -3,31 +3,19 @@ import { memo, useMemo, useEffect, ReactElement } from 'react';
 import { MapboxExportControl } from '../../../../gis/widget/Print';
 import InitialLocation from '@/gis/widget/InitialLocation';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import OffsetPanel from '@/gis/widget/OffsetPanel';
-import StatisticControl from './StatisticControl';
 import { useMap } from '@/gis/context/mapContext';
 import LayerList from '@/gis/widget/LayerList';
 import { useLocation } from 'react-router-dom';
 import Location from '@/gis/widget/Location';
 import Measure from '@/gis/widget/Measure';
 import Legend from '@/gis/widget/Legend';
-import CanvasToMap from './MapToCanvas';
 import Swipe from '@/gis/widget/Swipe';
-import Search from './Search';
-import Track from './Track';
-import SliderControl from './SliderControl';
-import RegionSearch from '@/pages/themeMap/components/control/RegionControl';
 interface TControlPanel {
   regionList?: any;
-  searchContent?: ReactElement;
-  statisticContent?: ReactElement;
-  trackContent?: ReactElement;
-  offsetContent?: ReactElement;
-  timeSliderContent?: ReactElement;
 }
 
 const ControlPanel = (props: TControlPanel) => {
-  const { searchContent, timeSliderContent, statisticContent, trackContent, offsetContent, regionList } = props;
+  const { regionList } = props;
   const location = useLocation();
   const { map } = useMap();
 
@@ -61,15 +49,6 @@ const ControlPanel = (props: TControlPanel) => {
       <Location position={{ top: 265, right: 10 }} />
       <Measure position={{ top: 305, right: 10 }} />
       <InitialLocation position={{ top: 185, right: 10 }} />
-      {location.pathname === '/theme-map' ? (
-        <RegionSearch position={{ top: 10, right: 640 }} regionList={regionList} />
-      ) : undefined}
-      {offsetContent && <OffsetPanel content={offsetContent} />}
-      {timeSliderContent && <SliderControl position={{ top: 10, right: 530 }} content={timeSliderContent} />}
-      {location.pathname === '/theme-map' ? <CanvasToMap position={{ top: 10, right: 410 }} /> : undefined}
-      {trackContent && <Track position={{ top: 10, right: 290 }} content={trackContent} />}
-      {searchContent && <Search position={{ top: 10, right: 50 }} content={searchContent} />}
-      {statisticContent && <StatisticControl position={{ top: 10, right: 170 }} content={statisticContent} />}
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import StatisticContent from './components/control/StatisticControl/StatisticContent';
+import StatisticContent from './components/tool/StatisticControl/StatisticContent';
 import { memo, useMemo, useEffect } from 'react';
-import TimeSliderContent from './components/control/SliderControl/TimeSliderContent';
-import TrackContent from '@/pages/themeMap/components/control/Track/TrackContent';
-import OffsetContent from './components/control/OffSetControl/OffsetContent';
-import SearchContent from './components/control/Search/SearchContent';
+import TimeSliderContent from './components/tool/SliderControl/TimeSliderContent';
+import TrackContent from '@/pages/themeMap/components/tool/Track/TrackContent';
+import OffsetContent from './components/tool/OffSetControl/OffsetContent';
+import SearchContent from './components/tool/Search/SearchContent';
 import { wh_sqal_sdbhq_wms } from './mapSetting/wh_sqal_sdbhq_wms';
 import ProtectionPopup from './components/popup/ProtectionPopup';
 import ControlPanel from './components/control/ControlPanel';
@@ -17,6 +17,7 @@ import { field_vt } from './mapSetting/field_vt';
 import { mainActions } from '@/models';
 import mapSetting from './mapSetting';
 import { isEmpty } from '@/utils';
+import ToolPanel from './components/tool/ToolPanel';
 
 const ThemeMap = (props: any) => {
   const { regionList } = useModel('main');
@@ -52,12 +53,13 @@ const ThemeMap = (props: any) => {
   return (
     <MapContainer mapOptions={{ ...mapOptionsJS, id: 'themeMap' }} mapSetting={mapSetting}>
       <PopupPanel vector={vector} wms={wms} />
-      <ControlPanel
+      <ControlPanel />
+      <ToolPanel
         offsetContent={<OffsetContent />}
         trackContent={<TrackContent />}
+        searchContent={<SearchContent />}
+        statisticContent={<StatisticContent />}
         timeSliderContent={<TimeSliderContent />}
-        searchContent={props?.location?.pathname === '/theme-map' ? <SearchContent /> : undefined}
-        statisticContent={props?.location?.pathname === '/theme-map' ? <StatisticContent /> : undefined}
       />
     </MapContainer>
   );

@@ -57,6 +57,7 @@ const PopupWrapper = (props: TPopupWrapper) => {
     };
     popup.on('close', onCloseHandle);
     map && popup.setDOMContent(container).addTo(map);
+    // 可移动panel
     const ppHeader = document.getElementsByClassName('popup-header-wrap')[0];
     const ppContainer = (popup as any)?._container as HTMLElement;
     const mousedown = (e: any) => {

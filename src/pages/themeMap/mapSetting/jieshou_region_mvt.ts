@@ -17,7 +17,6 @@ regionConfig.forEach((d) => {
     paint: {
       'line-color': 'blue',
       'line-width': 2,
-      // 'line-opacity-transition': { duration: 1000 },
     },
     source: {
       type: 'vector',

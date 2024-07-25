@@ -4,10 +4,10 @@ import { getFeatureBoundingBox } from '@/gis/utils';
 import { queryTrackLineResult } from '@/api/map';
 import { memo, useRef, useEffect } from 'react';
 import { AimOutlined } from '@ant-design/icons';
-import styles from './index.module.less';
 import { Button } from 'antd';
 
 const CanvasToMap = (props: { position: TWidgetPosition }) => {
+  const { position } = props;
   const mapUtil = useRef<any>(null);
 
   const btnClickHandle = () => {
@@ -24,7 +24,7 @@ const CanvasToMap = (props: { position: TWidgetPosition }) => {
   }, []);
 
   return (
-    <Button style={props.position} className={styles.btn} icon={<AimOutlined />} onClick={btnClickHandle}>
+    <Button style={{ ...position, position: 'absolute' }} icon={<AimOutlined />} onClick={btnClickHandle}>
       导出轨迹
     </Button>
   );

@@ -1,5 +1,5 @@
 import type { TWidgetPosition } from '@/gis/widget/BaseWidget';
-import { cloneElement, memo, useState } from 'react';
+import { cloneElement, memo, useState, useCallback } from 'react';
 import { PieChartOutlined } from '@ant-design/icons';
 import type { ReactElement } from 'react';
 import styles from './index.module.less';
@@ -11,11 +11,9 @@ const StatisticControl = (props: { position: TWidgetPosition; content: ReactElem
 
   return (
     <>
-      <div className={styles.control} style={position}>
-        <Button icon={<PieChartOutlined />} onClick={() => setOpen(true)}>
-          空间统计
-        </Button>
-      </div>
+      <Button style={{ ...position, position: 'absolute' }} icon={<PieChartOutlined />} onClick={() => setOpen(true)}>
+        空间统计
+      </Button>
       <Drawer
         title="空间统计"
         mask={false}

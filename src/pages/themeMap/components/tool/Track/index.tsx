@@ -1,8 +1,6 @@
 import { TWidgetPosition } from '@/gis/widget/BaseWidget';
 import { PlayCircleOutlined } from '@ant-design/icons';
-import { memo, useState } from 'react';
-import styles from './index.module.less';
-import TimeSliderContent from './TimeSliderContent';
+import { cloneElement, memo, useState } from 'react';
 import { ReactElement } from 'react';
 import { Button } from 'antd';
 
@@ -12,10 +10,14 @@ const TrackControl = (props: { position: TWidgetPosition; content: ReactElement 
 
   return (
     <>
-      <Button style={position} className={styles.btn} icon={<PlayCircleOutlined />} onClick={() => setShow(!show)}>
-        时间轴
+      <Button
+        style={{ ...position, position: 'absolute' }}
+        icon={<PlayCircleOutlined />}
+        onClick={() => setShow(!show)}
+      >
+        轨迹回放
       </Button>
-      {show && content && <TimeSliderContent />}
+      {show && content && cloneElement(content, { isPopOpenHandle: () => setShow(false) })}
     </>
   );
 };
