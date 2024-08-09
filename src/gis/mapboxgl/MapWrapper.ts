@@ -79,7 +79,8 @@ class MapWrapper extends Map {
     const center = this._options.center;
     const zoom = this._options.zoom;
     this.flyTo({
-      duration: 2000,
+      bearing: 0,
+      pitch: 0,
       center,
       zoom,
     });
@@ -252,6 +253,15 @@ class MapWrapper extends Map {
     }
   }
 
+  clearDotIcon = () => {
+    const dsId = 'red-dot-ds';
+    const lyrId = 'red-dot-lyr';
+    const flag = this.getLayer(lyrId);
+    if (flag) {
+      this.removeLayer(lyrId);
+      this.removeSource(dsId);
+    }
+  };
   /**
    * 查找有效beforeId
    */

@@ -84,20 +84,10 @@ const Location = (props: { position: TWidgetPosition }) => {
     addLocationIcon(lonlat as number[]);
   };
 
-  const clearIcon = () => {
-    const dsId = 'dot-ds';
-    const lyrId = 'dot';
-    const flag = map?.getLayer(lyrId);
-    if (flag) {
-      map?.removeLayer(lyrId);
-      map?.removeSource(dsId);
-    }
-  };
-
   const addLocationIcon = (point: number[]) => {
-    clearIcon();
+    map?.clearDotIcon();
     if (map) {
-      map?.addSource('dot-ds', {
+      map?.addSource('red-dot-ds', {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
@@ -114,9 +104,9 @@ const Location = (props: { position: TWidgetPosition }) => {
         },
       });
       map?.addLayer({
-        id: 'dot',
+        id: 'red-dot-lyr',
         type: 'symbol',
-        source: 'dot-ds',
+        source: 'red-dot-ds',
         layout: {
           'icon-image': 'redAnimationImg',
           'icon-size': 1,
@@ -129,7 +119,7 @@ const Location = (props: { position: TWidgetPosition }) => {
   };
 
   const resetForm = () => {
-    clearIcon();
+    map?.clearDotIcon();
     form.resetFields();
   };
 

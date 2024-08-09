@@ -1,15 +1,16 @@
 import { NavigationControl, FullscreenControl } from 'mapbox-gl';
-import { memo, useMemo, useEffect, ReactElement } from 'react';
-import { MapboxExportControl } from '../../../../gis/widget/Print';
 import InitialLocation from '@/gis/widget/InitialLocation';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import { MapboxExportControl } from 'qm-map-print';
 import { useMap } from '@/gis/context/mapContext';
+import { memo, useMemo, useEffect } from 'react';
 import LayerList from '@/gis/widget/LayerList';
 import { useLocation } from 'react-router-dom';
 import Location from '@/gis/widget/Location';
 import Measure from '@/gis/widget/Measure';
 import Legend from '@/gis/widget/Legend';
 import Swipe from '@/gis/widget/Swipe';
+
 interface TControlPanel {
   regionList?: any;
 }

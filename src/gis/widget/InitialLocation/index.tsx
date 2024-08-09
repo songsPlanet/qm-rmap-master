@@ -8,6 +8,8 @@ const Location = (props: { position: TWidgetPosition }) => {
 
   const onOpenHandle = () => {
     map?.zoomHome();
+    map?.clearDotIcon();
+    map?.clearSelect();
   };
 
   return (

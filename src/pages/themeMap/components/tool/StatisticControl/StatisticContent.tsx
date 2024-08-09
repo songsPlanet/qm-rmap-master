@@ -1,12 +1,12 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { Empty, Result, Spin, Tabs, message } from 'antd';
+import { Empty, Result, Spin, Tabs } from 'antd';
 import { useRegion } from '@/gis/context/RegionContext';
 import type { TMapSpaceStatistic } from './Detail';
 import { MapEvent } from '@/gis/mapboxgl/typings';
 import { useMap } from '@/gis/context/mapContext';
-import StatisticDetail from './Detail';
-import { debounce, isEmpty } from '@/utils';
 import { queryStatisticResult } from '@/api/map';
+import StatisticDetail from './Detail';
+import { debounce } from '@/utils';
 
 const StatisticContent = (props: { date?: any }) => {
   const { date } = props;
@@ -45,8 +45,6 @@ const StatisticContent = (props: { date?: any }) => {
   };
 
   useEffect(() => {
-    console.log('currentRegion', currentRegion?.value);
-
     if (currentRegion?.value) {
       getChartData();
     }

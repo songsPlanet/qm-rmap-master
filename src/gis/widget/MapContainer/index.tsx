@@ -1,14 +1,13 @@
-import { RegionProvider } from '@/gis/context/RegionContext';
 import { TMapLayerSettting } from '@/gis/mapboxgl/typings';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
-import { memo, useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import MapWidget from '@/gis/widget/MapWidget';
 import classes from './index.module.less';
 import { cloneDeep } from 'lodash';
 
 interface TMapContainerProp {
   mapOptions: any;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   mapSetting: TMapLayerSettting;
   onMapLoad?: (map: MapWrapper) => void;
 }
