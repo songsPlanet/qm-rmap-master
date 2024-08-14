@@ -1,6 +1,8 @@
 import { useMap } from '@/gis/context/mapContext';
-import { LngLatLike, Popup, PopupOptions } from 'mapbox-gl';
-import { ReactNode, memo, useEffect, useMemo } from 'react';
+import type { LngLatLike, PopupOptions } from 'mapbox-gl';
+import { Popup } from 'mapbox-gl';
+import type { ReactNode } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import './index.less';
 let defaultXY = {

@@ -1,4 +1,4 @@
-import { GeoJSONSource } from 'mapbox-gl';
+import type { GeoJSONSource } from 'mapbox-gl';
 
 export interface IGeoJSONResolver {
   /**

@@ -1,9 +1,10 @@
-import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
+import type { TWidgetPosition } from '../BaseWidget';
+import BaseWidget, { ControlICONS } from '../BaseWidget';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Button, Radio, Form, Input, Space } from 'antd';
 import { decimalToDms, dmsToDecimal } from '@/gis/utils';
 import { useMap } from '@/gis/context/mapContext';
-import { LngLatLike } from 'mapbox-gl';
+import type { LngLatLike } from 'mapbox-gl';
 import './index.less';
 
 const initialPosition = {

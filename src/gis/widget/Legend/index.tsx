@@ -1,10 +1,12 @@
 import { useMap } from '@/gis/context/mapContext';
-import LayerGroupWrapper from '@/gis/mapboxgl/layer/LayerGroupWrapper';
-import LayerWrapper from '@/gis/mapboxgl/layer/LayerWrapper';
+import type LayerGroupWrapper from '@/gis/mapboxgl/layer/LayerGroupWrapper';
+import type LayerWrapper from '@/gis/mapboxgl/layer/LayerWrapper';
 import { MapEvent } from '@/gis/mapboxgl/typings';
 import { debounce } from '@/gis/utils';
-import { memo, ReactNode, useCallback, useEffect, useState } from 'react';
-import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
+import type { ReactNode } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
+import type { TWidgetPosition } from '../BaseWidget';
+import BaseWidget, { ControlICONS } from '../BaseWidget';
 import './index.less';
 
 const LegendControl = (props: { position: TWidgetPosition }) => {

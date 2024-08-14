@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, memo, useMemo, useRef } from 'react';
 import { Table, Pagination, Spin, message } from 'antd';
-import ListPageHeader, { Columns, processFormValueAccordingColumns } from '../ListPageHeader';
+import type { Columns } from '../ListPageHeader';
+import ListPageHeader, { processFormValueAccordingColumns } from '../ListPageHeader';
 import classes from './index.module.less';
 import useReducer from '@/utils/useReducer';
 import { downLoadFile, delay, events } from '@/utils';

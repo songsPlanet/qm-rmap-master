@@ -1,4 +1,5 @@
-import { memo, useMemo, useEffect, ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import { memo, useMemo, useEffect } from 'react';
 import Search from './Search';
 import StatisticControl from './StatisticControl';
 import TrackControl from './Track';

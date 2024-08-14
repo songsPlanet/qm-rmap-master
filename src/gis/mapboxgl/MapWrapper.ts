@@ -1,10 +1,11 @@
-import { Map, LngLatBounds, LngLatLike, StyleFunction, Expression } from 'mapbox-gl';
+import type { StyleFunction, Expression } from 'mapbox-gl';
+import { Map, LngLatBounds, LngLatLike } from 'mapbox-gl';
 import { transTreeToArr, getFeatureBoundingBox } from '../utils';
 import LayerGroupWrapper from './layer/LayerGroupWrapper';
 import LayerWrapper from './layer/LayerWrapper';
 import { MapEvent } from './typings/TEvent';
-import { TMapLayerSettting } from './typings/TLayerOptions';
-import { TMapOptions } from './typings/TMapOptions';
+import type { TMapLayerSettting } from './typings/TLayerOptions';
+import type { TMapOptions } from './typings/TMapOptions';
 import { featureCollection, lineString, lineStringToPolygon } from '@turf/turf';
 import type { FeatureCollection } from '@turf/turf';
 /**

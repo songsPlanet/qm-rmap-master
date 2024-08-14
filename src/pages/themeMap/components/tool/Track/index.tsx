@@ -1,7 +1,7 @@
-import { TWidgetPosition } from '@/gis/widget/BaseWidget';
+import type { TWidgetPosition } from '@/gis/widget/BaseWidget';
 import { PlayCircleOutlined } from '@ant-design/icons';
 import { cloneElement, memo, useState } from 'react';
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Button } from 'antd';
 
 const TrackControl = (props: { position: TWidgetPosition; content: ReactElement }) => {

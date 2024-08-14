@@ -1,4 +1,5 @@
-import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
+import type { TWidgetPosition } from '../BaseWidget';
+import BaseWidget, { ControlICONS } from '../BaseWidget';
 import { PolylineMeasure } from '@/gis/mapboxgl/graphic/PolylineMeasure';
 import { PolygonMeasure } from '@/gis/mapboxgl/graphic/PolygonMeasure';
 import { useMap } from '@/gis/context/mapContext';

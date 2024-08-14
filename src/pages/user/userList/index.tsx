@@ -11,7 +11,7 @@ function initialState() {
   };
 }
 
-function Page(props: any) {
+function Page() {
   const [state, setState] = useReducer(initialState);
 
   return (
@@ -25,7 +25,7 @@ function Page(props: any) {
           plus {state.count}
         </Button>
 
-        <Button onClick={() => setState((prevState) => ({ count: 0 }))}>reset</Button>
+        <Button onClick={() => setState(() => ({ count: 0 }))}>reset</Button>
       </Space>
 
       <div style={{ height: 20 }} />

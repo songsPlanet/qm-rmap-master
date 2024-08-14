@@ -1,7 +1,7 @@
 import { useContext, createContext } from 'react';
-import { TMapOptions } from '../mapboxgl/typings';
-import MapWrapper from '../mapboxgl/MapWrapper';
-import { LngLatLike } from 'mapbox-gl';
+import type { TMapOptions } from '../mapboxgl/typings';
+import type MapWrapper from '../mapboxgl/MapWrapper';
+import type { LngLatLike } from 'mapbox-gl';
 export interface TMapContext {
   map: MapWrapper | null;
 }

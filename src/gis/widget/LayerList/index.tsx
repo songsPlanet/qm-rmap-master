@@ -1,10 +1,11 @@
-import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
-import LayerGroupWrapper from '@/gis/mapboxgl/layer/LayerGroupWrapper';
+import type { TWidgetPosition } from '../BaseWidget';
+import BaseWidget, { ControlICONS } from '../BaseWidget';
+import type LayerGroupWrapper from '@/gis/mapboxgl/layer/LayerGroupWrapper';
 import { useState, useEffect, memo, useCallback } from 'react';
-import LayerWrapper from '@/gis/mapboxgl/layer/LayerWrapper';
+import type LayerWrapper from '@/gis/mapboxgl/layer/LayerWrapper';
 import { useMap } from '@/gis/context/mapContext';
 import { MapEvent } from '@/gis/mapboxgl/typings';
-import { DataNode } from 'antd/es/tree';
+import type { DataNode } from 'antd/es/tree';
 import { debounce } from '@/gis/utils';
 import { Tree } from 'antd';
 

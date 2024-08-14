@@ -6,8 +6,8 @@
  * stepPoint：      通过turf.js平滑线路
  */
 
-import MapWrapper from '@/gis/mapboxgl/MapWrapper';
-import { GeoJSONSource } from 'mapbox-gl';
+import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type { GeoJSONSource } from 'mapbox-gl';
 import { along, length, polygonToLine } from '@turf/turf';
 
 const geojson: any = {

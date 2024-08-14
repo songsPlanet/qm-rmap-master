@@ -47,18 +47,18 @@ const InsurancePopup = (props: { data?: { dkbm: string } }) => {
     ];
   }, []);
 
-  const getInsuranceList = (value: string) => {
-    // getInsuranceListApi(value).then((ctx: any) => {
-    //   const temp = ctx?.data || [];
-    //   setList(temp);
-    // });
-  };
+  // const getInsuranceList = (value: string) => {
+  //   // getInsuranceListApi(value).then((ctx: any) => {
+  //   //   const temp = ctx?.data || [];
+  //   //   setList(temp);
+  //   // });
+  // };
 
-  useEffect(() => {
-    if (data?.dkbm) {
-      getInsuranceList(data?.dkbm);
-    }
-  }, [data?.dkbm]);
+  // useEffect(() => {
+  //   if (data?.dkbm) {
+  //     getInsuranceList(data?.dkbm);
+  //   }
+  // }, [data?.dkbm]);
   return (
     <List
       itemLayout="vertical"

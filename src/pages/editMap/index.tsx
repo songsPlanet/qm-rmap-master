@@ -1,9 +1,9 @@
 import ControlPanel from '../themeMap/components/control/ControlPanel';
 import mapSetting from './mapSetting';
-import MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import MapWidget from '@/gis/widget/MapWidget';
 import styles from './index.module.less';
-import { LngLatLike } from 'mapbox-gl';
+import type { LngLatLike } from 'mapbox-gl';
 import { memo, useState, useEffect } from 'react';
 import DrawWidget from '@/gis/widget/DrawWidget';
 import { isEmpty } from '@/utils';

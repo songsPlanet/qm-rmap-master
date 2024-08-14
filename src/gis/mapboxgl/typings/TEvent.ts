@@ -1,6 +1,6 @@
-import LayerGroupWrapper from '../layer/LayerGroupWrapper';
-import LayerWrapper from '../layer/LayerWrapper';
-import MapWrapper from '../MapWrapper';
+import type LayerGroupWrapper from '../layer/LayerGroupWrapper';
+import type LayerWrapper from '../layer/LayerWrapper';
+import type MapWrapper from '../MapWrapper';
 
 export enum MapEvent {
   /**

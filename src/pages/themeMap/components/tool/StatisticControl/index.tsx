@@ -1,8 +1,7 @@
 import type { TWidgetPosition } from '@/gis/widget/BaseWidget';
-import { cloneElement, memo, useState, useCallback } from 'react';
+import { cloneElement, memo, useState } from 'react';
 import { PieChartOutlined } from '@ant-design/icons';
 import type { ReactElement } from 'react';
-import styles from './index.module.less';
 import { Button, Drawer } from 'antd';
 
 const StatisticControl = (props: { position: TWidgetPosition; content: ReactElement }) => {

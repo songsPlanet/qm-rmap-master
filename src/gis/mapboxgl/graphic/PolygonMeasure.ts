@@ -1,5 +1,5 @@
 import { Marker } from 'mapbox-gl';
-import MapWrapper from '../MapWrapper';
+import type MapWrapper from '../MapWrapper';
 import './index.less';
 import { polygon, area } from '@turf/turf';
 class PolygonMeasure {

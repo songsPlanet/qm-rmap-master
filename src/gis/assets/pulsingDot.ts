@@ -1,4 +1,4 @@
-import MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 
 const getPulsingDot = (
   map: MapWrapper,

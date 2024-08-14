@@ -1,4 +1,5 @@
-import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
+import type { TWidgetPosition } from '../BaseWidget';
+import BaseWidget, { ControlICONS } from '../BaseWidget';
 import { useMap } from '@/gis/context/mapContext';
 import { memo } from 'react';
 import './index.less';

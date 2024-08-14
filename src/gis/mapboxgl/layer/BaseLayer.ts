@@ -1,5 +1,5 @@
-import MapWrapper from '../MapWrapper';
-import { TLayerOptions } from '../typings';
+import type MapWrapper from '../MapWrapper';
+import type { TLayerOptions } from '../typings';
 
 abstract class BaseLayer {
   protected _options: TLayerOptions;

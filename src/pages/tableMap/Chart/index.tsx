@@ -1,9 +1,9 @@
 import { memo, useRef, useEffect } from 'react';
 import MapWidget from '@/gis/widget/MapWidget';
-import { LngLatLike } from 'mapbox-gl';
+import type { LngLatLike } from 'mapbox-gl';
 import mapSetting from './mapSetting';
 import ControlPanel from '@/pages/themeMap/components/control/ControlPanel';
-import MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import { delay, events } from '@/utils';
 
 function Chart() {

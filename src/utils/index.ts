@@ -1,4 +1,5 @@
-import tween, { TweenAttrNames } from './tween';
+import type { TweenAttrNames } from './tween';
+import tween from './tween';
 
 // export { default as axios } from './axios';
 export { default as request } from '@/utils/axios';

@@ -19,7 +19,7 @@ import mapSetting from './mapSetting';
 import { isEmpty } from '@/utils';
 import ToolPanel from './components/tool/ToolPanel';
 
-const ThemeMap = (props: any) => {
+const ThemeMap = () => {
   const { regionList } = useModel('main');
   const { queryRegionList } = useActions(mainActions);
   const { dispatch } = useRegion();
@@ -27,7 +27,9 @@ const ThemeMap = (props: any) => {
   const vector = useMemo(() => {
     return [{ id: field_vt.id, title: field_vt.name, template: <FieldPopup /> }];
   }, []);
-
+  // const vector = useMemo(() => {
+  //   return [...zlyx.layers.map((d) => ({ id: d.id, title: d.name, template: <ZLYXPopup /> }))];
+  // }, []);
   const wms = {
     baseUrl: 'http://120.26.225.92:8088/geoserver/wh_sqal_work/ows',
     layers: [

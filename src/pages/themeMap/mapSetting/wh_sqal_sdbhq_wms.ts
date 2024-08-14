@@ -1,4 +1,4 @@
-import { TLayerOptions } from '@/gis/mapboxgl/typings';
+import type { TLayerOptions } from '@/gis/mapboxgl/typings';
 
 export interface TCBDK {
   name: string;

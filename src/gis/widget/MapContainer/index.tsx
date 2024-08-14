@@ -1,5 +1,5 @@
-import { TMapLayerSettting } from '@/gis/mapboxgl/typings';
-import MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type { TMapLayerSettting } from '@/gis/mapboxgl/typings';
+import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import React, { memo, useEffect, useRef } from 'react';
 import MapWidget from '@/gis/widget/MapWidget';
 import classes from './index.module.less';

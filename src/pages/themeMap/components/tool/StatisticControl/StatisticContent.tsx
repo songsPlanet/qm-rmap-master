@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Empty, Result, Spin, Tabs } from 'antd';
 import { useRegion } from '@/gis/context/RegionContext';
 import type { TMapSpaceStatistic } from './Detail';
@@ -24,7 +24,7 @@ const StatisticContent = (props: { date?: any }) => {
   const getChartData = () => {
     setLoading(true);
     Promise.all(
-      layers.map((d: any) => {
+      layers.map(() => {
         // if (d === 'field_vt') {
         const query = { type: 1, regionCode: currentRegion!.value };
         return queryStatisticResult(query);

@@ -2,8 +2,8 @@
   "compilerOptions": {
     "noEmit": true,
     "strict": true,
-    "allowJs": true,
-    "checkJs": true,
+    "allowJs": false,
+    "checkJs": false,
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react-jsx",

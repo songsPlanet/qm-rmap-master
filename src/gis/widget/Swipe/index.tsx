@@ -1,8 +1,9 @@
-import BaseWidget, { ControlICONS, TWidgetPosition } from '../BaseWidget';
+import type { TWidgetPosition } from '../BaseWidget';
+import BaseWidget, { ControlICONS } from '../BaseWidget';
 import { memo, useCallback, useEffect, useState } from 'react';
 import 'mapbox-gl-compare/dist/mapbox-gl-compare.css';
 import { useMap } from '@/gis/context/mapContext';
-import MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import Compare from 'mapbox-gl-compare';
 import LayerList from '../LayerList';
 import MapWidget from '../MapWidget';

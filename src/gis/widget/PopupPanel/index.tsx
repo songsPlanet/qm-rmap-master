@@ -1,8 +1,10 @@
-import { cloneElement, memo, ReactElement, useEffect, useState } from 'react';
+import type { ReactElement } from 'react';
+import { cloneElement, memo, useEffect, useState } from 'react';
 import { useMap } from '@/gis/context/mapContext';
-import MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import PopupWrapper from '@/gis/widget/PopupWrapper';
-import mapboxgl, { LngLatLike } from 'mapbox-gl';
+import type { LngLatLike } from 'mapbox-gl';
+import type mapboxgl from 'mapbox-gl';
 import axios from '@/utils/axios';
 
 interface TPouperData {

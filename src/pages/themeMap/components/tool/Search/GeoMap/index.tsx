@@ -1,4 +1,5 @@
-import { CSSProperties, memo, useEffect, useRef } from 'react';
+import type { CSSProperties } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { getFeatureBoundingBox } from '@/gis/utils';
 import { Map } from 'mapbox-gl';
 

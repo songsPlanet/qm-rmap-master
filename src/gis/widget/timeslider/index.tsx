@@ -1,4 +1,4 @@
-import MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import { Slider } from 'antd';
 import React, { useEffect } from 'react';
 import './index.less';

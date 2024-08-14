@@ -1,13 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import LazyLoader from '@/components/LazyLoader';
-import {
-  UserSwitchOutlined,
-  SolutionOutlined,
-  FileMarkdownOutlined,
-  TeamOutlined,
-  AreaChartOutlined,
-} from '@ant-design/icons';
+import { UserSwitchOutlined, SolutionOutlined, FileMarkdownOutlined, TeamOutlined } from '@ant-design/icons';
 
 export type RouteItem = {
   // 组件

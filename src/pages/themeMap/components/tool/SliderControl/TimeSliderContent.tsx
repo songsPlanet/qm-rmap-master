@@ -1,6 +1,6 @@
 import { Slider } from 'antd';
 import { useEffect } from 'react';
-import { useMap } from '@/gis/context/mapContext';
+// import { useMap } from '@/gis/context/mapContext';
 import styles from './index.module.less';
 
 const sliderLayers = [
@@ -16,15 +16,15 @@ const sliderLayers = [
   { key: 9, title: '2022', value: 'img-WH_2022_08M_01' },
   { key: 10, title: '2022', value: 'img-WH_2022_08M_01' },
 ];
-let lastItem: any;
+// let lastItem: any;
 
 const TimeSliderContent = () => {
-  const { map } = useMap();
+  // const { map } = useMap();
   const marks: any = {};
   sliderLayers.forEach((d) => {
     marks[d.key] = d.title;
   });
-  const onChangedHandler = (value: any) => {
+  const onChangedHandler = (v) => {
     // let currentItem = sliderLayers.find((d) => d.key === value);
     // let lyrItem: any;
     // if (lastItem) {

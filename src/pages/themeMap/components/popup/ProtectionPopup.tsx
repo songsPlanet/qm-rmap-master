@@ -1,10 +1,8 @@
 // import { getInsuranceListApi } from '@/services/piccClaimsAnalyse';
-import { Descriptions, List } from 'antd';
-import React from 'react';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { Descriptions } from 'antd';
+import { memo, useMemo } from 'react';
 const ProtectionPopup = (props: { data?: any }) => {
   const { data } = props;
-  const [list, setList] = useState([]);
   const fieldMap = useMemo(() => {
     return [
       {
@@ -29,18 +27,6 @@ const ProtectionPopup = (props: { data?: any }) => {
     ];
   }, [data]);
 
-  // const getInsuranceList = (value: string) => {
-  //   getInsuranceListApi(value).then((ctx: any) => {
-  //     const temp = ctx?.data || [];
-  //     setList(temp);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   if (data?.dkbm) {
-  //     getInsuranceList(data?.dkbm);
-  //   }
-  // }, [data?.dkbm]);
   return (
     <Descriptions column={1} layout="horizontal" bordered size="small">
       {fieldMap.map((d) => (

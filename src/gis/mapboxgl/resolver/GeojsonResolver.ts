@@ -1,5 +1,5 @@
-import { GeoJSONSource } from 'mapbox-gl';
-import { IGeoJSONResolver } from '../typings';
+import type { GeoJSONSource } from 'mapbox-gl';
+import type { IGeoJSONResolver } from '../typings';
 
 class GeojsonResolver implements IGeoJSONResolver {
   async load(source: GeoJSONSource) {}

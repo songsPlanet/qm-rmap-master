@@ -1,4 +1,4 @@
-import { TLayerOptions } from '@/gis/mapboxgl/typings';
+import type { TLayerOptions } from '@/gis/mapboxgl/typings';
 
 export const field_vt: TLayerOptions = {
   id: 'field_vt',

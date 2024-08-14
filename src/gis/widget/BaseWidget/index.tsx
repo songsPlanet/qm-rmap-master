@@ -1,4 +1,5 @@
-import { useState, memo, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { useState, memo } from 'react';
 import './index.less';
 export interface TWidgetPosition {
   top?: number;
