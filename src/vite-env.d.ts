@@ -3,3 +3,4 @@
 interface QueryParamsType {
   [x: string]: any;
 }
+declare module 'qm-rmap';

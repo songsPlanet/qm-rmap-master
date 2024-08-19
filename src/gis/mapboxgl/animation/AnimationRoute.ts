@@ -90,35 +90,33 @@ class AnimationRoute {
         'line-opacity': 1,
       },
     });
-    this.addImageLayer();
-    // if (this.isStyle) this.addDashLayer();
+    if (this.isStyle) this.addDashLayer();
   }
 
   addDashLayer() {
     this.map.addDashLayer('line-ds');
+    this.addImageLayer();
   }
 
   addImageLayer() {
     // 路径上的箭头
-    if (this.isStyle) {
-      this.map.loadImage(arrow, (error: any, image: any) => {
-        if (!error) {
-          if (!this.map.hasImage('arrow')) this.map.addImage('arrow', image);
-          this.map.addLayer({
-            id: 'line-arrow',
-            source: 'line-ds',
-            type: 'symbol',
-            layout: {
-              'symbol-placement': 'line',
-              'symbol-spacing': 50,
-              'icon-image': 'arrow',
-              'icon-size': 0.6,
-              'icon-allow-overlap': true,
-            },
-          });
-        }
-      });
-    }
+    this.map.loadImage(arrow, (error: any, image: any) => {
+      if (!error) {
+        if (!this.map.hasImage('arrow')) this.map.addImage('arrow', image);
+        this.map.addLayer({
+          id: 'line-arrow',
+          source: 'line-ds',
+          type: 'symbol',
+          layout: {
+            'symbol-placement': 'line',
+            'symbol-spacing': 50,
+            'icon-image': 'arrow',
+            'icon-size': 0.6,
+            'icon-allow-overlap': true,
+          },
+        });
+      }
+    });
 
     //  动态图标，目标layer:pointGeojson
     this.map.loadImage(trackIcon, (error: any, image: any) => {

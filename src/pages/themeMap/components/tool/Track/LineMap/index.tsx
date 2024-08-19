@@ -1,5 +1,5 @@
 import { PlayCircleOutlined, PauseOutlined, RedoOutlined } from '@ant-design/icons';
-import { AnimationRoute } from '@/gis/widget/Animation/AnimationRoute';
+import { AnimationRoute } from '@/gis/mapboxgl/animation/AnimationRoute';
 import { basemap } from '@/pages/themeMap/mapSetting/basemap';
 import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import { memo, useEffect, useRef } from 'react';

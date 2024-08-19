@@ -10,7 +10,7 @@ export const basemap: TLayerGroupOptions = {
       id: 'tdt_img',
       name: '天地图-影像',
       type: 'raster',
-      isAdd: true,
+      isAdd: false,
       source: {
         type: 'raster',
         tileSize: 256,

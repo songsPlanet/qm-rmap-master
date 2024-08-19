@@ -4,13 +4,13 @@ import TimeSliderContent from './components/tool/SliderControl/TimeSliderContent
 import TrackContent from '@/pages/themeMap/components/tool/Track/TrackContent';
 import OffsetContent from './components/tool/OffSetControl/OffsetContent';
 import SearchContent from './components/tool/Search/SearchContent';
+import { mapOptionsJS } from '@/gis/mapboxgl/typings/TMapOptions';
 import { wh_sqal_sdbhq_wms } from './mapSetting/wh_sqal_sdbhq_wms';
 import ProtectionPopup from './components/popup/ProtectionPopup';
 import ControlPanel from './components/control/ControlPanel';
 import MapContainer from '../../gis/widget/MapContainer';
 import FieldPopup from './components/popup/FieldPopup';
 import { useRegion } from '@/gis/context/RegionContext';
-import { mapOptionsJS } from '@/gis/context/mapContext';
 import PopupPanel from '@/gis/widget/PopupPanel';
 import { useModel, useActions } from '@/redux';
 import { field_vt } from './mapSetting/field_vt';

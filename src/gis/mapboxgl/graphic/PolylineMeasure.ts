@@ -1,5 +1,5 @@
 import { Marker } from 'mapbox-gl';
-import type MapWrapper from '../MapWrapper';
+import type MapWrapper from '../../mapboxgl/MapWrapper';
 import './index.less';
 import { lineString, length } from '@turf/turf';
 class PolylineMeasure {

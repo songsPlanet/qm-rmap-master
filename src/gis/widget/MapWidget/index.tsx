@@ -2,13 +2,14 @@ import type { TMapLayerSettting } from '@/gis/mapboxgl/typings/TLayerOptions';
 import React, { useRef, useEffect, memo, useState } from 'react';
 import type { TMapContext } from '@/gis/context/mapContext';
 import { MapContext } from '@/gis/context/mapContext';
-import { getPulsingDot } from '@/gis/assets/pulsingDot';
+import { getPulsingDot } from '@/gis/mapboxgl/animation/pulsingDot';
 import MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import type { MapboxOptions } from 'mapbox-gl';
 import { debounce } from '@/gis/utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { cloneDeep } from 'lodash';
 import './index.less';
+
 interface TMapProps {
   mapOptions: MapboxOptions & {
     id: string;
@@ -27,8 +28,6 @@ function MapWidget(props: TMapProps) {
 
   useEffect(() => {
     const map = new MapWrapper({
-      pitch: 0,
-      bearing: 0,
       attributionControl: false,
       renderWorldCopies: false,
       trackResize: true,
@@ -45,7 +44,6 @@ function MapWidget(props: TMapProps) {
     const loadLayers = () => {
       map.load(cloneDeep(mapLayerSettting));
       setMapInit(true);
-      onMapLoad?.(map);
       // map.showTileBoundaries=true // 瓦片
       // 添加动态点图标
       const redAnimationImg = getPulsingDot(map);
@@ -53,14 +51,34 @@ function MapWidget(props: TMapProps) {
       if (contextValue) {
         contextValue.map = map;
       }
+      onMapLoad?.(map);
+      // 添加其他图标资源
+      map.images.forEach((item: any) => {
+        map.loadImage(item.url, (error: any, image: any) => {
+          if (!error) {
+            if (!map.hasImage(item.id)) map.addImage(item.id, image);
+          } else throw error;
+        });
+      });
     };
+    map.on('styleimagemissing', (e) => {
+      const id = e.id;
+      const prefix = 'icon-';
+      if (!id.includes(prefix)) return;
+      map.images.forEach((item: any) => {
+        if (item.id === id) {
+          map.loadImage(item.url, (error: any, image: any) => {
+            map.removeImage(id);
+            if (!map.hasImage(id)) map.addImage(item.id, image);
+          });
+        }
+      });
+    });
     map.on('load', loadLayers);
     // map.showTileBoundaries = true;
     map.on('click', (e) => {
-      // console.log("vecterTile1",map.getStyle().layers)
       // const vecterTile=map.querySourceFeatures("wh_sy-ds")
       // const vecterTile3=map.queryRenderedFeatures()
-      // console.log("vecterTile",vecterTile,vecterTile3)
       console.log(e.lngLat);
       console.log(map.getCenter(), map.getZoom(), map.getBounds());
     });
@@ -68,8 +86,10 @@ function MapWidget(props: TMapProps) {
     const resizeMap = debounce(() => {
       map.resize();
     }, 10);
+
     const ro = new ResizeObserver(resizeMap);
     ro.observe(mapDom?.current as Element);
+
     return () => {
       map.off('load', loadLayers);
     };

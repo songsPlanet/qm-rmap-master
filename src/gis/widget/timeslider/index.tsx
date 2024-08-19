@@ -1,6 +1,6 @@
 import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import { Slider } from 'antd';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './index.less';
 const sliderLayers = [
   { key: 0, title: '2015', value: 'img-201605m' },

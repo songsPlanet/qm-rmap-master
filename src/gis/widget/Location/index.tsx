@@ -1,11 +1,12 @@
-import type { TWidgetPosition } from '../BaseWidget';
-import BaseWidget, { ControlICONS } from '../BaseWidget';
 import { memo, useCallback, useEffect, useState } from 'react';
+import BaseWidget, { ControlICONS } from '../BaseWidget';
 import { Button, Radio, Form, Input, Space } from 'antd';
 import { decimalToDms, dmsToDecimal } from '@/gis/utils';
+import type { TWidgetPosition } from '../BaseWidget';
 import { useMap } from '@/gis/context/mapContext';
 import type { LngLatLike } from 'mapbox-gl';
 import './index.less';
+import { createPointFeatureCollection } from '@/gis/utils';
 
 const initialPosition = {
   bearing: 0,
@@ -70,7 +71,6 @@ const Location = (props: { position: TWidgetPosition }) => {
   const onFinish = (values: any) => {
     setPositionList(values);
     const location: any = conversionDecimalDms(values);
-
     locationHandle(location);
   };
 
@@ -86,41 +86,13 @@ const Location = (props: { position: TWidgetPosition }) => {
   };
 
   const addLocationIcon = (point: number[]) => {
-    map?.clearDotIcon();
-    if (map) {
-      map?.addSource('red-dot-ds', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            {
-              properties: {},
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: point, // icon position [lng, lat]
-              },
-            },
-          ],
-        },
-      });
-      map?.addLayer({
-        id: 'red-dot-lyr',
-        type: 'symbol',
-        source: 'red-dot-ds',
-        layout: {
-          'icon-image': 'redAnimationImg',
-          'icon-size': 1,
-          'icon-rotation-alignment': 'map',
-          'icon-allow-overlap': true,
-          'icon-offset': [0, 0],
-        },
-      });
-    }
+    map?.clearSelect('red');
+    const geoPoint: any = createPointFeatureCollection(point);
+    map?.selectSymbolIconFeature(geoPoint, 'red', 'redAnimationImg');
   };
 
   const resetForm = () => {
-    map?.clearDotIcon();
+    map?.clearSelect('red');
     form.resetFields();
   };
 

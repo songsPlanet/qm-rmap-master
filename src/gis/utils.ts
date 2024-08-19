@@ -1,13 +1,15 @@
+import { featureCollection, lineString, lineStringToPolygon } from '@turf/turf';
 import { Map as IMap, is } from 'immutable';
 import { LngLatBounds } from 'mapbox-gl';
 import moment from 'moment';
+
 /**
  * 浅比较
  * @param obj1
  * @param obj2
  * @returns ture or false
  */
-const shollawEqual = (obj1: any, obj2: any): boolean => {
+export const shollawEqual = (obj1: any, obj2: any): boolean => {
   if (obj1 === obj2) {
     return true;
   }
@@ -33,7 +35,7 @@ const shollawEqual = (obj1: any, obj2: any): boolean => {
  * @param obj2
  * @returns ture or false
  */
-const deepEqual = (obj1: Object, obj2: Object): boolean => {
+export const deepEqual = (obj1: Object, obj2: Object): boolean => {
   const map1 = IMap(obj1);
   const map2 = IMap(obj2);
   return is(map1, map2);
@@ -42,7 +44,7 @@ const deepEqual = (obj1: Object, obj2: Object): boolean => {
  * 生成UUID
  * @returns
  */
-const generateUUID = () => {
+export const generateUUID = () => {
   return 'FY' + moment().format('YYYYMMDDHHmmSSSS');
 };
 
@@ -51,7 +53,7 @@ const generateUUID = () => {
  * @param func：需要防抖处理的函数
  * @param delay：时间间隔
  */
-const debounce = <T extends object>(func: Function, delay: number) => {
+export const debounce = <T extends object>(func: Function, delay: number) => {
   let task: any = null;
   // 通过闭包缓存一个定时器id
   // 将debounce处理结果当做函数返回
@@ -73,7 +75,7 @@ const debounce = <T extends object>(func: Function, delay: number) => {
  * @param func
  * @param delay
  */
-const throttle = <T extends object>(func: Function, delay: number) => {
+export const throttle = <T extends object>(func: Function, delay: number) => {
   let task: any = null;
   return (args: T) => {
     if (!task) {
@@ -90,7 +92,7 @@ const throttle = <T extends object>(func: Function, delay: number) => {
  *  @param {*} list
  *  @param {*} tree
  */
-const transTreeToArr = (list: any[], tree: any) => {
+export const transTreeToArr = (list: any[], tree: any) => {
   if (!(Array.isArray(tree) && tree.length > 0)) return;
   tree.forEach((father) => {
     list.push(father);
@@ -100,7 +102,7 @@ const transTreeToArr = (list: any[], tree: any) => {
   });
 };
 
-const loopBounds = (bound: LngLatBounds, coordinates: any) => {
+export const loopBounds = (bound: LngLatBounds, coordinates: any) => {
   if (coordinates[0] instanceof Array) {
     coordinates.forEach((item: any) => {
       if (item[0] instanceof Array) {
@@ -118,7 +120,7 @@ const loopBounds = (bound: LngLatBounds, coordinates: any) => {
  * 获取边界：
  * return：LngLatBounds
  */
-const getFeatureBoundingBox = (feature: any) => {
+export const getFeatureBoundingBox = (feature: any) => {
   const bounds = new LngLatBounds();
   loopBounds(bounds, feature.geometry.coordinates);
   return bounds;
@@ -131,7 +133,7 @@ const getFeatureBoundingBox = (feature: any) => {
  * @returns {string}
  * @private
  */
-const convertHexToRGB = (color: any, opacity = 1) => {
+export const convertHexToRGB = (color: any, opacity = 1) => {
   if (color.length === 4) {
     let extendedColor = '#';
     for (let i = 1; i < color.length; i++) {
@@ -147,7 +149,7 @@ const convertHexToRGB = (color: any, opacity = 1) => {
   return `rgba(${values.r}, ${values.g}, ${values.b}, ${opacity})`;
 };
 
-const unique = (arr: any[], uniId: string) => {
+export const unique = (arr: any[], uniId: string) => {
   const res = new Map();
   return arr.filter((item) => !res.has(item[uniId]) && res.set(item[uniId], 1));
 };
@@ -156,7 +158,7 @@ const unique = (arr: any[], uniId: string) => {
  *度分秒转十进制
  *
  */
-const dmsToDecimal = (degrees: string, minutes: string, seconds: string) => {
+export const dmsToDecimal = (degrees: string, minutes: string, seconds: string) => {
   const decimal = parseFloat(degrees) + parseFloat(minutes) / 60 + parseFloat(seconds) / 3600;
   return decimal.toFixed(6);
 };
@@ -165,7 +167,7 @@ const dmsToDecimal = (degrees: string, minutes: string, seconds: string) => {
  *十进制转度分秒
  * @returns {{}}
  */
-const decimalToDms = (decimal: any) => {
+export const decimalToDms = (decimal: any) => {
   // 提取整数部分
   const degrees = Math.floor(decimal);
   // 计算小数部分并转换为百分比
@@ -178,16 +180,164 @@ const decimalToDms = (decimal: any) => {
   return { degrees, minutes, seconds };
 };
 
-export {
-  unique,
-  debounce,
-  throttle,
-  deepEqual,
-  decimalToDms,
-  dmsToDecimal,
-  generateUUID,
-  shollawEqual,
-  transTreeToArr,
-  convertHexToRGB,
-  getFeatureBoundingBox,
+/**
+ * 已知一点经纬度，方位角，距离求另一点的坐标
+ *  @param  {number[]} 已知点经纬度
+ *  @param  {number}  方位角
+ *  @param  {number} 距离
+ */
+export const calcPointByPointAndDistance = (pointA: number[], brng: number, dist: number) => {
+  const VincentyConstants = {
+    a: 6378137,
+    b: 6356752.3142,
+    f: 1 / 298.257223563,
+  };
+  const a = VincentyConstants.a;
+  const b = VincentyConstants.b;
+  const f = VincentyConstants.f;
+
+  const lon1 = pointA[0];
+  const lat1 = pointA[1];
+
+  const s = dist;
+
+  const alpha1 = rad(brng);
+  const sinAlpha1 = Math.sin(alpha1);
+  const cosAlpha1 = Math.cos(alpha1);
+
+  const tanU1 = (1 - f) * Math.tan(rad(lat1));
+  const cosU1 = 1 / Math.sqrt(1 + tanU1 * tanU1);
+  const sinU1 = tanU1 * cosU1;
+  const sigma1 = Math.atan2(tanU1, cosAlpha1);
+  const sinAlpha = cosU1 * sinAlpha1;
+  const cosSqAlpha = 1 - sinAlpha * sinAlpha;
+  const uSq = (cosSqAlpha * (a * a - b * b)) / (b * b);
+  const A = 1 + (uSq / 16384) * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+  const B = (uSq / 1024) * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
+
+  let sigma = s / (b * A);
+  let sigmaP = 2 * Math.PI;
+  let cosSigma: any;
+  let sinSigma: any;
+  let cos2SigmaM: any;
+  while (Math.abs(sigma - sigmaP) > 1e-12) {
+    cos2SigmaM = Math.cos(2 * sigma1 + sigma);
+    sinSigma = Math.sin(sigma);
+    cosSigma = Math.cos(sigma);
+    let deltaSigma =
+      B *
+      sinSigma *
+      (cos2SigmaM +
+        (B / 4) *
+          (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) -
+            (B / 6) * cos2SigmaM * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2SigmaM * cos2SigmaM)));
+    sigmaP = sigma;
+    sigma = s / (b * A) + deltaSigma;
+  }
+
+  let tmp = sinU1 * sinSigma - cosU1 * cosSigma * cosAlpha1;
+  let lat2 = Math.atan2(
+    sinU1 * cosSigma + cosU1 * sinSigma * cosAlpha1,
+    (1 - f) * Math.sqrt(sinAlpha * sinAlpha + tmp * tmp),
+  );
+  let lambda = Math.atan2(sinSigma * sinAlpha1, cosU1 * cosSigma - sinU1 * sinSigma * cosAlpha1);
+  let C = (f / 16) * cosSqAlpha * (4 + f * (4 - 3 * cosSqAlpha));
+  let L =
+    lambda -
+    (1 - C) * f * sinAlpha * (sigma + C * sinSigma * (cos2SigmaM + C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
+
+  let revAz = Math.atan2(sinAlpha, -tmp); // final bearing
+
+  return [lon1 + deg(L), deg(lat2)];
+};
+
+/**
+ * 度换成弧度
+ * @param  {number} d 度
+ * @return {number} 弧度
+ */
+export const rad = (d: number) => {
+  return (d * Math.PI) / 180.0;
+};
+/**
+ * 弧度换成度
+ * @param  {number} x 弧度
+ * @return {number}   度
+ */
+export const deg = (x: number) => {
+  return (x * 180) / Math.PI;
+};
+
+/**
+ *创建Polygon的geojson 数据
+ * coords ：[[],[],...]
+ * @returns {{}}
+ */
+export const createPolygonFeatureCollection = (coords: any) => {
+  return {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [coords],
+        },
+      },
+    ],
+  };
+};
+
+/**
+ * 创建Point的FeatureCollection
+ * @param lonlat 经纬度数组
+ * lat: 纬度
+ * @returns {{}}
+ */
+
+export const createPointFeatureCollection = (lonlat: number[]) => {
+  return {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: lonlat,
+        },
+      },
+    ],
+  };
+};
+
+/**
+ *创建lineString的geojson 数据
+ * coordinates ：[[],[],...]
+ * @returns {{}}
+ */
+export const createLineFeatureCollection = (coords: any) => {
+  return {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: coords,
+        },
+      },
+    ],
+  };
+};
+
+/**
+ *通过turf.js创建Polygon的FeatureCollection数据(首尾不闭合也可成面)
+ * coords ：[[],[],...]
+ * @returns {{}}
+ */
+export const createPolygonFeatureCollectionByLine = (lineCoords: any) => {
+  const lineFeats = lineString(lineCoords);
+  const polygons: any = lineStringToPolygon(lineFeats);
+  const collection: any = featureCollection(polygons);
+  return collection;
 };
