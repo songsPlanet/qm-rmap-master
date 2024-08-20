@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
   }, {});
 
   return {
-    plugins: [react(), libcss(),],
+    plugins: [react(), libcss(), legacy()],
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js'],
       alias: {
@@ -44,11 +44,11 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: 'lib',// 自定义构建的输出目录
-      cssMinify: true,
+      // cssMinify: true,
       minify: 'terser',
-      emptyOutDir: true,
-      cssCodeSplit: true,
-      copyPublicDir: true,
+      // emptyOutDir: true,
+      // cssCodeSplit: true,
+      // copyPublicDir: true,
       sourcemap: 'hidden',
       terserOptions: {
         compress: {
@@ -58,41 +58,23 @@ export default defineConfig(({ mode }) => {
       },
       lib: {
         entry: 'src/gis/index.ts', // 入口文件路径
-        formats: ['es', 'cjs', 'umd'], // 输出的格式  
+        name: "index",
+        fileName: 'index',
       },
       rollupOptions:
-        // {
-        //   // 确保外部化处理那些你不想打包进库的依赖
-        //   external: ['react', 'react-dom'],
-        //   output: {
-        //     // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-        //     globals: {
-        //       'react': 'react',
-        //       'react-dom': 'react-dom',
-        //     },
-        //   },
-        // },
       {
-        output: {
-          entryFileNames: 'static/js/[name][hash].js',
-          chunkFileNames: 'static/js/[name][hash].chunk.js',
-          assetFileNames(chunkInfo: any) {
-            const { name } = chunkInfo;
-            if (/\.(jpg|jpeg|png|webp|bmp|gif|svg)$/.test(name)) {
-              return 'static/image/[name].[hash][extname]';
-            } else if (/\.(woff2|woff|ttf|eot)$/.test(name)) {
-              return 'static/font/[name].[hash][extname]';
-            } else if (/\.css$/.test(name)) {
-              return 'static/css/[name].[hash].css';
-            } else {
-              return 'static/[ext]/[name].[hash][extname]';
-            }
+        // 确保外部化处理那些你不想打包进库的依赖
+        external: ['react', 'react-dom'],
+        output: [
+          {
+            // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+            globals: {
+              'react': 'react',
+              'react-dom': 'react-dom',
+            },
           },
-          manualChunks: {
-            'vender-react': ['react', 'react-dom'],
-          }
-        }
-      }
+        ]
+      },
     },
   };
 });

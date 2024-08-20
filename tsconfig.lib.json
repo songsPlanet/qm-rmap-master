@@ -5,11 +5,12 @@
     "declaration": true, // 需要设置为 true 来支持类型
     "declarationDir": "lib", // 类型文件的导出目录
     "strict": true,
-    "allowJs": false,
-    "checkJs": false,
+
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react-jsx",
+    "allowJs": false,
+    "checkJs": false,
     "alwaysStrict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
@@ -26,7 +27,7 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "paths": {
-      "@/*": [ "./src/*" ]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/gis/**/*.ts", "src/gis/**/*.tsx", "src/vite-env*.d.ts"] // 编译目标仅为src文件下的文件
