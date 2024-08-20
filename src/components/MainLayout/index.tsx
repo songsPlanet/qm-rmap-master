@@ -53,6 +53,7 @@ const MainLayout: React.FC = () => {
     const menuItems = filterMenuTree(permissions);
     permissionsRef.current = permissions;
     menuItemsRef.current = menuItems;
+
     setState({ menuItems, avatar, userName });
   }, []);
 

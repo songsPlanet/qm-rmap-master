@@ -1,11 +1,11 @@
-import type { TMapLayerSettting } from '@/gis/mapboxgl/typings/TLayerOptions';
+import type { TMapLayerSettting } from '../../mapboxgl/typings/TLayerOptions';
 import React, { useRef, useEffect, memo, useState } from 'react';
-import type { TMapContext } from '@/gis/context/mapContext';
-import { MapContext } from '@/gis/context/mapContext';
-import { getPulsingDot } from '@/gis/mapboxgl/animation/pulsingDot';
-import MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type { TMapContext } from '../../context/mapContext';
+import { MapContext } from '../../context/mapContext';
+import { getPulsingDot } from '../../animation/pulsingDot';
+import MapWrapper from '../../mapboxgl/MapWrapper';
 import type { MapboxOptions } from 'mapbox-gl';
-import { debounce } from '@/gis/utils';
+import { debounce } from '../../utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { cloneDeep } from 'lodash';
 import './index.less';

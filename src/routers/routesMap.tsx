@@ -25,42 +25,11 @@ const routesMap: RouteItem[] = [
     icon: <FileMarkdownOutlined style={iconStyle} />,
     element: React.createElement(LazyLoader(() => import('../pages/themeMap'))),
   },
-  {
-    path: '/theme-map-table',
-    label: '表格地图',
-    icon: <FileMarkdownOutlined style={iconStyle} />,
-    element: React.createElement(LazyLoader(() => import('../pages/tableMap/index'))),
-  },
-  {
-    path: '/theme-map-edit',
-    label: '地图编辑',
-    icon: <FileMarkdownOutlined style={iconStyle} />,
-    element: React.createElement(LazyLoader(() => import('../pages/editMap/index'))),
-  },
-  {
-    path: '/user',
-    label: '用户管理',
-    icon: <SolutionOutlined style={iconStyle} />,
-    children: [
-      {
-        label: '用户列表',
-        path: '/user/user-list',
-        icon: <TeamOutlined style={iconStyle} />,
-        element: React.createElement(LazyLoader(() => import('../pages/user/userList'))),
-      },
-      {
-        path: '/user/role-list',
-        label: '角色列表',
-        icon: <UserSwitchOutlined style={iconStyle} />,
-        element: React.createElement(LazyLoader(() => import('../pages/user/roleList'))),
-      },
-    ],
-  },
 
-  {
-    path: '/404',
-    element: React.createElement(LazyLoader(() => import('../pages/404'))),
-  },
+  // {
+  //   path: '/404',
+  //   element: React.createElement(LazyLoader(() => import('../pages/404'))),
+  // },
   {
     path: '/',
     element: <Navigate to="/theme-map" />,

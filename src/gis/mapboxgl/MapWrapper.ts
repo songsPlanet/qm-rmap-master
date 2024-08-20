@@ -1,12 +1,12 @@
-import type { StyleFunction, Expression, LngLatLike } from 'mapbox-gl';
-import { Map, LngLatBounds } from 'mapbox-gl';
 import { transTreeToArr, getFeatureBoundingBox } from '../utils';
-import LayerGroupWrapper from './layer/LayerGroupWrapper';
-import LayerWrapper from './layer/LayerWrapper';
-import { MapEvent } from './typings/TEvent';
 import type { TMapLayerSettting } from './typings/TLayerOptions';
+import type { StyleFunction, Expression } from 'mapbox-gl';
+import LayerGroupWrapper from './layer/LayerGroupWrapper';
 import type { TMapOptions } from './typings/TMapOptions';
 import type { FeatureCollection } from '@turf/turf';
+import LayerWrapper from './layer/LayerWrapper';
+import { Map, LngLatBounds } from 'mapbox-gl';
+import { MapEvent } from './typings/TEvent';
 /**
  * 地图扩展类
  */
@@ -44,8 +44,12 @@ class MapWrapper extends Map {
    */
   private _images: { id: string; data: string }[] = [];
 
-  public get images() {
+  get images() {
     return this._images;
+  }
+
+  set images(value) {
+    this._images = value;
   }
 
   // 绘制工具

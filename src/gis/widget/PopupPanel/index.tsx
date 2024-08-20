@@ -1,8 +1,8 @@
 import type { ReactElement } from 'react';
 import { cloneElement, memo, useEffect, useState } from 'react';
-import { useMap } from '@/gis/context/mapContext';
-import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
-import PopupWrapper from '@/gis/widget/PopupWrapper';
+import { useMap } from '../../context/mapContext';
+import type MapWrapper from '../../mapboxgl/MapWrapper';
+import PopupWrapper from '../../widget/PopupWrapper';
 import type { LngLatLike } from 'mapbox-gl';
 import type mapboxgl from 'mapbox-gl';
 import axios from '@/utils/axios';

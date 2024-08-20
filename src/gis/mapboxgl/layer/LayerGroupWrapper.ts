@@ -1,5 +1,5 @@
-import type MapWrapper from '../MapWrapper';
 import type { TLayerGroupOptions } from '../typings';
+import type MapWrapper from '../MapWrapper';
 import LayerWrapper from './LayerWrapper';
 
 /**

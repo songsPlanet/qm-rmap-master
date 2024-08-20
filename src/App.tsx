@@ -1,5 +1,4 @@
 import { unstable_HistoryRouter as Router } from 'react-router-dom';
-import { RegionProvider } from '@/gis/context/RegionContext';
 import zhCN from 'antd/es/locale/zh_CN';
 import { Provider } from 'react-redux';
 import history from '@/utils/history';
@@ -22,11 +21,9 @@ export default memo(() => {
   return (
     <ConfigProvider locale={zhCN} theme={ANTD_THEME}>
       <Provider store={store}>
-        <RegionProvider>
-          <Router history={history as any}>
-            <Routers />
-          </Router>
-        </RegionProvider>
+        <Router history={history as any}>
+          <Routers />
+        </Router>
       </Provider>
     </ConfigProvider>
   );

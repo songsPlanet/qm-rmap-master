@@ -1,0 +1,33 @@
+{
+  // "extends": "./tsconfig.json", // 拓展 tsconfig.json 的配置
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true, // 需要设置为 true 来支持类型
+    "declarationDir": "lib", // 类型文件的导出目录
+    "strict": true,
+    "allowJs": false,
+    "checkJs": false,
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "alwaysStrict": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "removeComments": false,
+    "noUnusedLocals": false,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "paths": {
+      "@/*": [ "./src/*" ]
+    }
+  },
+  "include": ["src/gis/**/*.ts", "src/gis/**/*.tsx", "src/vite-env*.d.ts"] // 编译目标仅为src文件下的文件
+}

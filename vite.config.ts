@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [react(), legacy(), splitVendorChunkPlugin()],
     build: {
-      outDir: 'build',
+      outDir: 'dist',// 自定义构建的输出目录
       cssMinify: true,
       minify: 'terser',
       emptyOutDir: true,
@@ -65,11 +65,6 @@ export default defineConfig(({ mode }) => {
       postcss: {
         plugins: [postcssPresetEnv],
       },
-      // modules: {
-      //   scopeBehaviour: 'local',
-      //   localsConvention: 'camelCaseOnly',
-      //   globalModulePaths: [ /(?<!\.module)\.css/, /(?<!\.module)\.less/ ],
-      // },
       preprocessorOptions: {
         less: {
           modifyVars: {
@@ -91,12 +86,6 @@ export default defineConfig(({ mode }) => {
         '/v1.0': {
           // target: 'http://192.168.5.120:2005'
           // target: 'http://192.168.5.120:2005'
-          // 测试
-          // target: 'http://192.168.5.2:20011',
-          changeOrigin: true,
-        },
-        '/group1': {
-          // target: 'http://192.168.5.120:2005',
           // 测试
           // target: 'http://192.168.5.2:20011',
           changeOrigin: true,

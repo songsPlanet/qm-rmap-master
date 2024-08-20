@@ -1,6 +1,6 @@
 import type { AnyLayer, Layer } from 'mapbox-gl';
-import type { CSSProperties } from 'react';
 import type { IDataResolver } from './TResolver';
+import type { CSSProperties } from 'react';
 
 export type TLegendItemOptions = {
   imageId?: string;

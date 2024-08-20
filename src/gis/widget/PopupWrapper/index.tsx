@@ -1,9 +1,10 @@
-import { useMap } from '@/gis/context/mapContext';
+import { useMap } from '../../context/mapContext';
 import type { LngLatLike, PopupOptions } from 'mapbox-gl';
 import { Popup } from 'mapbox-gl';
 import type { ReactNode } from 'react';
 import { memo, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
+
 import './index.less';
 let defaultXY = {
   x: 0,
@@ -115,4 +116,5 @@ const PopupWrapper = (props: TPopupWrapper) => {
 
   return createPortal(children as any, container);
 };
+
 export default memo(PopupWrapper);

@@ -23,36 +23,36 @@ Mock.mock('/v1.0/login/admin', 'post', {
     loginType: 'end',
     roleIdList: ['1', '2', '3', '4'],
     resourceList: [
-      {
-        id: 'user',
-        path: '/user',
-        children: [
-          {
-            id: 'user-1',
-            path: '/user/user-list',
-          },
-          {
-            id: 'user-2',
-            path: '/user/role-list',
-          },
-        ],
-      },
-      {
-        id: 'home',
-        path: '/home',
-      },
+      // {
+      //   id: 'user',
+      //   path: '/user',
+      //   children: [
+      //     {
+      //       id: 'user-1',
+      //       path: '/user/user-list',
+      //     },
+      //     {
+      //       id: 'user-2',
+      //       path: '/user/role-list',
+      //     },
+      //   ],
+      // },
+      // {
+      //   id: 'home',
+      //   path: '/home',
+      // },
       {
         id: 'theme-map',
         path: '/theme-map',
       },
-      {
-        id: 'theme-map-table',
-        path: '/theme-map-table',
-      },
-      {
-        id: 'theme-map-edit',
-        path: '/theme-map-edit',
-      },
+      // {
+      //   id: 'theme-map-table',
+      //   path: '/theme-map-table',
+      // },
+      // {
+      //   id: 'theme-map-edit',
+      //   path: '/theme-map-edit',
+      // },
     ],
   },
 });

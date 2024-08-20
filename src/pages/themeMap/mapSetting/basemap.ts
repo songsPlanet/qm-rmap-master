@@ -10,7 +10,7 @@ export const basemap: TLayerGroupOptions = {
       id: 'tdt_img',
       name: '天地图-影像',
       type: 'raster',
-      isAdd: false,
+      isAdd: true,
       source: {
         type: 'raster',
         tileSize: 256,
@@ -43,20 +43,6 @@ export const basemap: TLayerGroupOptions = {
         tiles: [
           `http://t2.tianditu.gov.cn/cia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${tianditukey}`,
         ],
-      },
-    },
-    {
-      id: 'raster_png',
-      name: '遥感底图',
-      type: 'raster',
-      isAdd: false,
-      source: {
-        type: 'raster',
-        tileSize: 256,
-        minzoom: 0,
-        maxzoom: 18,
-        tiles: [`http://120.26.225.92:8090/data/jieshou_img_0to16/{z}/{x}/{y}.png`],
-        // tiles: [`http://${window.location.host}/tileserver/data/jieshou_img_0to16/{z}/{x}/{y}.png`],
       },
     },
   ],

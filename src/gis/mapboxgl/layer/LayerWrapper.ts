@@ -1,7 +1,7 @@
-import type MapWrapper from '../MapWrapper';
 import type { TLayerOptions } from '../typings';
-import BaseLayer from './BaseLayer';
 import type { VectorSource } from 'mapbox-gl';
+import type MapWrapper from '../MapWrapper';
+import BaseLayer from './BaseLayer';
 
 /**
  * 图层扩展

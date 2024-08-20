@@ -1,15 +1,18 @@
-import type { TWidgetPosition } from '../BaseWidget';
-import BaseWidget, { ControlICONS } from '../BaseWidget';
-import type LayerGroupWrapper from '@/gis/mapboxgl/layer/LayerGroupWrapper';
+import type LayerGroupWrapper from '../../mapboxgl/layer/LayerGroupWrapper';
+import type LayerWrapper from '../../mapboxgl/layer/LayerWrapper';
 import { useState, useEffect, memo, useCallback } from 'react';
-import type LayerWrapper from '@/gis/mapboxgl/layer/LayerWrapper';
-import { useMap } from '@/gis/context/mapContext';
-import { MapEvent } from '@/gis/mapboxgl/typings';
+import BaseWidget from '../BaseWidget';
+import type { TWidgetPosition } from '../BaseWidget';
+import { useMap } from '../../context/mapContext';
+import { MapEvent } from '../../mapboxgl/typings';
 import type { DataNode } from 'antd/es/tree';
-import { debounce } from '@/gis/utils';
+import { debounce } from '../../utils';
 import { Tree } from 'antd';
 
-const LayerList = (props: { position: TWidgetPosition }) => {
+const LayerListIcon =
+  'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjcyMTMyNjkyNzI3IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9Ijg5OTAiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTg1Mi42IDQ2Mi45bDEyLjEgNy42YzI0LjggMTUuNiAzMi4zIDQ4LjMgMTYuNyA3My4yLTQuMiA2LjctOS45IDEyLjQtMTYuNyAxNi43TDU0MC40IDc2NC4xYy0xNy4zIDEwLjgtMzkuMiAxMC44LTU2LjQgMEwxNTkuMyA1NjBjLTI0LjgtMTUuNi0zMi4zLTQ4LjMtMTYuNy03My4yIDQuMi02LjcgOS45LTEyLjQgMTYuNy0xNi43bDEyLjEtNy42TDQ4My45IDY1OWMxNy4zIDEwLjggMzkuMiAxMC44IDU2LjQgMGwzMTIuMi0xOTYgMC4xLTAuMXogbTAgMTU2LjFsMTIuMSA3LjZjMjQuOCAxNS42IDMyLjMgNDguMyAxNi43IDczLjItNC4yIDYuNy05LjkgMTIuNC0xNi43IDE2LjdMNTQwLjQgOTIwLjJjLTE3LjMgMTAuOC0zOS4yIDEwLjgtNTYuNCAwTDE1OS4zIDcxNi4xYy0yNC44LTE1LjYtMzIuMy00OC4zLTE2LjctNzMuMiA0LjItNi43IDkuOS0xMi40IDE2LjctMTYuN2wxMi4xLTcuNkw0ODMuOSA4MTVjMTcuMyAxMC44IDM5LjIgMTAuOCA1Ni40IDBsMzEyLjItMTk2aDAuMXpNNTQwIDEwNi40bDMyNC42IDIwNC4xYzI0LjggMTUuNiAzMi4zIDQ4LjMgMTYuNyA3My4yLTQuMiA2LjctOS45IDEyLjQtMTYuNyAxNi43TDU0MC40IDYwNGMtMTcuMyAxMC44LTM5LjIgMTAuOC01Ni40IDBMMTU5LjMgMzk5LjhjLTI0LjgtMTUuNi0zMi4zLTQ4LjMtMTYuNy03My4yIDQuMi02LjcgOS45LTEyLjQgMTYuNy0xNi43bDMyNC40LTIwMy43YzE3LjMtMTAuOCAzOS4yLTEwLjggNTYuNCAwbC0wLjEgMC4yeiIgcC1pZD0iODk5MSI+PC9wYXRoPjwvc3ZnPg==';
+
+const LayerList = (props: { position: TWidgetPosition; icon?: string }) => {
   const [keys, setkeys] = useState<string[]>([]);
   const { map } = useMap();
   const [data, setData] = useState<DataNode[]>([]);
@@ -125,7 +128,7 @@ const LayerList = (props: { position: TWidgetPosition }) => {
     <BaseWidget
       name="图层控制"
       position={props.position}
-      icon={ControlICONS.LayerList}
+      icon={props.icon ? props.icon : LayerListIcon}
       width={180}
       height={keys.length * 28 < 280 ? 280 : keys.length * 28}
     >
