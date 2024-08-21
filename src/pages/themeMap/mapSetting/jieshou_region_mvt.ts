@@ -1,4 +1,4 @@
-import type { TLayerGroupOptions, TLayerOptions } from '@/lib/mapboxgl/typings';
+import type { TLayerGroupOptions, TLayerOptions } from '@/gis/mapboxgl/typings';
 
 const regionConfig = [
   { name: '界首—镇级', lyr: 'xzqh_zhen', lbField: 'XZXZQH', minzoom: 0, maxzoom: 12 },

@@ -1,5 +1,5 @@
-import type { TWidgetPosition } from '@/lib/widget/BaseWidget';
-import { getFeatureBoundingBox } from '@/lib/utils';
+import type { TWidgetPosition } from '@/gis/widget/BaseWidget';
+import { getFeatureBoundingBox } from '@/gis/utils';
 import { queryTrackLineResult } from '@/api/map';
 import { memo, useRef, useEffect } from 'react';
 import { AimOutlined } from '@ant-design/icons';

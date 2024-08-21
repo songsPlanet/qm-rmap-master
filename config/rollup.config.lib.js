@@ -15,7 +15,7 @@ const context = fileURLToPath(new URL('../', import.meta.url));
 const extensions = [ '.tsx', '.ts', '.jsx', '.js', '.mjs', '.cjs' ];
 
 const inputOptions = {
-  input: path.resolve(context, 'src/lib/index.ts'),
+  input: path.resolve(context, 'src/gis/index.ts'),
   external: [ /[\\/]node_modules[\\/]/, /\.less/, /\.css/ ],
   makeAbsoluteExternalsRelative: false,
   plugins: [
@@ -38,7 +38,7 @@ const inputOptions = {
 const outputOptions = {
   format: 'es',
   preserveModules: true,
-  preserveModulesRoot: 'src/lib',
+  preserveModulesRoot: 'src/gis',
   dir: path.resolve(context, 'es'),
 };
 

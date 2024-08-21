@@ -1,7 +1,7 @@
-import type { TMapLayerSettting } from '@/lib/mapboxgl/typings';
-import type MapWrapper from '@/lib/mapboxgl/MapWrapper';
+import type { TMapLayerSettting } from '@/gis/mapboxgl/typings';
+import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
 import React, { memo, useEffect, useRef } from 'react';
-import MapWidget from '@/lib/widget/MapWidget';
+import MapWidget from '@/gis/widget/MapWidget';
 import classes from './index.module.less';
 import { cloneDeep } from 'lodash';
 

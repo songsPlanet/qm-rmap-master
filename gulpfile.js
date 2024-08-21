@@ -18,7 +18,7 @@ function cleanOutputDir(cb) {
     fs.rmSync(path.resolve(context, 'lib'), { force: true, recursive: true });
     fs.rmSync(path.resolve(context, 'es'), { force: true, recursive: true });
     cb();
-  } catch(error) {
+  } catch (error) {
     cb(error);
   }
 }
@@ -29,71 +29,108 @@ async function buildEs() {
 }
 
 // 打包构建 commonjs 模块
-function buildLib () {
-  return gulp.src([ 'es/**/*.js' ])
-    .pipe(through(
-      { objectMode: true },
-      function(chunk, encode, callback) {
-        if (/\.(png|jpe?g|gif|webp|svg)\.js$/.test(chunk.path)) return callback(null, chunk);
+function buildLib() {
+  return (
+    gulp
+      .src(['es/**/*.js'])
+      .pipe(
+        through({ objectMode: true }, function (chunk, encode, callback) {
+          if (/\.(png|jpe?g|gif|webp|svg)\.js$/.test(chunk.path)) return callback(null, chunk);
 
-        let contents = chunk.contents.toString();
-        if (/import {(.+)} from (['"])@ant-design\/icons\2/.test(contents)) {
-          const values = RegExp.$1;
-          const reg = /\b(\w+)\b/g;
-          const result = [];
-          while (reg.test(values)) {
-            result.push(RegExp.$1);
+          let contents = chunk.contents.toString();
+          if (/import {(.+)} from (['"])@ant-design\/icons\2/.test(contents)) {
+            const values = RegExp.$1;
+            const reg = /\b(\w+)\b/g;
+            const result = [];
+            while (reg.test(values)) {
+              result.push(RegExp.$1);
+            }
+
+            let context = '';
+            result.forEach((item) => (context += `import ${item} from '@ant-design/icons/${item}';`));
+
+            contents = contents.replace(/import .* from (['"])@ant-design\/icons\1;/, context);
+            chunk.contents = Buffer.from(contents);
           }
 
-          let context = '';
-          result.forEach(item => context += `import ${item} from '@ant-design/icons/${item}';`);
-
-          contents = contents.replace(/import .* from (['"])@ant-design\/icons\1;/, context);
-          chunk.contents = Buffer.from(contents);
-        }
-
-        callback(null, chunk);
-      }
-    ))
-    .pipe(babel({ configFile: './babel.config.lib.cjs' }))
-    // .pipe(gulp.src([ 'es/**/*.d.ts' ]))
-    .pipe(gulp.dest('./lib'));
+          callback(null, chunk);
+        }),
+      )
+      .pipe(babel({ configFile: './babel.config.lib.cjs' }))
+      // .pipe(gulp.src([ 'es/**/*.d.ts' ]))
+      .pipe(gulp.dest('./lib'))
+  );
 }
 
+// // 执行有关生成 .d.ts 文件相关的任务
+// const tscTask = gulp.series(
+//   function () {
+//     return child_process.exec('npx tsc -p tsconfig.lib.json');
+//   },
+//   function () {
+//     return gulp
+//       .src(['dts/**/*.d.ts'])
+//       .pipe(
+//         through({ objectMode: true }, function (chunk, encode, callback) {
+//           const newBase = path.join(chunk.base, 'lib');
+//           if (chunk.path.startsWith(newBase)) chunk.base = newBase;
+
+//           return callback(null, chunk);
+//         }),
+//       )
+//       .pipe(gulp.dest('lib'))
+//       .pipe(gulp.dest('es'));
+//   },
+//   function (cb) {
+//     fs.rmSync(path.resolve(context, 'dts'), { force: true, recursive: true });
+//     cb();
+//   },
+// );
 // 执行有关生成 .d.ts 文件相关的任务
 const tscTask = gulp.series(
-  function () {
-    return child_process.exec('npx tsc -p tsconfig.lib.json');
+  function tscCompile() {
+    return new Promise((resolve, reject) => {
+      child_process.exec('npx tsc -p tsconfig.lib.json', (error, stdout, stderr) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve();
+        }
+      });
+    });
   },
-  function () {
-    return gulp.src([ 'dts/**/*.d.ts' ])
-      .pipe(through(
-        { objectMode: true },
-        function(chunk, encode, callback) {
+  function copyDts() {
+    return gulp
+      .src('dts/**/*.d.ts')
+      .pipe(
+        through({ objectMode: true }, (chunk, encode, callback) => {
           const newBase = path.join(chunk.base, 'lib');
           if (chunk.path.startsWith(newBase)) chunk.base = newBase;
-
-          return callback(null, chunk);
-        }
-      ))
+          callback(null, chunk);
+        }),
+      )
       .pipe(gulp.dest('lib'))
       .pipe(gulp.dest('es'));
   },
-  function (cb) {
-    fs.rmSync(path.resolve(context, 'dts'), { force: true, recursive: true });
-    cb();
-  }
+  function cleanupDts(cb) {
+    try {
+      fs.rmSync(path.resolve(context, 'dts'), { force: true, recursive: true });
+      cb();
+    } catch (error) {
+      cb(error);
+    }
+  },
 );
 
 // 生成样式、以及相关的资源
-function buildStyleSteet() {
-  return gulp.src([ 'src/lib/**/*less' ])
+function buildStyleSheet() {
+  return gulp
+    .src(['src/gis/**/*less'])
     .pipe(less())
-    .pipe(gulp.src([ 'src/lib/**/*.css' ]))
     .pipe(postcss())
     .pipe(base64())
     .pipe(gulp.dest('es'))
     .pipe(gulp.dest('lib'));
 }
 
-export default gulp.series(cleanOutputDir, buildEs, buildLib, tscTask, buildStyleSteet);
+export default gulp.series(cleanOutputDir, buildEs, buildLib, tscTask, buildStyleSheet);

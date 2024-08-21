@@ -1,8 +1,8 @@
-import type { TWidgetPosition } from '../../../lib/widget/BaseWidget';
-import BaseWidget from '../../../lib/widget/BaseWidget';
-import { PolygonMeasure } from '@/lib/graphic/PolygonMeasure';
-import { PolylineMeasure } from '@/lib/graphic/PolylineMeasure';
-import { useMap } from '@/lib/context/mapContext';
+import type { TWidgetPosition } from '../../../gis/widget/BaseWidget';
+import BaseWidget from '../../../gis/widget/BaseWidget';
+import { PolygonMeasure } from '@/gis/graphic/PolygonMeasure';
+import { PolylineMeasure } from '@/gis/graphic/PolylineMeasure';
+import { useMap } from '@/gis/context/mapContext';
 import { Space, Button } from 'antd';
 import { memo } from 'react';
 import './index.less';

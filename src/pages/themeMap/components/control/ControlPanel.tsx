@@ -1,11 +1,11 @@
 import { NavigationControl, FullscreenControl } from 'mapbox-gl';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import { useMap } from '@/lib/context/mapContext';
+import { useMap } from '@/gis/context/mapContext';
 import { memo, useMemo, useEffect } from 'react';
-import LayerList from '@/lib/widget/LayerList';
+import LayerList from '@/gis/widget/LayerList';
 import Location from '@/components/Map/Location';
 import Measure from '@/components/Map/Measure';
-import Legend from '@/lib/widget/Legend';
+import Legend from '@/gis/widget/Legend';
 import Swipe from '@/components/Map/Swipe';
 
 interface TControlPanel {

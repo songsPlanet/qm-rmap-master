@@ -1,4 +1,4 @@
-import type { TMapLayerSettting } from '@/lib/mapboxgl/typings';
+import type { TMapLayerSettting } from '@/gis/mapboxgl/typings';
 import { basemap } from '@/pages/themeMap/mapSetting/basemap';
 import { region } from './jieshou_region_mvt';
 import { wh_sqal_sdbhq_wms } from './wh_sqal_sdbhq_wms';

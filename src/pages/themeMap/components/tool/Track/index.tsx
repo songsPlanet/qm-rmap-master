@@ -1,4 +1,4 @@
-import type { TWidgetPosition } from '@/lib/widget/BaseWidget';
+import type { TWidgetPosition } from '@/gis/widget/BaseWidget';
 import { PlayCircleOutlined } from '@ant-design/icons';
 import { cloneElement, memo, useState } from 'react';
 import type { ReactElement } from 'react';

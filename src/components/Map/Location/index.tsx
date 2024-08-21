@@ -1,12 +1,12 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import BaseWidget, { ControlICONS } from '../../../lib/widget/BaseWidget';
+import BaseWidget from '../../../gis/widget/BaseWidget';
 import { Button, Radio, Form, Input, Space } from 'antd';
-import { decimalToDms, dmsToDecimal } from '@/lib/utils';
-import type { TWidgetPosition } from '../../../lib/widget/BaseWidget';
-import { useMap } from '@/lib/context/mapContext';
+import { decimalToDms, dmsToDecimal } from '@/gis/utils';
+import type { TWidgetPosition } from '../../../gis/widget/BaseWidget';
+import { useMap } from '@/gis/context/mapContext';
 import type { LngLatLike } from 'mapbox-gl';
 import './index.less';
-import { createPointFeatureCollection } from '@/lib/utils';
+import { createPointFeatureCollection } from '@/gis/utils';
 
 const initialPosition = {
   bearing: 0,
@@ -29,7 +29,7 @@ interface TPosition {
 const LocationIcon =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAtVJREFUWEfFlknoj0EYxz//mxI32aUQsiUuKDlYIru4oiT75S8HFApFpKzlKCciW/YQ4WDLLkvJvtzIQSnmq3k15jfzzrzvX3lqept3nuc733lm5plvE//ZmmrMPxYYCAwBRtj4q8At4B5wtgpmVQK7gEWJCXYDi3NJVCHwHOiRCfwC6Jnjm0vgGjAsB9DxuW62Y3gqJodAM7AlBRQZXw5sLYtNEdCBOxMBmAVctmMjgQMRv3FlBzNFYBWwPgAci/sZ8F0NbIhlIUXgCDDFC1b/WARwMnDUG1N/al0Cb4FOXrD67yOAHYF33pj6nf8lgQ7Axwhge+CDN/YVaFuXgFI9yQueYSrh4QjgdOCQN/YU6F2XwCZghRes1SsLIdPqlQXXrgC6JUFLHUIVEtV53x5aYnfswGBgM9Av4Dsb2FeXgOKU7mkxgMT/08D4Mp9UBhQ72rx652oSGAOcbykBxW8HllYksQNYlorJyYAwWgMPgO4pQDv+EugPfEv55xIQzkJAb32OSTPsyXGsQkB4J1OHCjgFTMiZXD5VCYRKrT9XWalu4FWVgAD0sq2MrHAjoBc023IIjAIueYjPApJLkq2X4ycdoP4F4FGMUYyAioee1jlAK7NV6wzAWgekD/DYA+0LPHH+XTTERV6myrkf2AZ8d+N8AgsASbBCUP4AbgDzAqvQPV9iwXYG6oQmn2sLWfGk37b4fzLqEpjpyCqtWBOrfSrZ0EIBlW2lMqhqqldUGZXpzfi9LW6gUrwmkO7sA5Xh2DCHS0D7rnsuU4oO2vY5A7jMpZ05A8quWnEmVCdULxrqwEQjqeY7IkSlVCVYh+imSeN9s4dSOGpf7Fc4bazq0VdtADDUplolWaVcdtxIvL1m7ETBOLZ3BRG9811amIE3RthKN/w1cYqAO2dXQNduENDNqiEpIlXFQhlJCUmo6qv2ymiIu/Zavi5bQE4hamECysN/AYtbfCHCDbyeAAAAAElFTkSuQmCC';
 
-const Location = (props: { position: TWidgetPosition }) => {
+const Location = (props: { position: TWidgetPosition; icon?: string }) => {
   const { map } = useMap();
   const [form] = Form.useForm();
   const [ifDecimal, setIfDecimal] = useState(true);
@@ -123,7 +123,7 @@ const Location = (props: { position: TWidgetPosition }) => {
     <BaseWidget
       name="坐标定位"
       position={{ ...props.position }}
-      icon={LocationIcon}
+      icon={props.icon ? props.icon : LocationIcon}
       width={300}
       height={180}
       openHandle={onOpenHandle}

@@ -11,8 +11,6 @@ const __dirname = fileURLToPath(new URL('./', import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
-
-
   plugins: [
     react(),
     libcss(),
@@ -59,7 +57,7 @@ export default defineConfig({
       },
     },
     lib: {
-      entry: './src/lib/index.ts', // 入口文件路径
+      entry: './src/gis/index.ts', // 入口文件路径
       name: "index",
       fileName: 'index',
     },
@@ -76,10 +74,9 @@ export default defineConfig({
         //   preserveModules: true,
         //   exports: "named",
         //   // 打包根目录
-        //   dir: "../lib1/es",
+        //   dir: "../lib/es",
         // },
         // {
-
         //   format: "cjs",
         //   // 打包后文件名
         //   entryFileNames: "[name].js",
@@ -87,7 +84,7 @@ export default defineConfig({
         //   preserveModules: true,
         //   exports: "named",
         //   // 打包根目录
-        //   dir: "../lib1/lib",
+        //   dir: "../lib/cjs",
         // },
         {
           // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量

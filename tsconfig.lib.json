@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "lib",
+    "outDir": "dts",
     "declaration": true,
     "emitDeclarationOnly": true,
     "strict": true,
@@ -29,5 +29,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/lib/**/*.ts", "src/lib/**/*.tsx", "src/vite-env*.d.ts"]
+  "include": ["src/gis/**/*.ts", "src/gis/**/*.tsx", "src/vite-env*.d.ts"]
 }

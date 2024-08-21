@@ -1,7 +1,7 @@
 // https://docs.mapbox.com/mapbox-gl-js/example/offset-vanishing-point-with-padding/
 
 import { cloneElement, memo, useState } from 'react';
-import { useMap } from '@/lib/context/mapContext';
+import { useMap } from '@/gis/context/mapContext';
 import type { ReactElement } from 'react';
 import './index.less';
 
