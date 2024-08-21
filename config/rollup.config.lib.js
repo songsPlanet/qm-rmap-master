@@ -9,7 +9,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replaceLessToCss from './rollup-plugin-less2css.js';
-// import divisionAntDesignIcons from './rollup-plugin-division-ant-design-icons.js';
 
 const context = fileURLToPath(new URL('../', import.meta.url));
 const extensions = [ '.tsx', '.ts', '.jsx', '.js', '.mjs', '.cjs' ];

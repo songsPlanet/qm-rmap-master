@@ -58,8 +58,8 @@ export default defineConfig({
     },
     lib: {
       entry: './src/gis/index.ts', // 入口文件路径
-      name: "index",
-      fileName: 'index',
+      name: "qm-rmap",
+      fileName: 'qm-rmap',
     },
     rollupOptions:
     {
