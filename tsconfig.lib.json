@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "dts",
+    "outDir": "lib",
     "declaration": true,
     "emitDeclarationOnly": true,
     "strict": true,
@@ -8,7 +8,7 @@
     "checkJs": true,
     "module": "ESNext",
     "target": "ESNext",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "alwaysStrict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
@@ -26,8 +26,8 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "baseUrl": "./",
     "paths": {
-      "@/*": [ "src/*" ]
-    },
+      "@/*": ["src/*"]
+    }
   },
-  "include": [ "src/lib/**/*.ts", "src/lib/**/*.tsx", "src/vite-env*.d.ts" ]
+  "include": ["src/lib/**/*.ts", "src/lib/**/*.tsx", "src/vite-env*.d.ts"]
 }

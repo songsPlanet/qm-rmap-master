@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.0.1",
   "type": "module",
-  "types": "./lib/index.d.ts",
+  "types": "./lib/lib/index.d.ts",
   "module": "./es/index.js",
   "main": "./src/index.tsx",
   "files": [
@@ -17,8 +17,7 @@
     "preview": "vite preview",
     "lint": "npx eslint ./src --config ./.eslintrc.yml --ext .tsx,.ts --fix",
     "prettier": "npx prettier -w ./src",
-    "build-lib": "vite build --config vite.config.lib.ts && tsc -p tsconfig.lib.json",
-    "build:lib": "npx gulp"
+    "build-lib": "vite build --config vite.config.lib.ts && tsc -p tsconfig.lib.json"
   },
   "lint-staged": {
     "src/**/*{.tsx, .ts, .jsx, .js}": [
