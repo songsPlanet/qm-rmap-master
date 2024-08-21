@@ -1,4 +1,4 @@
-import { transTreeToArr, getFeatureBoundingBox } from '../utils';
+import { transTreeToArr, getFeatureBoundingBox } from '../widget/utils';
 import type { TMapLayerSettting } from './typings/TLayerOptions';
 import type { StyleFunction, Expression } from 'mapbox-gl';
 import LayerGroupWrapper from './layer/LayerGroupWrapper';
@@ -42,7 +42,7 @@ class MapWrapper extends Map {
    *  data:"base64字符串"
    * }[]
    */
-  private _images: { id: string; data: string }[] = [];
+  private _images: { id: string; url: string }[] = [];
 
   get images() {
     return this._images;

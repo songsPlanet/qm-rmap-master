@@ -38,17 +38,17 @@ const MainLayout: React.FC = () => {
   useLayoutEffect(() => {
     const userInfo = getLocalStorage('USER_INFO');
 
-    if (!userInfo) {
-      endProcessRef.current = true;
-      return;
-    }
+    // if (!userInfo) {
+    //   endProcessRef.current = true;
+    //   return;
+    // }
 
-    // resourceList 为用户菜单权限
+    // // resourceList 为用户菜单权限
     const { avatar, username: userName, resourceList } = userInfo;
-    console.log('userinfor是什么', userInfo);
+    // console.log('userinfor是什么', userInfo);
 
     const permissions = flatMenuTree(resourceList || []);
-    console.log('permissions是什么', permissions);
+    // console.log('permissions是什么', permissions);
 
     const menuItems = filterMenuTree(permissions);
     permissionsRef.current = permissions;
@@ -58,11 +58,11 @@ const MainLayout: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (endProcessRef.current) {
-      message.warning('请先完成用户登录');
-      navigate('/login');
-      return;
-    }
+    // if (endProcessRef.current) {
+    //   message.warning('请先完成用户登录');
+    //   navigate('/login');
+    //   return;
+    // }
 
     const { pathname } = location;
     // 每当访问 '/' 路径时，重定向到菜单的第一项。
@@ -72,10 +72,10 @@ const MainLayout: React.FC = () => {
       return;
     }
 
-    if (!routerGuard(permissionsRef.current, pathname)) {
-      navigate('/404');
-      return;
-    }
+    // if (!routerGuard(permissionsRef.current, pathname)) {
+    //   navigate('/404');
+    //   return;
+    // }
 
     const regexp = /^(\/[^/?#]+)(\/[^/?#]+)+/;
     let openKeys: string[] = [];
@@ -111,7 +111,7 @@ const MainLayout: React.FC = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider width={240} collapsible theme="light" trigger={null} collapsed={collapsed}>
+      <Sider width={240} collapsible theme="light" trigger={null} collapsed={!collapsed}>
         <div className="hn-picc-logo">
           <img src={logo} className="hn-picc-logo-img" />
           <div className={`hn-picc-logo-title ${collapsed ? ' hide' : ''}`}>xxx系统</div>

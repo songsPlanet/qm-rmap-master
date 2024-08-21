@@ -1,5 +1,5 @@
-import type { TWidgetPosition } from '@/gis/widget/BaseWidget';
-import BaseWidget from '@/gis/widget/BaseWidget';
+import type { TWidgetPosition } from '@/components/Map/BaseWidget';
+import BaseWidget from '@/components/Map/BaseWidget';
 import { memo, useCallback, useEffect, useState } from 'react';
 import 'mapbox-gl-compare/dist/mapbox-gl-compare.css';
 import { useMap } from '@/gis/context/mapContext';

@@ -6,7 +6,6 @@ import PopupWrapper from '../PopupWrapper';
 import type { LngLatLike } from 'mapbox-gl';
 import type mapboxgl from 'mapbox-gl';
 import axios from '@/utils/axios';
-
 interface TPouperData {
   properties: any;
   lngLat: LngLatLike;
@@ -66,8 +65,7 @@ const PopupPanel = (props: TPopupPanel) => {
 
     const restLayerClicked = async (map: MapWrapper, e: mapboxgl.MapMouseEvent & mapboxgl.EventData) => {
       if (wms) {
-        const url = wms.baseUrl;
-
+        const baseUrl = wms.baseUrl;
         const params = {
           service: 'WFS',
           version: '1.0.0',
@@ -82,7 +80,9 @@ const PopupPanel = (props: TPopupPanel) => {
           .map((l) => l.options.id);
         const openLys = wms!.layers.filter((d) => lyrIds.findIndex((f) => f === d.id) > -1);
         for (let i = 0; i < openLys.length; i++) {
-          const rData = await axios.get(url, { ...params, typeName: openLys[i].layerName }).then((ctx: any) => {
+          const url = `${baseUrl}?${JSON.stringify(params)}&typeName=${openLys[i].layerName}`;
+          const rData = await axios.get(baseUrl, { ...params, typeName: openLys[i].layerName }).then((ctx: any) => {
+            // const rData = await axios.get(url).then((ctx: any) => {
             const temp = ctx || {};
             const flag = temp?.features?.length > 0;
             if (flag) {

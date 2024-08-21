@@ -1,8 +1,8 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import BaseWidget from '../../../gis/widget/BaseWidget';
+import BaseWidget from '../BaseWidget';
 import { Button, Radio, Form, Input, Space } from 'antd';
 import { decimalToDms, dmsToDecimal } from '@/gis/utils';
-import type { TWidgetPosition } from '../../../gis/widget/BaseWidget';
+import type { TWidgetPosition } from '../BaseWidget';
 import { useMap } from '@/gis/context/mapContext';
 import type { LngLatLike } from 'mapbox-gl';
 import './index.less';

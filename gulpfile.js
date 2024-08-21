@@ -62,30 +62,6 @@ function buildLib() {
   );
 }
 
-// // 执行有关生成 .d.ts 文件相关的任务
-// const tscTask = gulp.series(
-//   function () {
-//     return child_process.exec('npx tsc -p tsconfig.lib.json');
-//   },
-//   function () {
-//     return gulp
-//       .src(['dts/**/*.d.ts'])
-//       .pipe(
-//         through({ objectMode: true }, function (chunk, encode, callback) {
-//           const newBase = path.join(chunk.base, 'lib');
-//           if (chunk.path.startsWith(newBase)) chunk.base = newBase;
-
-//           return callback(null, chunk);
-//         }),
-//       )
-//       .pipe(gulp.dest('lib'))
-//       .pipe(gulp.dest('es'));
-//   },
-//   function (cb) {
-//     fs.rmSync(path.resolve(context, 'dts'), { force: true, recursive: true });
-//     cb();
-//   },
-// );
 // 执行有关生成 .d.ts 文件相关的任务
 const tscTask = gulp.series(
   function tscCompile() {

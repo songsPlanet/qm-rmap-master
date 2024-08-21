@@ -34,10 +34,10 @@ export function filterMenuTree(permissions: Map<string, object>, routes = routes
 
 export default function Router() {
   return useRoutes([
-    {
-      element: React.createElement(LazyLoader(() => import('../pages/login'))),
-      path: '/login/:status?',
-    },
+    // {
+    //   element: React.createElement(LazyLoader(() => import('../pages/login'))),
+    //   path: '/login/:status?',
+    // },
     {
       path: '/',
       element: <MainLayout />,

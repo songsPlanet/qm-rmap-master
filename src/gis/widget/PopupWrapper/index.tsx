@@ -1,9 +1,9 @@
-import { useMap } from '../../context/mapContext';
 import type { LngLatLike, PopupOptions } from 'mapbox-gl';
-import { Popup } from 'mapbox-gl';
-import type { ReactNode } from 'react';
+import { useMap } from '../../context/mapContext';
 import { memo, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
+import type { ReactNode } from 'react';
+import { Popup } from 'mapbox-gl';
 
 import './index.less';
 let defaultXY = {

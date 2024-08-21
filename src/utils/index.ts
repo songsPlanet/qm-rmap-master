@@ -1,11 +1,6 @@
-import type { TweenAttrNames } from './tween';
-import tween from './tween';
-
-// export { default as axios } from './axios';
 export { default as request } from '@/utils/axios';
 export { default as useReducer } from './useReducer';
 export { default as events } from './events';
-export { default as downLoadFile } from './download';
 
 export function getType(data: any) {
   return Object.prototype.toString.call(data).slice(8, -1).toLowerCase();
@@ -50,26 +45,6 @@ export function extName(filename: string) {
   const idx = filename.lastIndexOf('.');
   if (~idx) return filename.slice(idx + 1);
   return '';
-}
-
-/**
- * 下载文件
- * @param fileName 指定文件下载后的文件名
- * @param data     文件资源（blob）
- * @param extName  文件后缀
- */
-export function downloadFile(fileName: string, data: any, extName = '.xlsx') {
-  const blob = new Blob([data]);
-  const eLink = document.createElement('a');
-  // <a/> 上的 download 属性用于重命名一个需要下载的文件
-  eLink.download = /\.([a-zA-Z]+)$/i.test(fileName) ? fileName : fileName + extName;
-  eLink.style.display = 'none';
-  eLink.href = URL.createObjectURL(blob);
-  document.body.appendChild(eLink);
-  eLink.click();
-  // 释放 URL 对象
-  URL.revokeObjectURL(eLink.href);
-  document.body.removeChild(eLink);
 }
 
 // 判断两个值是否完全相等，可以比较 +0 !== -0，NaN === NaN
@@ -147,30 +122,6 @@ export function throttle(func: Function, delay: number, immediately = false) {
       }, delay);
     }
   };
-}
-
-/**
- * 页面，元素容器（voerflow 不是 visible）的滚动（动画）
- * @param position       终点位置
- * @param timingFunction 动画曲线
- * @param times          动画执行的次数
- * @param container      目标元素
- */
-export function scrollToPosition(
-  position: number,
-  timingFunction: TweenAttrNames = 'linear',
-  times = 50,
-  container: HTMLElement = document.documentElement,
-) {
-  execAnimation(0);
-
-  function execAnimation(count: number) {
-    const scrollTop = container.scrollTop;
-    let pos = tween[timingFunction](count, scrollTop, position - scrollTop, times);
-    container.scrollTop = pos;
-    if (pos === position || count >= times) return;
-    requestAnimationFrame(() => execAnimation(count + 1));
-  }
 }
 
 /**

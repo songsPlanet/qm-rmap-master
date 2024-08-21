@@ -2,10 +2,9 @@ import type { TMapLayerSettting } from '../../mapboxgl/typings/TLayerOptions';
 import React, { useRef, useEffect, memo, useState } from 'react';
 import type { TMapContext } from '../../context/mapContext';
 import { MapContext } from '../../context/mapContext';
-import { getPulsingDot } from '../../animation/pulsingDot';
 import MapWrapper from '../../mapboxgl/MapWrapper';
 import type { MapboxOptions } from 'mapbox-gl';
-import { debounce } from '../../utils';
+import { debounce } from '../utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { cloneDeep } from 'lodash';
 import './index.less';
@@ -45,9 +44,9 @@ function MapWidget(props: TMapProps) {
       map.load(cloneDeep(mapLayerSettting));
       setMapInit(true);
       // map.showTileBoundaries=true // 瓦片
-      // 添加动态点图标
-      const redAnimationImg = getPulsingDot(map);
-      map.addImage('redAnimationImg', redAnimationImg, { pixelRatio: 2 });
+      // // 添加动态点图标
+      // const redAnimationImg = getPulsingDot(map);
+      // map.addImage('redAnimationImg', redAnimationImg, { pixelRatio: 2 });
       if (contextValue) {
         contextValue.map = map;
       }
@@ -75,10 +74,7 @@ function MapWidget(props: TMapProps) {
       });
     });
     map.on('load', loadLayers);
-    // map.showTileBoundaries = true;
     map.on('click', (e) => {
-      // const vecterTile=map.querySourceFeatures("wh_sy-ds")
-      // const vecterTile3=map.queryRenderedFeatures()
       console.log(e.lngLat);
       console.log(map.getCenter(), map.getZoom(), map.getBounds());
     });
