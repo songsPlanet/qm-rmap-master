@@ -1,11 +1,11 @@
 {
   "name": "qm-rmap",
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
-  "types": "./lib/index.d.ts",
-  "module": "./es/index.js",
-  "main": "./lib/index.js",
+  "types": "./lib/gis/index.d.ts",
+  "module": "./lib/qm-rmap.js",
+  "main": "./lib/qm-rmap.js",
   "files": [
     "lib"
   ],
@@ -16,8 +16,7 @@
     "preview": "vite preview",
     "lint": "npx eslint ./src --config ./.eslintrc.yml --ext .tsx,.ts --fix",
     "prettier": "npx prettier -w ./src",
-    "build-lib": "vite build --config vite.config.lib.ts && tsc -p tsconfig.lib.json",
-    "build:lib": "npx gulp"
+    "build-lib": "vite build --config vite.config.lib.ts && tsc -p tsconfig.lib.json"
   },
   "dependencies": {
     "@commitlint/cli": "^19.4.0",
