@@ -1,8 +1,8 @@
 import type { TMapLayerSettting } from '../../mapboxgl/typings/TLayerOptions';
 import React, { useRef, useEffect, memo, useState } from 'react';
-import type { TMapContext } from '../../context/mapContext';
-import { MapContext } from '../../context/mapContext';
 import MapWrapper from '../../mapboxgl/MapWrapper';
+import { MapContext } from '@/gis/context/mapContext';
+import type { TMapContext } from '@/gis/context/mapContext';
 import type { MapboxOptions } from 'mapbox-gl';
 import { debounce } from '../utils';
 import 'mapbox-gl/dist/mapbox-gl.css';

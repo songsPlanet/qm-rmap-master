@@ -1,5 +1,5 @@
 import type { LngLatLike, PopupOptions } from 'mapbox-gl';
-import { useMap } from '../../context/mapContext';
+import { useMap } from '@/gis/context/mapContext';
 import { memo, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import type { ReactNode } from 'react';

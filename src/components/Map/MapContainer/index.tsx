@@ -4,6 +4,7 @@ import React, { memo, useEffect, useRef } from 'react';
 import MapWidget from '@/gis/widget/MapWidget';
 import classes from './index.module.less';
 import { cloneDeep } from 'lodash';
+import type { TMapContext } from '../context/mapContext';
 
 interface TMapContainerProp {
   mapOptions: any;

@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { cloneElement, memo, useEffect, useState } from 'react';
-import { useMap } from '../../context/mapContext';
+import { useMap } from '@/gis/context/mapContext';
 import type MapWrapper from '../../mapboxgl/MapWrapper';
 import PopupWrapper from '../PopupWrapper';
 import type { LngLatLike } from 'mapbox-gl';

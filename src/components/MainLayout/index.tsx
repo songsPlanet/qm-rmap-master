@@ -8,7 +8,6 @@ import logo from '@/assets/images/logo.png';
 import { filterMenuTree } from '@/routers';
 import type { MenuItem } from '@/routers';
 import { getLocalStorage } from '@/utils';
-import { signOut } from '@/models/login';
 import './index.less';
 
 const { Content, Sider, Header, Footer } = Layout;
@@ -33,15 +32,9 @@ const MainLayout: React.FC = () => {
   const menuItemsRef = useRef<any>(null);
   const permissionsRef = useRef<any>(null);
   // 终止程序
-  const endProcessRef = useRef(false);
 
   useLayoutEffect(() => {
     const userInfo = getLocalStorage('USER_INFO');
-
-    // if (!userInfo) {
-    //   endProcessRef.current = true;
-    //   return;
-    // }
 
     // // resourceList 为用户菜单权限
     const { avatar, username: userName, resourceList } = userInfo;
@@ -72,11 +65,6 @@ const MainLayout: React.FC = () => {
       return;
     }
 
-    // if (!routerGuard(permissionsRef.current, pathname)) {
-    //   navigate('/404');
-    //   return;
-    // }
-
     const regexp = /^(\/[^/?#]+)(\/[^/?#]+)+/;
     let openKeys: string[] = [];
     if (regexp.exec(pathname)) openKeys = [RegExp.$1];
@@ -92,18 +80,6 @@ const MainLayout: React.FC = () => {
   const handleChangeOpenKeys = useCallback((keys: any[]) => {
     setState({ openKeys: keys });
   }, []);
-
-  const handleSignOut = () => {
-    // 先调用退出接口。不管结果如何都清空本地数据缓存。
-    signOut().finally(() => {
-      window.localStorage.clear();
-      navigate('/login');
-    });
-  };
-
-  const handleResetPassword = () => {
-    navigate('/login/passwd');
-  };
 
   const handleTriggerSlider = () => {
     setState((prevState) => ({ collapsed: !prevState.collapsed }));
@@ -135,25 +111,6 @@ const MainLayout: React.FC = () => {
               <MenuFoldOutlined className="hn-picc-menu-slider-button" />
             )}
           </span>
-          <Popover
-            trigger="click"
-            placement="bottomLeft"
-            content={
-              <>
-                <a className="hn-picc-signout-button" onClick={handleSignOut}>
-                  退出登录
-                </a>
-                <a className="hn-picc-signout-button" onClick={handleResetPassword}>
-                  修改密码
-                </a>
-              </>
-            }
-          >
-            <div className="hn-picc-body-header-avatar">
-              <Avatar size={48} icon={<UserOutlined />} src={avatar || avatarURL} />
-              <span className="hn-picc-body-header-userName">{userName}</span>
-            </div>
-          </Popover>
         </Header>
         <Content>
           <Outlet />

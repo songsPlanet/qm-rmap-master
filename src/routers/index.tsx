@@ -8,7 +8,6 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import routesMap from '@/routers/routesMap';
 import MainLayout from '@/components/MainLayout';
-import LazyLoader from '@/components/LazyLoader';
 
 export type MenuItem = {
   icon?: React.ReactNode | null;
@@ -34,10 +33,6 @@ export function filterMenuTree(permissions: Map<string, object>, routes = routes
 
 export default function Router() {
   return useRoutes([
-    // {
-    //   element: React.createElement(LazyLoader(() => import('../pages/login'))),
-    //   path: '/login/:status?',
-    // },
     {
       path: '/',
       element: <MainLayout />,

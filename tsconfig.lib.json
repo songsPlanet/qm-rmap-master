@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "dts",
+    "outDir": "lib",
     "declaration": true,
+    "declarationDir": "lib",
     "emitDeclarationOnly": true,
     "strict": true,
     "allowJs": true,

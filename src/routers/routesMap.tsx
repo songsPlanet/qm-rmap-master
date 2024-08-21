@@ -25,11 +25,6 @@ const routesMap: RouteItem[] = [
     icon: <FileMarkdownOutlined style={iconStyle} />,
     element: React.createElement(LazyLoader(() => import('../pages/themeMap'))),
   },
-
-  // {
-  //   path: '/404',
-  //   element: React.createElement(LazyLoader(() => import('../pages/404'))),
-  // },
   {
     path: '/',
     element: <Navigate to="/theme-map" />,
