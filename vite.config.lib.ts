@@ -1,25 +1,25 @@
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import legacy from '@vitejs/plugin-legacy';
-import process from 'process';
 import libcss from 'vite-plugin-libcss';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import presetEnv from 'postcss-preset-env';
+import dts from "vite-plugin-dts"
 
 const __dirname = fileURLToPath(new URL('./', import.meta.url));
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), 'VITE_');
-  // 打包入口文件夹
-  const define = Object.keys(env).reduce((memo, key) => {
-    memo[key] = JSON.stringify(env[key]);
-    return memo;
-  }, {});
+export default defineConfig({
+  
 
-  return {
-    plugins: [react(), libcss(), legacy()],
+  plugins: [react(), libcss(), legacy(),
+    dts({
+      entryRoot: "./src",
+      outDir: ["./es/src", "./lib/src"],
+      tsconfigPath:"./tsconfig.lib.json"
+    })
+  ],
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js'],
       alias: {
@@ -67,6 +67,27 @@ export default defineConfig(({ mode }) => {
         external: ['react', 'react-dom'],
         output: [
           {
+            format: "es",
+            // 打包后文件名
+            entryFileNames: "[name].mjs",
+            // 让打包目录和我们的目录对应
+            preserveModules: true,
+            exports: "named",
+            // 打包根目录
+            dir: "../es",
+          },
+          {
+
+            format: "cjs",
+            // 打包后文件名
+            entryFileNames: "[name].js",
+            // 让打包目录和我们的目录对应
+            preserveModules: true,
+            exports: "named",
+            // 打包根目录
+            dir: "../lib",
+          },
+          {
             // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
             globals: {
               'react': 'react',
@@ -76,5 +97,4 @@ export default defineConfig(({ mode }) => {
         ]
       },
     },
-  };
 });

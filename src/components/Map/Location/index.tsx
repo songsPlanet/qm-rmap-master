@@ -1,12 +1,12 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import BaseWidget, { ControlICONS } from '../../../gis/widget/BaseWidget';
+import BaseWidget, { ControlICONS } from '../../../lib/widget/BaseWidget';
 import { Button, Radio, Form, Input, Space } from 'antd';
-import { decimalToDms, dmsToDecimal } from '@/gis/utils';
-import type { TWidgetPosition } from '../../../gis/widget/BaseWidget';
-import { useMap } from '@/gis/context/mapContext';
+import { decimalToDms, dmsToDecimal } from '@/lib/utils';
+import type { TWidgetPosition } from '../../../lib/widget/BaseWidget';
+import { useMap } from '@/lib/context/mapContext';
 import type { LngLatLike } from 'mapbox-gl';
 import './index.less';
-import { createPointFeatureCollection } from '@/gis/utils';
+import { createPointFeatureCollection } from '@/lib/utils';
 
 const initialPosition = {
   bearing: 0,

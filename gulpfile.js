@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 import fs from 'fs';
 import path from 'path';
 import gulp from 'gulp';

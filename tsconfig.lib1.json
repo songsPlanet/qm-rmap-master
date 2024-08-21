@@ -1,14 +1,15 @@
 {
+  // "extends": "./tsconfig.json", // 拓展 tsconfig.json 的配置
   "compilerOptions": {
-    "outDir": "dts",
-    "declaration": true,
-    "emitDeclarationOnly": true,
+    "noEmit": false,
+    "declaration": true, // 需要设置为 true 来支持类型
+    "declarationDir": "lib", // 类型文件的导出目录
     "strict": true,
-    "allowJs": true,
-    "checkJs": true,
     "module": "ESNext",
     "target": "ESNext",
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "allowJs": false,
+    "checkJs": false,
     "alwaysStrict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
@@ -24,10 +25,9 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "baseUrl": "./",
     "paths": {
-      "@/*": [ "src/*" ]
-    },
+      "@/*": ["./src/*"]
+    }
   },
-  "include": [ "src/lib/**/*.ts", "src/lib/**/*.tsx", "src/vite-env*.d.ts" ]
+  "include": ["src/lib/**/*.ts", "src/lib/**/*.tsx", "src/vite-env*.d.ts"] // 编译目标仅为src文件下的文件
 }

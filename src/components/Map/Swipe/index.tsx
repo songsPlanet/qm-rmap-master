@@ -1,12 +1,12 @@
-import type { TWidgetPosition } from '@/gis/widget/BaseWidget';
-import BaseWidget from '@/gis/widget/BaseWidget';
+import type { TWidgetPosition } from '@/lib/widget/BaseWidget';
+import BaseWidget from '@/lib/widget/BaseWidget';
 import { memo, useCallback, useEffect, useState } from 'react';
 import 'mapbox-gl-compare/dist/mapbox-gl-compare.css';
-import { useMap } from '@/gis/context/mapContext';
-import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import { useMap } from '@/lib/context/mapContext';
+import type MapWrapper from '@/lib/mapboxgl/MapWrapper';
 import Compare from 'mapbox-gl-compare';
-import LayerList from '@/gis/widget/LayerList';
-import MapWidget from '@/gis/widget/MapWidget';
+import LayerList from '@/lib/widget/LayerList';
+import MapWidget from '@/lib/widget/MapWidget';
 import { Modal } from 'antd';
 import './index.less';
 

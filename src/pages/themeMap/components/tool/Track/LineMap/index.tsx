@@ -1,10 +1,10 @@
 import { PlayCircleOutlined, PauseOutlined, RedoOutlined } from '@ant-design/icons';
-import { AnimationRoute } from '@/gis/animation/AnimationRoute';
+import { AnimationRoute } from '@/lib/animation/AnimationRoute';
 import { basemap } from '@/pages/themeMap/mapSetting/basemap';
-import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type MapWrapper from '@/lib/mapboxgl/MapWrapper';
 import { memo, useEffect, useRef } from 'react';
 import type { LngLatBoundsLike } from 'mapbox-gl';
-import MapWidget from '@/gis/widget/MapWidget';
+import MapWidget from '@/lib/widget/MapWidget';
 import classes from './index.module.less';
 import { Button, Space } from 'antd';
 

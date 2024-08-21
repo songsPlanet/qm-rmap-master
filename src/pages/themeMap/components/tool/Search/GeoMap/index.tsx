@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import { memo, useEffect, useRef } from 'react';
-import { getFeatureBoundingBox } from '@/gis/utils';
+import { getFeatureBoundingBox } from '@/lib/utils';
 import { Map } from 'mapbox-gl';
 
 interface TGeoMap {
