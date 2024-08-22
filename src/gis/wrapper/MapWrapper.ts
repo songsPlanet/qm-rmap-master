@@ -1,5 +1,5 @@
 import type { TMapLayerSettting } from '../typings/TLayerOptions';
-import { transTreeToArr,getFeatureBoundingBox } from './utils';
+import  GisToolHelper from '../GISToolHelper';
 import type { StyleFunction, Expression } from 'mapbox-gl';
 import type { TMapOptions } from '../typings/TMapOptions';
 import LayerGroupWrapper from './LayerGroupWrapper';
@@ -331,7 +331,7 @@ class MapWrapper extends Map {
    */
   getLayerList() {
     const lyrList: Array<LayerWrapper | LayerGroupWrapper> = [];
-    transTreeToArr(lyrList, this.layers);
+    GisToolHelper.transTreeToArr(lyrList, this.layers);
     return lyrList;
   }
 
@@ -349,7 +349,7 @@ class MapWrapper extends Map {
   locationFeature(featCol: FeatureCollection) {
     const bds = new LngLatBounds();
     featCol.features.forEach((d: any) => {
-      bds.extend(getFeatureBoundingBox(d));
+      bds.extend(GisToolHelper.getFeatureBoundingBox(d));
     });
     this.fitBounds(bds, { maxZoom: 16 });
   }
@@ -361,7 +361,7 @@ class MapWrapper extends Map {
     const bds = new LngLatBounds();
     featCols.forEach((featCol: any) => {
       featCol.features.forEach((d: any) => {
-        bds.extend(getFeatureBoundingBox(d));
+        bds.extend(GisToolHelper.getFeatureBoundingBox(d));
       });
     });
     this.fitBounds(bds, { maxZoom: 16 });

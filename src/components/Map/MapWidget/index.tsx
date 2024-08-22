@@ -3,8 +3,8 @@ import React, { useRef, useEffect, memo, useState } from 'react';
 import MapWrapper from '@/gis/wrapper/MapWrapper';
 import { MapContext } from '../context/mapContext';
 import { TMapContext } from '../context/mapContext';
+import  GisToolHelper  from '@/gis/GISToolHelper';
 import type { MapboxOptions } from 'mapbox-gl';
-import { debounce } from '../../../gis/wrapper/utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { cloneDeep } from 'lodash';
 import './index.less';
@@ -79,7 +79,7 @@ function MapWidget(props: TMapProps) {
       console.log(map.getCenter(), map.getZoom(), map.getBounds());
     });
 
-    const resizeMap = debounce(() => {
+    const resizeMap = GisToolHelper.debounce(() => {
       map.resize();
     }, 10);
 
