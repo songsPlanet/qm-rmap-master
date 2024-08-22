@@ -1,4 +1,4 @@
-import type { TLayerOptions } from '@/gis/mapboxgl/typings';
+import type { TLayerOptions } from '@/gis/typings';
 
 export const wh_sy_geo: TLayerOptions = {
   id: 'wh_sy_geo',

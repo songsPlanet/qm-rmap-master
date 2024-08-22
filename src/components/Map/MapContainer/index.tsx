@@ -1,10 +1,9 @@
-import type { TMapLayerSettting } from '@/gis/mapboxgl/typings';
-import type MapWrapper from '@/gis/mapboxgl/MapWrapper';
+import type { TMapLayerSettting } from '@/gis/typings';
+import type MapWrapper from '@/gis/wrapper/MapWrapper';
 import React, { memo, useEffect, useRef } from 'react';
-import MapWidget from '@/gis/widget/MapWidget';
+import MapWidget from '@/components/Map/MapWidget';
 import classes from './index.module.less';
 import { cloneDeep } from 'lodash';
-import type { TMapContext } from '../context/mapContext';
 
 interface TMapContainerProp {
   mapOptions: any;

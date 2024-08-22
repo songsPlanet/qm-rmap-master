@@ -1,11 +1,11 @@
 import { memo, useMemo } from 'react';
-import { mapOptionsJS } from '@/gis/mapboxgl/typings/TMapOptions';
+import { mapOptionsJS } from '@/gis/typings/TMapOptions';
 import { wh_sqal_sdbhq_wms } from './mapSetting/wh_sqal_sdbhq_wms';
 import ProtectionPopup from './components/popup/ProtectionPopup';
 import ControlPanel from './components/control/ControlPanel';
 import MapContainer from '../../components/Map/MapContainer';
 import FieldPopup from './components/popup/FieldPopup';
-import PopupPanel from '@/gis/widget/PopupPanel';
+import PopupPanel from '@/components/Map/PopupPanel';
 import { field_vt } from './mapSetting/field_vt';
 import mapSetting from './mapSetting';
 

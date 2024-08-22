@@ -1,8 +1,6 @@
 import { NavigationControl, FullscreenControl } from 'mapbox-gl';
-import { useMap } from '@/gis/context/mapContext';
+import { useMap } from '@/components/Map/context/mapContext';
 import { memo, useMemo, useEffect } from 'react';
-import Location from '@/components/Map/Location';
-import Swipe from '@/components/Map/Swipe';
 
 interface TControlPanel {
   regionList?: any;
