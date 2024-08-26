@@ -1,8 +1,8 @@
 import type { TMapLayerSettting } from '../typings/TLayerOptions';
 import type { StyleFunction, Expression } from 'mapbox-gl';
 import type { TMapOptions } from '../typings/TMapOptions';
-import LayerGroupWrapper from './LayerGroupWrapper';
 import type { FeatureCollection } from '@turf/turf';
+import LayerGroupWrapper from './LayerGroupWrapper';
 import { Map, LngLatBounds } from 'mapbox-gl';
 import LayerWrapper from './LayerWrapper';
 /**

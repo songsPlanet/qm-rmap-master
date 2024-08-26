@@ -11,11 +11,11 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import replaceLessToCss from './rollup-plugin-less2css.js';
 
 const context = fileURLToPath(new URL('../', import.meta.url));
-const extensions = [ '.tsx', '.ts', '.jsx', '.js', '.mjs', '.cjs' ];
+const extensions = ['.tsx', '.ts', '.jsx', '.js', '.mjs', '.cjs'];
 
 const inputOptions = {
   input: path.resolve(context, 'src/gis/index.ts'),
-  external: [ /[\\/]node_modules[\\/]/, /\.less/, /\.css/ ],
+  external: [/[\\/]node_modules[\\/]/, /\.less/, /\.css/],
   makeAbsoluteExternalsRelative: false,
   plugins: [
     nodeResolve(),
@@ -25,13 +25,12 @@ const inputOptions = {
     babel({
       extensions,
       babelHelpers: 'runtime',
-      exclude:/[\\/]node_modules[\\/]/,
+      exclude: /[\\/]node_modules[\\/]/,
     }),
     // encode image to base64
     image(),
     replaceLessToCss(),
-    // divisionAntDesignIcons(),
-  ]
+  ],
 };
 
 const outputOptions = {
@@ -41,13 +40,13 @@ const outputOptions = {
   dir: path.resolve(context, 'es'),
 };
 
-export default async function build () {
+export default async function build() {
   let bundle = null;
   try {
     bundle = await rollup(inputOptions);
     await bundle.write(outputOptions);
   } catch (error) {
-    const msg = error.stack.replace(/^\b/mg, '   ');
+    const msg = error.stack.replace(/^\b/gm, '   ');
     process.stdout.write('\n');
     process.stdout.write(chalk.red(msg));
     process.stdout.write('\n');

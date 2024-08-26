@@ -15,6 +15,7 @@ var LayerGroupWrapper = /*#__PURE__*/function () {
   function LayerGroupWrapper(options) {
     var _this = this;
     _classCallCheck(this, LayerGroupWrapper);
+    _defineProperty(this, "_options", void 0);
     _defineProperty(this, "_layers", []);
     this._options = options;
     options.layers.forEach(function (item) {

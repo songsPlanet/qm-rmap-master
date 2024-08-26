@@ -1,7 +1,6 @@
 module.exports = {
   plugins: [
     ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'lib', style: false }],
-    '@babel/plugin-transform-typescript',
     '@babel/plugin-proposal-export-default-from',
     '@babel/plugin-proposal-export-namespace-from',
     ['@babel/plugin-transform-runtime', { corejs: 3 }],

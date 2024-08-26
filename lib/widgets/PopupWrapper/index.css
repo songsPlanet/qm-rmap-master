@@ -1,0 +1,40 @@
+.popup-content-wrap {
+  min-width: 350px;
+  max-width: 500px;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+.popup-header-wrap {
+  height: 35px;
+  line-height: 35px;
+  display: flex;
+  justify-content: space-between;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.05) 50px, rgba(255, 255, 255, 0.05)), url(~@/assets/images/dash-board-module-bg.png);
+  background-repeat: no-repeat;
+  background-size: contain, 102% 35px;
+}
+.popup-title-wrap {
+  font-size: 16px;
+  width: 80%;
+  color: aqua;
+  padding-left: 10px;
+}
+.mapboxgl-popup-wrapper .mapboxgl-popup-content {
+  padding: 0;
+  background-color: #0b2545;
+}
+.mapboxgl-popup-wrapper .mapboxgl-popup-content .ant-descriptions-item-label {
+  min-width: 80px;
+}
+.mapboxgl-popup-wrapper .mapboxgl-popup-close-button {
+  width: 35px;
+  height: 35px;
+  font-size: 20px;
+  outline: 0;
+  color: aqua;
+}
+.mapboxgl-popup-wrapper .mapboxgl-popup-tip {
+  visibility: hidden;
+}

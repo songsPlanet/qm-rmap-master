@@ -18,8 +18,8 @@ import 'core-js/modules/es.regexp.exec.js';
 import 'core-js/modules/es.regexp.test.js';
 import 'core-js/modules/es.regexp.to-string.js';
 import 'core-js/modules/web.dom-collections.for-each.js';
-import GisToolHelper from '../GISToolHelper.js';
 import LayerGroupWrapper from './LayerGroupWrapper.js';
+import GisToolHelper from '../GISToolHelper.js';
 import { LngLatBounds, Map } from 'mapbox-gl';
 import { MapEvent } from '../typings/TEvent.js';
 import LayerWrapper from './LayerWrapper.js';
@@ -37,6 +37,15 @@ var MapWrapper = /*#__PURE__*/function (_Map) {
     var _this;
     _classCallCheck(this, MapWrapper);
     _this = _callSuper(this, MapWrapper, [options]);
+    _defineProperty(_this, "_id", void 0);
+    /**
+     * 获取mapOptions
+     */
+    _defineProperty(_this, "_options", void 0);
+    /**
+     * 获取MapLayerSettting
+     */
+    _defineProperty(_this, "_mapLayerSetting", void 0);
     /**
      * 获取images列表
      * {
@@ -45,6 +54,8 @@ var MapWrapper = /*#__PURE__*/function (_Map) {
      * }[]
      */
     _defineProperty(_this, "_images", []);
+    // 绘制工具
+    _defineProperty(_this, "_drawTool", void 0);
     _defineProperty(_this, "_layers", []);
     /**
      * 获取地图边界：
@@ -87,17 +98,11 @@ var MapWrapper = /*#__PURE__*/function (_Map) {
     get: function get() {
       return this._id;
     }
-    /**
-     * 获取mapOptions
-     */
   }, {
     key: "options",
     get: function get() {
       return this._options;
     }
-    /**
-     * 获取MapLayerSettting
-     */
   }, {
     key: "mapLayerSetting",
     get: function get() {
@@ -111,7 +116,6 @@ var MapWrapper = /*#__PURE__*/function (_Map) {
     set: function set(value) {
       this._images = value;
     }
-    // 绘制工具
   }, {
     key: "drawTool",
     get: function get() {

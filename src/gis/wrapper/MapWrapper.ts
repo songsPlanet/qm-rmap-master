@@ -1,12 +1,13 @@
 import type { TMapLayerSettting } from '../typings/TLayerOptions';
-import  GisToolHelper from '../GISToolHelper';
 import type { StyleFunction, Expression } from 'mapbox-gl';
 import type { TMapOptions } from '../typings/TMapOptions';
-import LayerGroupWrapper from './LayerGroupWrapper';
 import type { FeatureCollection } from '@turf/turf';
+import LayerGroupWrapper from './LayerGroupWrapper';
+import  GisToolHelper from '../GISToolHelper';
 import { Map, LngLatBounds } from 'mapbox-gl';
 import { MapEvent } from '../typings/TEvent';
 import LayerWrapper from './LayerWrapper';
+
 /**
  * 地图扩展类
  */

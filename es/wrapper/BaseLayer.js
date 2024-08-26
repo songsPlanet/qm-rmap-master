@@ -1,9 +1,11 @@
 import _classCallCheck from '@babel/runtime-corejs3/helpers/classCallCheck';
 import _createClass from '@babel/runtime-corejs3/helpers/createClass';
+import _defineProperty from '@babel/runtime-corejs3/helpers/defineProperty';
 
 var BaseLayer = /*#__PURE__*/function () {
   function BaseLayer(options) {
     _classCallCheck(this, BaseLayer);
+    _defineProperty(this, "_options", void 0);
     this._options = options;
   }
   return _createClass(BaseLayer, [{

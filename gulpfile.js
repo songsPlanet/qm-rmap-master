@@ -1,4 +1,3 @@
-/* eslint-disable prefer-arrow-callback */
 import fs from 'fs';
 import path from 'path';
 import gulp from 'gulp';
@@ -30,71 +29,57 @@ async function buildEs() {
 
 // 打包构建 commonjs 模块
 function buildLib() {
-  return (
-    gulp
-      .src(['es/**/*.js'])
-      .pipe(
-        through({ objectMode: true }, function (chunk, encode, callback) {
-          if (/\.(png|jpe?g|gif|webp|svg)\.js$/.test(chunk.path)) return callback(null, chunk);
+  return gulp
+    .src(['es/**/*.js'])
+    .pipe(
+      through({ objectMode: true }, function (chunk, encode, callback) {
+        if (/\.(png|jpe?g|gif|webp|svg)\.js$/.test(chunk.path)) return callback(null, chunk);
 
-          let contents = chunk.contents.toString();
-          if (/import {(.+)} from (['"])@ant-design\/icons\2/.test(contents)) {
-            const values = RegExp.$1;
-            const reg = /\b(\w+)\b/g;
-            const result = [];
-            while (reg.test(values)) {
-              result.push(RegExp.$1);
-            }
-
-            let context = '';
-            result.forEach((item) => (context += `import ${item} from '@ant-design/icons/${item}';`));
-
-            contents = contents.replace(/import .* from (['"])@ant-design\/icons\1;/, context);
-            chunk.contents = Buffer.from(contents);
+        let contents = chunk.contents.toString();
+        if (/import {(.+)} from (['"])@ant-design\/icons\2/.test(contents)) {
+          const values = RegExp.$1;
+          const reg = /\b(\w+)\b/g;
+          const result = [];
+          while (reg.test(values)) {
+            result.push(RegExp.$1);
           }
 
-          callback(null, chunk);
-        }),
-      )
-      .pipe(babel({ configFile: './babel.config.lib.cjs' }))
-      // .pipe(gulp.src([ 'es/**/*.d.ts' ]))
-      .pipe(gulp.dest('./lib'))
-  );
+          let context = '';
+          result.forEach((item) => (context += `import ${item} from '@ant-design/icons/${item}';`));
+
+          contents = contents.replace(/import .* from (['"])@ant-design\/icons\1;/, context);
+          chunk.contents = Buffer.from(contents);
+        }
+
+        callback(null, chunk);
+      }),
+    )
+    .pipe(babel({ configFile: './babel.config.lib.cjs' }))
+    .pipe(gulp.dest('./lib'));
 }
 
 // 执行有关生成 .d.ts 文件相关的任务
 const tscTask = gulp.series(
-  function tscCompile() {
-    return new Promise((resolve, reject) => {
-      child_process.exec('npx tsc -p tsconfig.lib.json', (error, stdout, stderr) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve();
-        }
-      });
-    });
+  function () {
+    return child_process.exec('npx tsc -p tsconfig.lib.json');
   },
-  function copyDts() {
+  function () {
     return gulp
-      .src('dts/**/*.d.ts')
+      .src(['dts/**/*.d.ts'])
       .pipe(
-        through({ objectMode: true }, (chunk, encode, callback) => {
+        through({ objectMode: true }, function (chunk, encode, callback) {
           const newBase = path.join(chunk.base, 'lib');
           if (chunk.path.startsWith(newBase)) chunk.base = newBase;
-          callback(null, chunk);
+
+          return callback(null, chunk);
         }),
       )
       .pipe(gulp.dest('lib'))
       .pipe(gulp.dest('es'));
   },
-  function cleanupDts(cb) {
-    try {
-      fs.rmSync(path.resolve(context, 'dts'), { force: true, recursive: true });
-      cb();
-    } catch (error) {
-      cb(error);
-    }
+  function (cb) {
+    fs.rmSync(path.resolve(context, 'dts'), { force: true, recursive: true });
+    cb();
   },
 );
 
@@ -108,5 +93,7 @@ function buildStyleSheet() {
     .pipe(gulp.dest('es'))
     .pipe(gulp.dest('lib'));
 }
+
+
 
 export default gulp.series(cleanOutputDir, buildEs, buildLib, tscTask, buildStyleSheet);

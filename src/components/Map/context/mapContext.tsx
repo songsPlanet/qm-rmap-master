@@ -1,5 +1,5 @@
 import { useContext, createContext } from 'react';
-import type MapWrapper from '../mapboxgl/MapWrapper';
+import { MapWrapper } from '@/gis';
 export interface TMapContext {
   map: MapWrapper | null;
 }
