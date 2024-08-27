@@ -34,17 +34,17 @@ const MainLayout: React.FC = () => {
   // 终止程序
 
   useLayoutEffect(() => {
-    const userInfo = getLocalStorage('USER_INFO');
+    // const userInfo = getLocalStorage('USER_INFO');
 
     // // resourceList 为用户菜单权限
-    const { avatar, username: userName, resourceList } = userInfo;
+    // const { avatar, username: userName, resourceList } = userInfo;
     // console.log('userinfor是什么', userInfo);
 
-    const permissions = flatMenuTree(resourceList || []);
+    // const permissions = flatMenuTree(resourceList || []);
     // console.log('permissions是什么', permissions);
 
-    const menuItems = filterMenuTree(permissions);
-    permissionsRef.current = permissions;
+    // const menuItems = filterMenuTree(permissions);
+    // permissionsRef.current = permissions;
     menuItemsRef.current = menuItems;
 
     setState({ menuItems, avatar, userName });

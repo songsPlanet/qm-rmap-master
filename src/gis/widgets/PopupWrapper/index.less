@@ -1,6 +1,6 @@
 .popup-content-wrap {
   min-width: 350px;
-  max-width: 500px;
+  max-width: 600px;
   position: relative;
   border-radius: 5px;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
@@ -29,6 +29,8 @@
 }
 
 .mapboxgl-popup-wrapper {
+  z-index: 999;
+
   .mapboxgl-popup-content {
     padding: 0;
     background-color: rgba(11, 37, 69, 1);
@@ -46,4 +48,11 @@
   .mapboxgl-popup-tip {
     visibility: hidden;
   }
+}
+
+.mapboxgl-popup {
+  // width:600px; /* 假设Popup的宽度是固定的 */
+  top: 50%;
+  left: 50%; /* 将Popup的左边缘置于屏幕中心的左侧 */
+  transform: translate(-50%,-50%) !important /* 向左偏移Popup宽度的一半，使其中心与屏幕中心对齐 */
 }

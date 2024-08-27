@@ -41,7 +41,8 @@ function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymb
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var PopupPanel = function PopupPanel(props) {
   var vector = props.vector,
-    wms = props.wms;
+    wms = props.wms,
+    ifCenter = props.ifCenter;
   var _useMap = useMap(),
     map = _mapInstanceProperty(_useMap);
   var _useState = useState(),
@@ -91,7 +92,7 @@ var PopupPanel = function PopupPanel(props) {
           console.log(feature);
           setPopupData({
             properties: feature.properties,
-            lngLat: map.unproject(new Point(e.point.x / scale, e.point.y / scale)),
+            lngLat: ifCenter ? map.getCenter() : map.unproject(new Point(e.point.x / scale, e.point.y / scale)),
             title: title,
             template: template
           });
@@ -221,7 +222,7 @@ var PopupPanel = function PopupPanel(props) {
                 map.selectFeature(feature);
                 setPopupData({
                   properties: feature.properties,
-                  lngLat: rData.lngLat,
+                  lngLat: ifCenter ? map.getCenter() : rData.lngLat,
                   title: title,
                   template: template
                 });

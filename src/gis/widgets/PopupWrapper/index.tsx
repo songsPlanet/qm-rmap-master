@@ -45,17 +45,23 @@ const PopupWrapper = (props: TPopupWrapper) => {
     return content;
   }, []);
 
+  const maskContainer = useMemo(() => {
+    return document.getElementById('popup-mask-container');
+  }, []);
+
   const popup: Popup = useMemo(() => {
     const options = { ...props, maxWidth: 'none', className: 'mapboxgl-popup-wrapper' };
     const pp = new Popup(options).setLngLat(lngLat);
     pp.once('open', (e: any) => {
       onOpen?.(e as PopupEvent);
+      maskContainer!.style.display = 'block';
     });
     return pp;
   }, []);
 
   useEffect(() => {
     const onCloseHandle = (e: any) => {
+      maskContainer!.style.display = 'none';
       onClose?.(e as PopupEvent);
     };
     popup.on('close', onCloseHandle);
@@ -94,6 +100,7 @@ const PopupWrapper = (props: TPopupWrapper) => {
     }
     return () => {
       popup.off('close', onClose);
+      maskContainer!.style.display = 'none';
       ppHeader.removeEventListener('mousedown', mousedown);
       ppHeader.removeEventListener('mouseup', mouseup);
       if (popup.isOpen()) {

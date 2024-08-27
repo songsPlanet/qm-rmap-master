@@ -1,5 +1,3 @@
-
-
 import React, { cloneElement, memo, useEffect, useState } from 'react';
 import PopupWrapper from '../PopupWrapper';
 import type { LngLatLike } from 'mapbox-gl';
@@ -18,12 +16,13 @@ interface TPouperData {
 }
 
 interface TPopupPanel {
+  ifCenter?: boolean;
   vector: { id: string; title: string; template: ReactElement }[];
   wms?: { baseUrl: string; layers: { id: string; title: string; template: ReactElement; layerName: string }[] };
 }
 
 const PopupPanel = (props: TPopupPanel) => {
-  const { vector, wms } = props;
+  const { vector, wms, ifCenter } = props;
   const { map } = useMap();
 
   const [popupData, setPopupData] = useState<TPouperData | undefined>();
@@ -61,7 +60,7 @@ const PopupPanel = (props: TPopupPanel) => {
           console.log(feature);
           setPopupData({
             properties: feature.properties,
-            lngLat: map.unproject(new Point(e.point.x / scale, e.point.y / scale)),
+            lngLat: ifCenter?map.getCenter(): map.unproject(new Point(e.point.x / scale, e.point.y / scale)),
             title,
             template,
           });
@@ -119,7 +118,7 @@ const PopupPanel = (props: TPopupPanel) => {
         map.selectFeature(feature);
         setPopupData({
           properties: feature.properties,
-          lngLat: rData.lngLat,
+          lngLat: ifCenter?map.getCenter():rData.lngLat,
           title,
           template,
         });

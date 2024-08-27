@@ -44,6 +44,9 @@ var PopupWrapper = function PopupWrapper(props) {
     content.appendChild(header);
     return content;
   }, []);
+  var maskContainer = useMemo(function () {
+    return document.getElementById('popup-mask-container');
+  }, []);
   var popup = useMemo(function () {
     var options = _objectSpread(_objectSpread({}, props), {}, {
       maxWidth: 'none',
@@ -52,11 +55,13 @@ var PopupWrapper = function PopupWrapper(props) {
     var pp = new Popup(options).setLngLat(lngLat);
     pp.once('open', function (e) {
       onOpen === null || onOpen === void 0 || onOpen(e);
+      maskContainer.style.display = 'block';
     });
     return pp;
   }, []);
   useEffect(function () {
     var onCloseHandle = function onCloseHandle(e) {
+      maskContainer.style.display = 'none';
       onClose === null || onClose === void 0 || onClose(e);
     };
     popup.on('close', onCloseHandle);
@@ -95,6 +100,7 @@ var PopupWrapper = function PopupWrapper(props) {
     }
     return function () {
       popup.off('close', onClose);
+      maskContainer.style.display = 'none';
       ppHeader.removeEventListener('mousedown', mousedown);
       ppHeader.removeEventListener('mouseup', mouseup);
       if (popup.isOpen()) {

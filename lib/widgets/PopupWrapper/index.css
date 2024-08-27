@@ -21,6 +21,9 @@
   color: aqua;
   padding-left: 10px;
 }
+.mapboxgl-popup-wrapper {
+  z-index: 999;
+}
 .mapboxgl-popup-wrapper .mapboxgl-popup-content {
   padding: 0;
   background-color: #0b2545;
@@ -37,4 +40,13 @@
 }
 .mapboxgl-popup-wrapper .mapboxgl-popup-tip {
   visibility: hidden;
+}
+.mapboxgl-popup {
+  transform: translate(-50%, -50%) !important;
+}
+.mapboxgl-popup {
+  top: 50%;
+  left: 50%;
+  /* 将Popup的左边缘置于屏幕中心的左侧 */
+  /* 向左偏移Popup宽度的一半，使其中心与屏幕中心对齐 */
 }

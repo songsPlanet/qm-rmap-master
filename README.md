@@ -14,7 +14,7 @@ yarn add qm-rmap
 
 ## 依赖
 
-qm-rmap 开发依赖于fabric@5.3.0，file-saver，jspdf 库
+qm-rmap 开发依赖于mapbox-gl,turf.js 库
 
 ## 使用
 
@@ -47,7 +47,7 @@ const basemap: TLayerGroupOptions = {
         type: 'raster',
         tileSize: 256,
         tiles: [
-          `http://t2.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${tianditukey}`,
+          `http://t0.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${tianditukey}`,
         ],
       },
     }]}

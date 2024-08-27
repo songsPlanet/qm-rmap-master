@@ -5,7 +5,7 @@ import ProtectionPopup from './components/popup/ProtectionPopup';
 import ControlPanel from './components/control/ControlPanel';
 import MapContainer from '../../components/Map/MapContainer';
 import FieldPopup from './components/popup/FieldPopup';
-import PopupPanel from '@/components/Map/PopupPanel';
+import  PopupPanel  from '@/gis/widgets/PopupPanel';
 import { field_vt } from './mapSetting/field_vt';
 import mapSetting from './mapSetting';
 
@@ -32,7 +32,7 @@ const ThemeMap = () => {
 
   return (
     <MapContainer mapOptions={mapOptionsJS} mapSetting={mapSetting}>
-      <PopupPanel vector={vector} wms={wms} />
+      <PopupPanel vector={vector} wms={wms} ifCenter={true} />
       <ControlPanel />
     </MapContainer>
   );
