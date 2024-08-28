@@ -32,7 +32,7 @@ const ThemeMap = () => {
 
   return (
     <MapContainer mapOptions={mapOptionsJS} mapSetting={mapSetting}>
-      <PopupPanel vector={vector} wms={wms} ifCenter={true} />
+      <PopupPanel vector={vector} wms={wms} ifCenter={false} />
       <ControlPanel />
     </MapContainer>
   );

@@ -1,12 +1,15 @@
 import type { TMapLayerSettting } from '@/gis/typings';
 import type MapWrapper from '@/gis/wrapper/MapWrapper';
 import React, { memo, useEffect, useRef } from 'react';
-import { MapWidget } from '@/gis';
+import type { MapboxOptions } from 'mapbox-gl';
 import classes from './index.module.less';
+import { MapWidget } from '@/gis';
 import { cloneDeep } from 'lodash';
 
 interface TMapContainerProp {
-  mapOptions: any;
+  mapOptions: MapboxOptions & {
+    id: string;
+  };
   children?: React.ReactNode;
   mapSetting: TMapLayerSettting;
   onMapLoad?: (map: MapWrapper) => void;
@@ -27,21 +30,7 @@ const MapContainer = (props: TMapContainerProp) => {
   return (
     <div className={classes.mapContainer}>
       <MapWidget mapOptions={mapOptions} mapLayerSettting={mapSetting} onMapLoad={mapLoadHandle}>
-        <div
-          id="popup-mask-container"
-          style={{
-            display: 'none',
-            position: 'absolute',
-            width: '100%',
-            height: 'calc(100vh - 131px)',
-            top: 0,
-            left: 0,
-            zIndex: 998,
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          }}
-        >
-          {children}
-        </div>
+        {children}
       </MapWidget>
     </div>
   );

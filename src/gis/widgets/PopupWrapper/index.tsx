@@ -19,17 +19,18 @@ export type PopupEvent = {
   target: Popup;
 };
 export type TPopupWrapper = PopupOptions & {
+  title: string;
   map: MapWrapper;
   children: ReactNode;
   lngLat: LngLatLike;
+  ifCenter?: boolean;
   enableDrag?: boolean;
-  title: string;
   onOpen?: (e: PopupEvent) => void;
   onClose?: (e: any) => void;
 };
 
 const PopupWrapper = (props: TPopupWrapper) => {
-  const { children, lngLat, onOpen, onClose, enableDrag, title, map } = props;
+  const { children, lngLat, onOpen, onClose, enableDrag, title, map, ifCenter } = props;
 
   const container = useMemo(() => {
     const content = document.createElement('div');
@@ -53,16 +54,18 @@ const PopupWrapper = (props: TPopupWrapper) => {
     const options = { ...props, maxWidth: 'none', className: 'mapboxgl-popup-wrapper' };
     const pp = new Popup(options).setLngLat(lngLat);
     pp.once('open', (e: any) => {
+      const a = document.getElementById('mapboxgl-popup');
+
       onOpen?.(e as PopupEvent);
-      maskContainer!.style.display = 'block';
+      if (maskContainer && ifCenter) maskContainer.style.display = 'block';
     });
     return pp;
   }, []);
 
   useEffect(() => {
     const onCloseHandle = (e: any) => {
-      maskContainer!.style.display = 'none';
       onClose?.(e as PopupEvent);
+      if (maskContainer && ifCenter) maskContainer.style.display = 'none';
     };
     popup.on('close', onCloseHandle);
     map && popup.setDOMContent(container).addTo(map);
@@ -100,7 +103,7 @@ const PopupWrapper = (props: TPopupWrapper) => {
     }
     return () => {
       popup.off('close', onClose);
-      maskContainer!.style.display = 'none';
+      if (maskContainer && ifCenter) maskContainer.style.display = 'none';
       ppHeader.removeEventListener('mousedown', mousedown);
       ppHeader.removeEventListener('mouseup', mouseup);
       if (popup.isOpen()) {

@@ -1,12 +1,13 @@
 import React, { cloneElement, memo, useEffect, useState } from 'react';
-import PopupWrapper from '../PopupWrapper';
-import type { LngLatLike } from 'mapbox-gl';
 import MapWrapper from '../../wrapper/MapWrapper';
+import { useMap } from '../context/mapContext';
+import type { LngLatLike } from 'mapbox-gl';
+import PopupWrapper from '../PopupWrapper';
 import type { ReactElement } from 'react';
 import type mapboxgl from 'mapbox-gl';
 import { request } from '@/utils';
 import { Point } from 'mapbox-gl';
-import { useMap } from '../context/mapContext';
+import './index.less';
 
 interface TPouperData {
   properties: any;
@@ -24,8 +25,8 @@ interface TPopupPanel {
 const PopupPanel = (props: TPopupPanel) => {
   const { vector, wms, ifCenter } = props;
   const { map } = useMap();
-
   const [popupData, setPopupData] = useState<TPouperData | undefined>();
+
   const onCloseHandle = () => {
     map?.clearSelect();
     setPopupData(undefined);
@@ -60,7 +61,7 @@ const PopupPanel = (props: TPopupPanel) => {
           console.log(feature);
           setPopupData({
             properties: feature.properties,
-            lngLat: ifCenter?map.getCenter(): map.unproject(new Point(e.point.x / scale, e.point.y / scale)),
+            lngLat: ifCenter ? map.getCenter() : map.unproject(new Point(e.point.x / scale, e.point.y / scale)),
             title,
             template,
           });
@@ -118,26 +119,30 @@ const PopupPanel = (props: TPopupPanel) => {
         map.selectFeature(feature);
         setPopupData({
           properties: feature.properties,
-          lngLat: ifCenter?map.getCenter():rData.lngLat,
+          lngLat: ifCenter ? map.getCenter() : rData.lngLat,
           title,
           template,
         });
       }
     });
   }, []);
+
   return (
-    <div>
-      {popupData && map ? (
-        <PopupWrapper
-          map={map}
-          title={popupData.title}
-          lngLat={popupData.lngLat}
-          closeOnClick={false}
-          onClose={() => onCloseHandle()}
-        >
-          {popupData.template && cloneElement(popupData.template, { data: popupData.properties })}
-        </PopupWrapper>
-      ) : null}
+    <div className={'popupMaskContainer'} id="popup-mask-container">
+      <div>
+        {popupData && map ? (
+          <PopupWrapper
+            map={map}
+            ifCenter={ifCenter}
+            title={popupData.title}
+            lngLat={popupData.lngLat}
+            closeOnClick={false}
+            onClose={() => onCloseHandle()}
+          >
+            {popupData.template && cloneElement(popupData.template, { data: popupData.properties })}
+          </PopupWrapper>
+        ) : null}
+      </div>
     </div>
   );
 };

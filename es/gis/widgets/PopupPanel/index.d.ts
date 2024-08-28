@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ReactElement } from 'react';
+import './index.less';
 interface TPopupPanel {
     ifCenter?: boolean;
     vector: {

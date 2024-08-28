@@ -21,7 +21,7 @@ export type TLayerOptions = AnyLayer &
     legend?: TLegendControlOptions;
     LayerName?: string;
     dataResolver?: IDataResolver;
-    canUpdate?: boolean;
+    canUpdate?: boolean; // 更新矢量切片服务tiles
   };
 
 export interface TLayerGroupOptions {

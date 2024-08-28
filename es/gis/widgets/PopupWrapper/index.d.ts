@@ -9,11 +9,12 @@ export type PopupEvent = {
     target: Popup;
 };
 export type TPopupWrapper = PopupOptions & {
+    title: string;
     map: MapWrapper;
     children: ReactNode;
     lngLat: LngLatLike;
+    ifCenter?: boolean;
     enableDrag?: boolean;
-    title: string;
     onOpen?: (e: PopupEvent) => void;
     onClose?: (e: any) => void;
 };

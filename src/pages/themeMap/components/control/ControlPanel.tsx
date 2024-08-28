@@ -1,5 +1,5 @@
 import { NavigationControl, FullscreenControl } from 'mapbox-gl';
-import { useMap } from '@/components/Map/context/mapContext';
+import { useMap } from '@/gis/widgets/context/mapContext';
 import { memo, useMemo, useEffect } from 'react';
 
 interface TControlPanel {

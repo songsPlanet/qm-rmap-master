@@ -30,7 +30,8 @@ var PopupWrapper = function PopupWrapper(props) {
     onClose = props.onClose,
     enableDrag = props.enableDrag,
     title = props.title,
-    map = _mapInstanceProperty(props);
+    map = _mapInstanceProperty(props),
+    ifCenter = props.ifCenter;
   var container = useMemo(function () {
     var content = document.createElement('div');
     content.className = 'popup-content-wrap';
@@ -54,15 +55,16 @@ var PopupWrapper = function PopupWrapper(props) {
     });
     var pp = new Popup(options).setLngLat(lngLat);
     pp.once('open', function (e) {
+      document.getElementById('mapboxgl-popup');
       onOpen === null || onOpen === void 0 || onOpen(e);
-      maskContainer.style.display = 'block';
+      if (maskContainer && ifCenter) maskContainer.style.display = 'block';
     });
     return pp;
   }, []);
   useEffect(function () {
     var onCloseHandle = function onCloseHandle(e) {
-      maskContainer.style.display = 'none';
       onClose === null || onClose === void 0 || onClose(e);
+      if (maskContainer && ifCenter) maskContainer.style.display = 'none';
     };
     popup.on('close', onCloseHandle);
     map && popup.setDOMContent(container).addTo(map);
@@ -100,7 +102,7 @@ var PopupWrapper = function PopupWrapper(props) {
     }
     return function () {
       popup.off('close', onClose);
-      maskContainer.style.display = 'none';
+      if (maskContainer && ifCenter) maskContainer.style.display = 'none';
       ppHeader.removeEventListener('mousedown', mousedown);
       ppHeader.removeEventListener('mouseup', mouseup);
       if (popup.isOpen()) {

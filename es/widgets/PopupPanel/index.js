@@ -19,6 +19,7 @@ import _Object$getOwnPropertyDescriptor from '@babel/runtime-corejs3/core-js-sta
 import _Object$getOwnPropertyDescriptors from '@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors';
 import { jsx } from 'react/jsx-runtime';
 import { memo, useState, useEffect, cloneElement } from 'react';
+import { useMap } from '../context/mapContext.js';
 import PopupWrapper from '../PopupWrapper/index.js';
 import '@babel/runtime-corejs3/helpers/typeof';
 import '@babel/runtime-corejs3/helpers/toConsumableArray';
@@ -35,7 +36,7 @@ import '@babel/runtime-corejs3/core-js-stable/json/stringify';
 import request from '../../utils/axios.js';
 import '../../utils/events.js';
 import { Point } from 'mapbox-gl';
-import { useMap } from '../context/mapContext.js';
+import './index.css';
 
 function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -239,18 +240,23 @@ var PopupPanel = function PopupPanel(props) {
     }());
   }, []);
   return jsx("div", {
-    children: popupData && map ? jsx(PopupWrapper, {
-      map: map,
-      title: popupData.title,
-      lngLat: popupData.lngLat,
-      closeOnClick: false,
-      onClose: function onClose() {
-        return onCloseHandle();
-      },
-      children: popupData.template && /*#__PURE__*/cloneElement(popupData.template, {
-        data: popupData.properties
-      })
-    }) : null
+    className: 'popupMaskContainer',
+    id: "popup-mask-container",
+    children: jsx("div", {
+      children: popupData && map ? jsx(PopupWrapper, {
+        map: map,
+        ifCenter: ifCenter,
+        title: popupData.title,
+        lngLat: popupData.lngLat,
+        closeOnClick: false,
+        onClose: function onClose() {
+          return onCloseHandle();
+        },
+        children: popupData.template && /*#__PURE__*/cloneElement(popupData.template, {
+          data: popupData.properties
+        })
+      }) : null
+    })
   });
 };
 var index = /*#__PURE__*/memo(PopupPanel);
