@@ -92,7 +92,7 @@ declare class GisToolHelper {
      * coords ：[[],[],...]
      * @returns {{}}
      */
-    static createPolygonFeatureCollection: (coords: any) => {
+    static createPolygonFeatureCollection: (coords: any, prop: any) => {
         type: string;
         features: {
             type: string;
@@ -100,6 +100,7 @@ declare class GisToolHelper {
                 type: string;
                 coordinates: any[];
             };
+            properties: any;
         }[];
     };
     /**
@@ -108,7 +109,7 @@ declare class GisToolHelper {
      * lat: 纬度
      * @returns {{}}
      */
-    static createPointFeatureCollection: (lonlat: number[]) => {
+    static createPointFeatureCollection: (lonlat: number[], prop: any) => {
         type: string;
         features: {
             type: string;
@@ -116,6 +117,7 @@ declare class GisToolHelper {
                 type: string;
                 coordinates: number[];
             };
+            properties: any;
         }[];
     };
     /**
@@ -123,7 +125,7 @@ declare class GisToolHelper {
      * coordinates ：[[],[],...]
      * @returns {{}}
      */
-    static createLineFeatureCollection: (coords: any) => {
+    static createLineFeatureCollection: (coords: any, prop: any) => {
         type: string;
         features: {
             type: string;
@@ -131,6 +133,7 @@ declare class GisToolHelper {
                 type: string;
                 coordinates: any;
             };
+            properties: any;
         }[];
     };
 }

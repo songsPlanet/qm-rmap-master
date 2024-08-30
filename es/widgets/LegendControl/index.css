@@ -1,0 +1,43 @@
+.mapboxgl-legend {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.mapboxgl-legend-group {
+  border-bottom: 1px solid #d3cfcf;
+}
+.mapboxgl-legend-tilte {
+  font-size: 14px;
+  text-align: left;
+  height: 30px;
+  font-weight: bolder;
+  line-height: 30px;
+  margin-left: 10px;
+  border-bottom: 1px solid #d3cfcf;
+}
+.mapboxgl-legend-item {
+  height: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  display: flex;
+}
+.mapboxgl-legend-item .mapboxgl-legend-item-geo {
+  height: 16px;
+  width: 16px;
+  text-align: center;
+  line-height: 16px;
+  font-size: 18px;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+.mapboxgl-legend-item .mapboxgl-legend-item-text {
+  font-weight: bolder;
+  width: 120px;
+  height: 16px;
+  text-align: center;
+  font-size: 12px;
+  margin-left: 5px;
+  line-height: 16px;
+  white-space: nowrap;
+}

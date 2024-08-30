@@ -273,7 +273,7 @@ class GisToolHelper {
      * coords ：[[],[],...]
      * @returns {{}}
      */
-    public static createPolygonFeatureCollection = (coords: any) => {
+    public static createPolygonFeatureCollection = (coords: any, prop: any) => {
         return {
             type: 'FeatureCollection',
             features: [
@@ -283,6 +283,7 @@ class GisToolHelper {
                         type: 'Polygon',
                         coordinates: [coords],
                     },
+                    properties: prop
                 },
             ],
         };
@@ -295,7 +296,7 @@ class GisToolHelper {
      * @returns {{}}
      */
 
-    public static createPointFeatureCollection = (lonlat: number[]) => {
+    public static createPointFeatureCollection = (lonlat: number[],prop:any) => {
         return {
             type: 'FeatureCollection',
             features: [
@@ -305,6 +306,7 @@ class GisToolHelper {
                         type: 'Point',
                         coordinates: lonlat,
                     },
+                    properties: prop,
                 },
             ],
         };
@@ -315,7 +317,7 @@ class GisToolHelper {
      * coordinates ：[[],[],...]
      * @returns {{}}
      */
-    public static createLineFeatureCollection = (coords: any) => {
+    public static createLineFeatureCollection = (coords: any, prop: any) => {
         return {
             type: 'FeatureCollection',
             features: [
@@ -325,6 +327,7 @@ class GisToolHelper {
                         type: 'LineString',
                         coordinates: coords,
                     },
+                    properties: prop
                 },
             ],
         };

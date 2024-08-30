@@ -1,0 +1,37 @@
+.cursorTip {
+  position: absolute;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  padding-right: 20px;
+  background-color: #171e26;
+  color: #3a89dd;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 999;
+  min-width: 150px;
+  font-size: 12px;
+  left: 0;
+  top: 0;
+}
+.measureResult {
+  background-color: white;
+  border-radius: 3px;
+  height: 16px;
+  line-height: 16px;
+  padding: 0 3px;
+  font-size: 12px;
+  box-shadow: 0 0 0 1px #ccc;
+}
+.measureResultClose {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  line-height: 16px;
+  text-align: center;
+  padding: 0;
+  font-size: 12px;
+  box-shadow: 0 0 0 1px #ccc;
+  background-color: white;
+  color: red;
+}

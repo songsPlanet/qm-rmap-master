@@ -7,6 +7,7 @@ import _Object$getOwnPropertyDescriptors from '@babel/runtime-corejs3/core-js-st
 import _defineProperty from '@babel/runtime-corejs3/helpers/defineProperty';
 import _slicedToArray from '@babel/runtime-corejs3/helpers/slicedToArray';
 import _includesInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/includes';
+import _findInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/find';
 import 'core-js/modules/es.array.map.js';
 import 'core-js/modules/es.object.to-string.js';
 import 'core-js/modules/web.dom-collections.for-each.js';
@@ -69,9 +70,16 @@ function MapWidget(props) {
       });
     };
     map.on('styleimagemissing', function (e) {
+      var _context;
       var id = e.id;
       var prefix = 'icon-';
+      // 检查缺失的图片ID是否以特定前缀开始
       if (!_includesInstanceProperty(id).call(id, prefix)) return;
+      // 在自定义图片数组中查找缺失的图片
+      var customImage = _findInstanceProperty(_context = map.images).call(_context, function (img) {
+        return img.id === id;
+      });
+      if (!customImage) return; // 如果没有找到，则不做任何操作
       map.images.forEach(function (item) {
         if (item.id === id) {
           map.loadImage(item.url, function (error, image) {

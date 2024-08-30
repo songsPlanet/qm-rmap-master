@@ -20,6 +20,8 @@ class LayerWrapper extends BaseLayer {
     if (typeof source === 'string') {
       sourceId = source;
     }
+
+
     // add source
     const oldSource = map.getSource(sourceId);
     if (!oldSource && source && typeof source !== 'string') {
@@ -29,15 +31,16 @@ class LayerWrapper extends BaseLayer {
     if (canUpdate && oldSource?.type === 'vector') {
       oldSource.setTiles((source as VectorSource).tiles!);
     }
-
-    // add layer
-    const oldLayer = map.getLayer(id);
-    const newSource = map.getSource(sourceId);
-    if (!oldLayer && newSource) {
-      const layerOptions = { ...(this._options as TLayerOptions), source: sourceId };
-      map.addLayer(layerOptions, beforeId);
+   
+   
+      // add layer
+      const oldLayer = map.getLayer(id);
+      const newSource = map.getSource(sourceId);
+      if (!oldLayer && newSource) {
+        const layerOptions = { ...(this._options as TLayerOptions), source: sourceId };
+        map.addLayer(layerOptions, beforeId);
+      }
     }
-  }
 }
 
 export default LayerWrapper;

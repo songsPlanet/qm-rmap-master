@@ -57,10 +57,16 @@ function MapWidget(props: TMapProps) {
         });
       });
     };
-    map.on('styleimagemissing', (e:any) => {
+    map.on('styleimagemissing', (e: any) => {
       const id = e.id;
       const prefix = 'icon-';
+      // 检查缺失的图片ID是否以特定前缀开始
       if (!id.includes(prefix)) return;
+
+      // 在自定义图片数组中查找缺失的图片
+      const customImage = map.images.find((img) => img.id === id);
+      if (!customImage) return; // 如果没有找到，则不做任何操作
+
       map.images.forEach((item: any) => {
         if (item.id === id) {
           map.loadImage(item.url, (error: any, image: any) => {

@@ -278,7 +278,7 @@ _defineProperty(GisToolHelper, "deg", function (x) {
  * coords ：[[],[],...]
  * @returns {{}}
  */
-_defineProperty(GisToolHelper, "createPolygonFeatureCollection", function (coords) {
+_defineProperty(GisToolHelper, "createPolygonFeatureCollection", function (coords, prop) {
   return {
     type: 'FeatureCollection',
     features: [{
@@ -286,7 +286,8 @@ _defineProperty(GisToolHelper, "createPolygonFeatureCollection", function (coord
       geometry: {
         type: 'Polygon',
         coordinates: [coords]
-      }
+      },
+      properties: prop
     }]
   };
 });
@@ -296,7 +297,7 @@ _defineProperty(GisToolHelper, "createPolygonFeatureCollection", function (coord
  * lat: 纬度
  * @returns {{}}
  */
-_defineProperty(GisToolHelper, "createPointFeatureCollection", function (lonlat) {
+_defineProperty(GisToolHelper, "createPointFeatureCollection", function (lonlat, prop) {
   return {
     type: 'FeatureCollection',
     features: [{
@@ -304,7 +305,8 @@ _defineProperty(GisToolHelper, "createPointFeatureCollection", function (lonlat)
       geometry: {
         type: 'Point',
         coordinates: lonlat
-      }
+      },
+      properties: prop
     }]
   };
 });
@@ -313,7 +315,7 @@ _defineProperty(GisToolHelper, "createPointFeatureCollection", function (lonlat)
  * coordinates ：[[],[],...]
  * @returns {{}}
  */
-_defineProperty(GisToolHelper, "createLineFeatureCollection", function (coords) {
+_defineProperty(GisToolHelper, "createLineFeatureCollection", function (coords, prop) {
   return {
     type: 'FeatureCollection',
     features: [{
@@ -321,7 +323,8 @@ _defineProperty(GisToolHelper, "createLineFeatureCollection", function (coords) 
       geometry: {
         type: 'LineString',
         coordinates: coords
-      }
+      },
+      properties: prop
     }]
   };
 });
