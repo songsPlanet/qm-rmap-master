@@ -136,5 +136,10 @@ declare class GisToolHelper {
             properties: any;
         }[];
     };
+    /**
+*十进制转度分秒
+* @returns {{}}
+*/
+    static getTdtSubDomain: (tianditukey: string) => any;
 }
 export default GisToolHelper;

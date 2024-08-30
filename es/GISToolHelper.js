@@ -23,7 +23,7 @@ import moment from 'moment';
 
 var _GisToolHelper;
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof _Symbol && _getIteratorMethod(r) || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray(r, a) { if (r) { var _context4; if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = _sliceInstanceProperty(_context4 = {}.toString.call(r)).call(_context4, 8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _unsupportedIterableToArray(r, a) { if (r) { var _context6; if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = _sliceInstanceProperty(_context6 = {}.toString.call(r)).call(_context6, 8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 var GisToolHelper = /*#__PURE__*/_createClass(function GisToolHelper() {
   _classCallCheck(this, GisToolHelper);
@@ -327,6 +327,22 @@ _defineProperty(GisToolHelper, "createLineFeatureCollection", function (coords, 
       properties: prop
     }]
   };
+});
+/**
+*十进制转度分秒
+* @returns {{}}
+*/
+_defineProperty(GisToolHelper, "getTdtSubDomain", function (tianditukey) {
+  var _context4, _context5;
+  // 创建一个随机选择子域名的函数
+  var subDomains = ['t1', 't2', 't3', 't4', 't5', 't6', 't7'];
+  var index = Math.floor(Math.random() * subDomains.length);
+  var sub = subDomains[index];
+  var tiles = {
+    imgw: _concatInstanceProperty(_context4 = "http://".concat(sub, ".tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=")).call(_context4, tianditukey),
+    ciaw: _concatInstanceProperty(_context5 = "http://".concat(sub, ".tianditu.gov.cn/cia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=")).call(_context5, tianditukey)
+  };
+  return tiles;
 });
 
 export { GisToolHelper as default };

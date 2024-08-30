@@ -1,6 +1,7 @@
 import { Map as IMap, is } from 'immutable';
 import { LngLatBounds } from 'mapbox-gl';
 import moment from 'moment';
+import { TLayerGroupOptions } from './typings';
 
 class GisToolHelper {
     /**
@@ -296,7 +297,7 @@ class GisToolHelper {
      * @returns {{}}
      */
 
-    public static createPointFeatureCollection = (lonlat: number[],prop:any) => {
+    public static createPointFeatureCollection = (lonlat: number[], prop: any) => {
         return {
             type: 'FeatureCollection',
             features: [
@@ -332,6 +333,23 @@ class GisToolHelper {
             ],
         };
     };
+
+    /**
+*十进制转度分秒
+* @returns {{}}
+*/
+    public static getTdtSubDomain = (tianditukey: string) => {
+        // 创建一个随机选择子域名的函数
+        const subDomains = ['t1', 't2', 't3', 't4', 't5', 't6', 't7'];
+        const index = Math.floor(Math.random() * subDomains.length);
+        const sub = subDomains[index]
+        const tiles: any = {
+            imgw: `http://${sub}.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${tianditukey}`,
+            ciaw: `http://${sub}.tianditu.gov.cn/cia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${tianditukey}`
+        }
+        return tiles
+    };
+
 }
 
 export default GisToolHelper;
