@@ -9,8 +9,7 @@ import _concatInstanceProperty from '@babel/runtime-corejs3/core-js-stable/insta
 import _filterInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/filter';
 import _includesInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/includes';
 import _findIndexInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/find-index';
-import { jsx } from 'react/jsx-runtime';
-import { memo, useState, useCallback, useEffect } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 import GisToolHelper from '../../GISToolHelper.js';
 import { useMap } from '../context/mapContext.js';
 import { MapEvent } from '../../typings/TEvent.js';
@@ -141,27 +140,26 @@ var LayerList = function LayerList(props) {
       map === null || map === void 0 || map.off(MapEvent.MAPLAYERCHANGED, mapLayerChangedHandle);
     };
   }, []);
-  return jsx(BaseWidget, {
+  return /*#__PURE__*/React.createElement(BaseWidget, {
     name: "\u56FE\u5C42\u63A7\u5236",
     width: 180,
     position: props.position,
     icon: props.icon ? props.icon : LayerListIcon,
-    height: keys.length * 28 < 280 ? 280 : keys.length * 28,
-    children: jsx(Tree, {
-      checkable: true,
-      checkedKeys: keys,
-      onCheck: function onCheck(checkedKeys, info) {
-        return checkedHandle(checkedKeys);
-      },
-      treeData: data,
-      style: {
-        fontSize: 12,
-        maxHeight: 400,
-        overflowX: 'hidden',
-        overflowY: 'auto'
-      }
-    })
-  });
+    height: keys.length * 28 < 280 ? 280 : keys.length * 28
+  }, /*#__PURE__*/React.createElement(Tree, {
+    checkable: true,
+    checkedKeys: keys,
+    onCheck: function onCheck(checkedKeys, info) {
+      return checkedHandle(checkedKeys);
+    },
+    treeData: data,
+    style: {
+      fontSize: 12,
+      maxHeight: 400,
+      overflowX: 'hidden',
+      overflowY: 'auto'
+    }
+  }));
 };
 var index = /*#__PURE__*/memo(LayerList);
 

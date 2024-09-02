@@ -6,8 +6,7 @@ import _mapInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance
 import _filterInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/filter';
 import _findInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/find';
 import _reduceInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/reduce';
-import { jsxs, jsx } from 'react/jsx-runtime';
-import { memo, useState, useCallback, useEffect } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 import { useMap } from '../context/mapContext.js';
 import GisToolHelper from '../../GISToolHelper.js';
 import { MapEvent } from '../../typings/TEvent.js';
@@ -40,33 +39,31 @@ var LegendControl = function LegendControl(props) {
           title = _layer$options$legend.title,
           items = _layer$options$legend.items;
         if (items) {
-          nodeData = jsxs("div", {
+          nodeData = /*#__PURE__*/React.createElement("div", {
             className: "mapboxgl-legend-group",
-            children: [jsx("div", {
-              className: "mapboxgl-legend-tilte",
-              children: title ? title : layer.options.name
-            }), items === null || items === void 0 ? void 0 : _mapInstanceProperty(items).call(items, function (d) {
-              var _context2;
-              hArr.push(26);
-              var img = map === null || map === void 0 ? void 0 : _findInstanceProperty(_context2 = map.images).call(_context2, function (f) {
-                return f.id === d.imageId;
-              });
-              return jsxs("div", {
-                className: "mapboxgl-legend-item",
-                children: [img ? jsx("img", {
-                  src: img.url,
-                  alt: "",
-                  className: "mapboxgl-legend-item-img"
-                }) : jsx("div", {
-                  className: "mapboxgl-legend-item-geo",
-                  style: d.style
-                }), jsx("div", {
-                  className: "mapboxgl-legend-item-text",
-                  children: d.text
-                })]
-              }, d.text);
-            })]
-          }, layer.options.id);
+            key: layer.options.id
+          }, /*#__PURE__*/React.createElement("div", {
+            className: "mapboxgl-legend-tilte"
+          }, title ? title : layer.options.name), items === null || items === void 0 ? void 0 : _mapInstanceProperty(items).call(items, function (d) {
+            var _context2;
+            hArr.push(26);
+            var img = map === null || map === void 0 ? void 0 : _findInstanceProperty(_context2 = map.images).call(_context2, function (f) {
+              return f.id === d.imageId;
+            });
+            return /*#__PURE__*/React.createElement("div", {
+              className: "mapboxgl-legend-item",
+              key: d.text
+            }, img ? (/*#__PURE__*/React.createElement("img", {
+              src: img.url,
+              alt: "",
+              className: "mapboxgl-legend-item-img"
+            })) : (/*#__PURE__*/React.createElement("div", {
+              className: "mapboxgl-legend-item-geo",
+              style: d.style
+            })), /*#__PURE__*/React.createElement("div", {
+              className: "mapboxgl-legend-item-text"
+            }, d.text));
+          }));
           hArr.push(50);
         } else {
           var _context3;
@@ -78,20 +75,19 @@ var LegendControl = function LegendControl(props) {
             return f.id === imageId;
           });
           hArr.push(26);
-          nodeData = jsxs("div", {
+          nodeData = /*#__PURE__*/React.createElement("div", {
             className: "mapboxgl-legend-item",
-            children: [img ? jsx("img", {
-              src: img.url,
-              alt: "",
-              className: "mapboxgl-legend-item-img"
-            }) : jsx("div", {
-              className: "mapboxgl-legend-item-geo",
-              style: style
-            }), jsx("div", {
-              className: "mapboxgl-legend-item-text",
-              children: text ? text : layer.options.name
-            })]
-          }, text ? text : title ? title : layer.options.id);
+            key: text ? text : title ? title : layer.options.id
+          }, img ? (/*#__PURE__*/React.createElement("img", {
+            src: img.url,
+            alt: "",
+            className: "mapboxgl-legend-item-img"
+          })) : (/*#__PURE__*/React.createElement("div", {
+            className: "mapboxgl-legend-item-geo",
+            style: style
+          })), /*#__PURE__*/React.createElement("div", {
+            className: "mapboxgl-legend-item-text"
+          }, text ? text : layer.options.name));
         }
       } else {
         nodeData = undefined;
@@ -123,17 +119,15 @@ var LegendControl = function LegendControl(props) {
       map === null || map === void 0 || map.off(MapEvent.MAPLAYERCHANGED, mapLayerChangedHandle);
     };
   }, []);
-  return jsx(BaseWidget, {
+  return /*#__PURE__*/React.createElement(BaseWidget, {
     name: "\u56FE\u4F8B",
     width: 180,
     height: height,
     position: props.position,
-    icon: props.icon ? props.icon : LegendIcon,
-    children: jsx("div", {
-      className: "mapboxgl-legend",
-      children: listDom
-    })
-  });
+    icon: props.icon ? props.icon : LegendIcon
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mapboxgl-legend"
+  }, listDom));
 };
 var index = /*#__PURE__*/memo(LegendControl);
 

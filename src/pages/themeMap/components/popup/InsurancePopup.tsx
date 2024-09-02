@@ -1,5 +1,6 @@
 // import { getInsuranceListApi } from '@/services/piccClaimsAnalyse';
 import { Descriptions, List } from 'antd';
+import React from 'react';
 import { memo, useEffect, useMemo, useState } from 'react';
 const InsurancePopup = (props: { data?: { dkbm: string } }) => {
   const { data } = props;

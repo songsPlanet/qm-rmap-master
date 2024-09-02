@@ -10,4 +10,5 @@ export { default as Legend } from './widgets/LegendControl';
 export { default as BaseWidget } from './widgets/BaseWidget';
 export { default as PopupPanel } from './widgets/PopupPanel';
 export { default as PopupWrapper } from './widgets/PopupWrapper';
+export { default as DrawWidget } from './widgets/DrawWidget';
 export { useMap, MapContext, type TMapContext } from './widgets/context/mapContext';

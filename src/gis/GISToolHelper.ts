@@ -1,7 +1,6 @@
 import { Map as IMap, is } from 'immutable';
 import { LngLatBounds } from 'mapbox-gl';
 import moment from 'moment';
-import { TLayerGroupOptions } from './typings';
 
 class GisToolHelper {
     /**

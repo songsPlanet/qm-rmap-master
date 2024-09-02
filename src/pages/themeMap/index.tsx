@@ -5,9 +5,10 @@ import ProtectionPopup from './components/popup/ProtectionPopup';
 import ControlPanel from './components/control/ControlPanel';
 import MapContainer from '../../components/Map/MapContainer';
 import FieldPopup from './components/popup/FieldPopup';
-import  PopupPanel  from '@/gis/widgets/PopupPanel';
+import PopupPanel from '@/gis/widgets/PopupPanel';
 import { field_vt } from './mapSetting/field_vt';
 import mapSetting from './mapSetting';
+import React from 'react';
 
 const ThemeMap = () => {
   const vector = useMemo(() => {

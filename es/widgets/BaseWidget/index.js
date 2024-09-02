@@ -8,8 +8,7 @@ import _Object$getOwnPropertyDescriptor from '@babel/runtime-corejs3/core-js-sta
 import _Object$getOwnPropertyDescriptors from '@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors';
 import _defineProperty from '@babel/runtime-corejs3/helpers/defineProperty';
 import _slicedToArray from '@babel/runtime-corejs3/helpers/slicedToArray';
-import { jsxs, jsx } from 'react/jsx-runtime';
-import { memo, useState } from 'react';
+import React, { memo, useState } from 'react';
 import './index.css';
 
 function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -38,24 +37,21 @@ var BaseWidget = function BaseWidget(props) {
       setOpen(!open);
     }
   };
-  return jsxs("div", {
+  return /*#__PURE__*/React.createElement("div", {
     className: "mapboxgl-control",
-    style: controlStyle,
-    children: [jsxs("div", {
-      className: "mapboxgl-bar",
-      children: [jsx("div", {
-        className: "mapboxgl-bar-button",
-        onClick: onClickHandle,
-        title: name !== null && name !== void 0 ? name : '',
-        style: {
-          backgroundImage: "url(".concat(icon, ")")
-        }
-      }), name && jsx("div", {
-        className: "mapboxgl-bar-title",
-        children: name
-      })]
-    }), open && children]
-  });
+    style: controlStyle
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mapboxgl-bar"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mapboxgl-bar-button",
+    onClick: onClickHandle,
+    title: name !== null && name !== void 0 ? name : '',
+    style: {
+      backgroundImage: "url(".concat(icon, ")")
+    }
+  }), name && /*#__PURE__*/React.createElement("div", {
+    className: "mapboxgl-bar-title"
+  }, name)), open && children);
 };
 var BaseWidget$1 = /*#__PURE__*/memo(BaseWidget);
 

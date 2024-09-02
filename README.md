@@ -16,7 +16,7 @@ yarn add qm-rmap
 
 qm-rmap 开发依赖于mapbox-gl,turf.js 库
 
-## 使用
+## 初始化使用
 
 ```js
 import { MapWidget } from 'qm-rmap';
@@ -58,5 +58,16 @@ const mapSetting:TMapLayerSettting=[basemap]
  <MapWidget mapOptions={mapOptions} mapLayerSettting={mapSetting} onMapLoad={mapLoadHandle}>
         {children}
 </MapWidget>
+
+```
+
+## 工具条使用-作为MapWidget-children
+```js
+
+  <Legend position={{ bottom: 10, left: 10 }} />
+  <Measure position={{ top: 190, right: 10 }} />
+  <LayerList position={{ top: 10, left: 10 }} />
+  <SwipeControl position={{top: 150,right: 10}}/>
+
 
 ```

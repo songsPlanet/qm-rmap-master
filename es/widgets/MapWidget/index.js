@@ -11,8 +11,7 @@ import _findInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instanc
 import 'core-js/modules/es.array.map.js';
 import 'core-js/modules/es.object.to-string.js';
 import 'core-js/modules/web.dom-collections.for-each.js';
-import { jsx } from 'react/jsx-runtime';
-import { memo, useRef, useState, useEffect } from 'react';
+import React, { memo, useRef, useState, useEffect } from 'react';
 import { MapContext } from '../context/mapContext.js';
 import MapWrapper from '../../wrapper/MapWrapper.js';
 import GisToolHelper from '../../GISToolHelper.js';
@@ -103,15 +102,13 @@ function MapWidget(props) {
       map.off('load', loadLayers);
     };
   }, []);
-  return jsx("div", {
+  return /*#__PURE__*/React.createElement("div", {
     ref: mapDom,
     className: className !== null && className !== void 0 ? className : 'map-wrapper',
-    id: "map-wrapper",
-    children: mapInit && contextValue && jsx(MapContext.Provider, {
-      value: contextValue,
-      children: children
-    })
-  });
+    id: "map-wrapper"
+  }, mapInit && contextValue && /*#__PURE__*/React.createElement(MapContext.Provider, {
+    value: contextValue
+  }, children));
 }
 var index = /*#__PURE__*/memo(MapWidget);
 

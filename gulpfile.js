@@ -60,25 +60,23 @@ function buildLib() {
 
 // 执行有关生成 .d.ts 文件相关的任务
 const tscTask = gulp.series(
-  function () {
-    return child_process.exec('npx tsc -p tsconfig.lib.json');
+  function compileTs() {
+    return new Promise((resolve, reject) => {
+      child_process.exec('npx tsc -p tsconfig.lib.json', (error, stdout, stderr) => {
+        if (error) reject(new Error(`Exec error: ${error}`));
+        if (stderr) console.error(`stderr: ${stderr}`);
+        resolve();
+      });
+    });
   },
-  function () {
-    return gulp
-      .src(['dts/**/*.d.ts'])
-      .pipe(
-        through({ objectMode: true }, function (chunk, encode, callback) {
-          const newBase = path.join(chunk.base, 'lib');
-          if (chunk.path.startsWith(newBase)) chunk.base = newBase;
-
-          return callback(null, chunk);
-        }),
-      )
-      .pipe(gulp.dest('lib'))
-      .pipe(gulp.dest('es'));
+  function moveDts() {
+    return gulp.src(['dts/**/*.d.ts']).pipe(gulp.dest('lib')).pipe(gulp.dest('es'));
   },
-  function (cb) {
-    fs.rmSync(path.resolve(context, 'dts'), { force: true, recursive: true });
+  function cleanupDtsDir(cb) {
+    const dtsDir = path.resolve(context, 'dts');
+    if (fs.existsSync(dtsDir)) {
+      fs.rmSync(dtsDir, { force: true, recursive: true });
+    }
     cb();
   },
 );
@@ -86,14 +84,12 @@ const tscTask = gulp.series(
 // 生成样式、以及相关的资源
 function buildStyleSheet() {
   return gulp
-    .src(['src/gis/**/*less'])
+    .src(['src/gis/**/*.less'])
     .pipe(less())
     .pipe(postcss())
     .pipe(base64())
     .pipe(gulp.dest('es'))
     .pipe(gulp.dest('lib'));
 }
-
-
 
 export default gulp.series(cleanOutputDir, buildEs, buildLib, tscTask, buildStyleSheet);

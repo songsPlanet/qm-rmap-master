@@ -1,7 +1,8 @@
 import type { TWidgetPosition } from '../BaseWidget';
 import './index.less';
-declare const _default: import("react").MemoExoticComponent<(props: {
+import React from 'react';
+declare const _default: React.MemoExoticComponent<(props: {
     position: TWidgetPosition;
     icon?: string;
-}) => import("react/jsx-runtime").JSX.Element>;
+}) => React.JSX.Element>;
 export default _default;

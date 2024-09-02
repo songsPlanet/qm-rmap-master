@@ -18,5 +18,5 @@ interface TPopupPanel {
         }[];
     };
 }
-declare const _default: React.MemoExoticComponent<(props: TPopupPanel) => import("react/jsx-runtime").JSX.Element>;
+declare const _default: React.MemoExoticComponent<(props: TPopupPanel) => React.JSX.Element>;
 export default _default;

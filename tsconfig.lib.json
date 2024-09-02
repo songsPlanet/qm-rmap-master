@@ -8,7 +8,7 @@
     "checkJs": true,
     "module": "ESNext",
     "target": "ESNext",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "alwaysStrict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,

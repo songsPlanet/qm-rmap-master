@@ -2,11 +2,11 @@
   "compilerOptions": {
     "noEmit": true,
     "strict": true,
-    "module": "ESNext",
-    "target": "ESNext",
-    "jsx": "react-jsx",
     "allowJs": false,
     "checkJs": false,
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react",
     "alwaysStrict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
@@ -22,10 +22,11 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "mock", "test", "vitest-setup*.ts"],
+  // "references": [{ "path": "./tsconfig.node.json" }]
 }

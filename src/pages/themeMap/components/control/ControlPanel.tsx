@@ -1,9 +1,11 @@
 import { NavigationControl, FullscreenControl } from 'mapbox-gl';
 import { useMap } from '@/gis/widgets/context/mapContext';
-import { memo, useMemo, useEffect } from 'react';
+// import SwipeControl from '@/gis/widgets/SwipeControl';
+import React, { memo, useMemo, useEffect } from 'react';
+import Legend from '@/gis/widgets/LegendControl';
 import Measure from '@/components/Map/Measure';
 import LayerList from '@/gis/widgets/LayerList';
-import Legend from '@/gis/widgets/LegendControl';
+import DrawWidget from '@/gis/widgets/DrawWidget';
 
 interface TControlPanel {
   regionList?: any;
@@ -32,8 +34,10 @@ const ControlPanel = (props: TControlPanel) => {
   return (
     <div>
       <Legend position={{ bottom: 10, left: 10 }} />
-      <Measure position={{ top: 180, right: 10 }} />
+      <Measure position={{ top: 190, right: 10 }} />
       <LayerList position={{ top: 10, left: 10 }} />
+      {/* <SwipeControl position={{top: 150,right: 10}}/> */}
+      {map ? <DrawWidget position={{ bottom: 10, right: 10 }} map={map} /> : null}
     </div>
   );
 };

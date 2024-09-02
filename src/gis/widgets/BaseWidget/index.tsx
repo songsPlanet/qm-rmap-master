@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { useState, memo } from 'react';
 import './index.less';
+import React from 'react';
 
 export interface TWidgetPosition {
   top?: number;

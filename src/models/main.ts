@@ -8,7 +8,7 @@ import type { Dispatch } from '@reduxjs/toolkit';
 import createReducer from '@/redux/createReducer';
 
 const effects = {
-  queryRegionList: (query?: QueryParamsType) => {
+  queryRegionList: (query?: any) => {
     return (dispatch: Dispatch) => {
       return api.queryRegionList(query).then((response: any) => {
         dispatch({ type: 'main/queryRegionList', payload: { regionList: response?.data ?? [] } });

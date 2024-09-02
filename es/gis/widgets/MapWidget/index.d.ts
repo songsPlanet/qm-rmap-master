@@ -13,6 +13,6 @@ interface TMapProps {
     children?: React.ReactNode;
     onMapLoad?: (map: MapWrapper) => void;
 }
-declare function MapWidget(props: TMapProps): import("react/jsx-runtime").JSX.Element;
+declare function MapWidget(props: TMapProps): React.JSX.Element;
 declare const _default: React.MemoExoticComponent<typeof MapWidget>;
 export default _default;

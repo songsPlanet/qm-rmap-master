@@ -17,8 +17,7 @@ import _Object$keys from '@babel/runtime-corejs3/core-js-stable/object/keys';
 import _Object$getOwnPropertySymbols from '@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols';
 import _Object$getOwnPropertyDescriptor from '@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor';
 import _Object$getOwnPropertyDescriptors from '@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors';
-import { jsx } from 'react/jsx-runtime';
-import { memo, useState, useEffect, cloneElement } from 'react';
+import React, { memo, useState, useEffect, cloneElement } from 'react';
 import { useMap } from '../context/mapContext.js';
 import PopupWrapper from '../PopupWrapper/index.js';
 import '@babel/runtime-corejs3/helpers/typeof';
@@ -102,7 +101,7 @@ var PopupPanel = function PopupPanel(props) {
     };
     // geoserver请求
     var restLayerClicked = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(map, e) {
+      var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(map, e) {
         var _window$scale2, _context3, _context4, _context5, _context6, scale, url, params, lyrIds, openLys, _loop, _ret, i;
         return _regeneratorRuntime.wrap(function _callee$(_context8) {
           while (1) switch (_context8.prev = _context8.next) {
@@ -200,7 +199,7 @@ var PopupPanel = function PopupPanel(props) {
     }();
     // 添加事件监听
     map === null || map === void 0 || map.on('click', /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(e) {
+      var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee2(e) {
         var rData, _context9, _context10, feature, layerId, title, template;
         return _regeneratorRuntime.wrap(function _callee2$(_context11) {
           while (1) switch (_context11.prev = _context11.next) {
@@ -239,25 +238,21 @@ var PopupPanel = function PopupPanel(props) {
       };
     }());
   }, []);
-  return jsx("div", {
+  return /*#__PURE__*/React.createElement("div", {
     className: 'popupMaskContainer',
-    id: "popup-mask-container",
-    children: jsx("div", {
-      children: popupData && map ? jsx(PopupWrapper, {
-        map: map,
-        ifCenter: ifCenter,
-        title: popupData.title,
-        lngLat: popupData.lngLat,
-        closeOnClick: false,
-        onClose: function onClose() {
-          return onCloseHandle();
-        },
-        children: popupData.template && /*#__PURE__*/cloneElement(popupData.template, {
-          data: popupData.properties
-        })
-      }) : null
-    })
-  });
+    id: "popup-mask-container"
+  }, /*#__PURE__*/React.createElement("div", null, popupData && map ? (/*#__PURE__*/React.createElement(PopupWrapper, {
+    map: map,
+    ifCenter: ifCenter,
+    title: popupData.title,
+    lngLat: popupData.lngLat,
+    closeOnClick: false,
+    onClose: function onClose() {
+      return onCloseHandle();
+    }
+  }, popupData.template && /*#__PURE__*/cloneElement(popupData.template, {
+    data: popupData.properties
+  }))) : null));
 };
 var index = /*#__PURE__*/memo(PopupPanel);
 

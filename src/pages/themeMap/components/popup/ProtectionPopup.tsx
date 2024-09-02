@@ -1,5 +1,6 @@
 // import { getInsuranceListApi } from '@/services/piccClaimsAnalyse';
 import { Descriptions } from 'antd';
+import React from 'react';
 import { memo, useMemo } from 'react';
 const ProtectionPopup = (props: { data?: any }) => {
   const { data } = props;

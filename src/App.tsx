@@ -6,6 +6,7 @@ import { ConfigProvider } from 'antd';
 import { store } from '@/redux';
 import Routers from '@/routers';
 import { memo } from 'react';
+import React from 'react';
 
 // 主题色
 const THEME_COLOR = import.meta.env.VITE_THEME_COLOR;

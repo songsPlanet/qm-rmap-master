@@ -1,5 +1,5 @@
+/// <reference types="./vite-env-override.d.ts" />
 /// <reference types="vite/client" />
 
-interface QueryParamsType {
-  [x: string]: any;
-}
+declare module 'mapbox-gl-compare';
+declare module 'mapbox-gl-draw-rectangle-mode';
