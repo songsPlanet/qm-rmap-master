@@ -161,6 +161,6 @@ var LayerList = function LayerList(props) {
     }
   }));
 };
-var index = /*#__PURE__*/memo(LayerList);
+var LayerList$1 = /*#__PURE__*/memo(LayerList);
 
-export { index as default };
+export { LayerList$1 as default };

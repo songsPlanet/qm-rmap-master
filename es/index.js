@@ -9,4 +9,5 @@ export { default as BaseWidget } from './widgets/BaseWidget/index.js';
 export { default as PopupPanel } from './widgets/PopupPanel/index.js';
 export { default as PopupWrapper } from './widgets/PopupWrapper/index.js';
 export { default as DrawWidget } from './widgets/DrawWidget/index.js';
+export { default as SwipeControl } from './widgets/SwipeControl/index.js';
 export { MapContext, useMap } from './widgets/context/mapContext.js';

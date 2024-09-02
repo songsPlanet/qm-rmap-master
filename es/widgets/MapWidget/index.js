@@ -110,6 +110,6 @@ function MapWidget(props) {
     value: contextValue
   }, children));
 }
-var index = /*#__PURE__*/memo(MapWidget);
+var MapWidget$1 = /*#__PURE__*/memo(MapWidget);
 
-export { index as default };
+export { MapWidget$1 as default };
