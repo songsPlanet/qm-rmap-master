@@ -12,4 +12,5 @@ export { default as PopupPanel } from './widgets/PopupPanel';
 export { default as PopupWrapper } from './widgets/PopupWrapper';
 export { default as DrawWidget } from './widgets/DrawWidget';
 export { default as SwipeControl } from './widgets/SwipeControl';
+export { default as QueryGeocode } from './widgets/QueryGeocode';
 export { useMap, MapContext, type TMapContext } from './widgets/context/mapContext';

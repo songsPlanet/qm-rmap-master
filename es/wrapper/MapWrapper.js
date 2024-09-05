@@ -336,7 +336,7 @@ var MapWrapper = /*#__PURE__*/function (_Map) {
       this.addLayer({
         id: lyrId,
         type: 'symbol',
-        minzoom: 10,
+        minzoom: 0,
         layout: {
           'icon-image': icon,
           'text-field': filter ? filter : '',

@@ -1,5 +1,5 @@
 import type { TLayerGroupOptions } from '@/gis/typings';
-const tianditukey = '7271c460eedd19a02b7b7bb1b19ba7ac';
+export const tianditukey = '7271c460eedd19a02b7b7bb1b19ba7ac';
 
 export const basemap: TLayerGroupOptions = {
   id: 'base_map',

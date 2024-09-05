@@ -6,6 +6,7 @@ import Legend from '@/gis/widgets/LegendControl';
 import Measure from '@/components/Map/Measure';
 import LayerList from '@/gis/widgets/LayerList';
 import DrawWidget from '@/gis/widgets/DrawWidget';
+import QueryGeoTool from './QueryGeoTool';
 
 interface TControlPanel {
   regionList?: any;
@@ -36,7 +37,8 @@ const ControlPanel = (props: TControlPanel) => {
       <Legend position={{ bottom: 10, left: 10 }} />
       <Measure position={{ top: 190, right: 10 }} />
       <LayerList position={{ top: 10, left: 10 }} />
-      <SwipeControl position={{top: 150,right: 10}}/>
+      <SwipeControl position={{ top: 150, right: 10 }} />
+      <QueryGeoTool position={{ top: 10, right: 50 }} />
       {map ? <DrawWidget position={{ bottom: 10, right: 10 }} map={map} /> : null}
     </div>
   );

@@ -277,7 +277,7 @@ class MapWrapper extends Map {
     this.addLayer({
       id: lyrId,
       type: 'symbol',
-      minzoom: 10,
+      minzoom: 0,
       layout: {
         'icon-image': icon,
         'text-field': filter ? filter : '',
