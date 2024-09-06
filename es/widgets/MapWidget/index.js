@@ -12,6 +12,7 @@ import 'core-js/modules/es.array.map.js';
 import 'core-js/modules/es.object.to-string.js';
 import 'core-js/modules/web.dom-collections.for-each.js';
 import React, { memo, useRef, useState, useEffect } from 'react';
+import { getPulsingDot } from '../../animation/pulsingDot.js';
 import { MapContext } from '../context/mapContext.js';
 import MapWrapper from '../../wrapper/MapWrapper.js';
 import GisToolHelper from '../../GISToolHelper.js';
@@ -56,6 +57,14 @@ function MapWidget(props) {
     var loadLayers = function loadLayers() {
       map.load(cloneDeep(mapLayerSettting));
       setMapInit(true);
+      if (contextValue) {
+        contextValue.map = map;
+      }
+      // 添加动态点图标
+      var redAnimationImg = getPulsingDot(map);
+      map.addImage('redAnimationImg', redAnimationImg, {
+        pixelRatio: 2
+      });
       if (contextValue) {
         contextValue.map = map;
       }

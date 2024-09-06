@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, memo, useState } from 'react';
+import { getPulsingDot } from '@/gis/animation/pulsingDot';
 import { TMapContext } from '../context/mapContext';
 import { MapContext } from '../context/mapContext';
 import { TMapLayerSettting } from '@/gis/typings';
@@ -45,6 +46,12 @@ function MapWidget(props: TMapProps) {
     const loadLayers = () => {
       map.load(cloneDeep(mapLayerSettting));
       setMapInit(true);
+      if (contextValue) {
+        contextValue.map = map;
+      }
+      // 添加动态点图标
+      const redAnimationImg = getPulsingDot(map);
+      map.addImage('redAnimationImg', redAnimationImg, { pixelRatio: 2 });
       if (contextValue) {
         contextValue.map = map;
       }

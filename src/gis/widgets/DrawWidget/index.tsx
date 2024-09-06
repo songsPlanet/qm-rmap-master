@@ -1,17 +1,18 @@
 import { useState, memo, useRef, useEffect } from 'react';
 import DrawRectangle from 'mapbox-gl-draw-rectangle-mode';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import GisToolHelper from '@/gis/GISToolHelper';
-import type MapWrapper from '@/gis/wrapper/MapWrapper';
 import type { TWidgetPosition } from '../BaseWidget';
-import MapboxDraw from '@mapbox/mapbox-gl-draw';
+import GisToolHelper from '@/gis/GISToolHelper';
+import mapboxDraw from '@mapbox/mapbox-gl-draw';
+import { useMap } from '../context/mapContext';
 import { drawToolList } from './constant';
 import { Marker } from 'mapbox-gl';
-import './index.less';
 import React from 'react';
+import './index.less';
 
-const DrawWidget = (props: { position: TWidgetPosition; map: MapWrapper }) => {
-  const { position, map } = props;
+const DrawWidget = (props: { position: TWidgetPosition }) => {
+  const { map } = useMap();
+  const { position } = props;
   const controlStyle = { ...position };
   const [mode, setMode] = useState('none');
   const markerRef = useRef<Marker[]>([]);
@@ -19,16 +20,16 @@ const DrawWidget = (props: { position: TWidgetPosition; map: MapWrapper }) => {
 
   const selectedModeHandle = (type: any) => {
     setMode(type);
-    if (map.drawTool) {
-      map.drawTool.changeMode(type);
+    if (map?.drawTool) {
+      map?.drawTool.changeMode(type);
     }
   };
 
   const clearAllHandle = () => {
     setMode('simple_select');
-    if (map.drawTool) {
-      map.drawTool.deleteAll();
-      map.drawTool.changeMode('simple_select');
+    if (map?.drawTool) {
+      map?.drawTool.deleteAll();
+      map?.drawTool.changeMode('simple_select');
       markerRef.current.forEach((item: Marker) => {
         item.remove();
       });
@@ -48,11 +49,11 @@ const DrawWidget = (props: { position: TWidgetPosition; map: MapWrapper }) => {
       offset: [-5, -10],
     })
       .setLngLat(box.getCenter())
-      .addTo(map);
+      .addTo(map!);
     markerRef.current.push(closeMarker);
     _ele.onclick = (e) => {
       e.stopPropagation();
-      map.drawTool.delete(_ele.getAttribute('id'));
+      map?.drawTool.delete(_ele.getAttribute('id'));
       closeMarker.remove();
     };
   };
@@ -77,10 +78,10 @@ const DrawWidget = (props: { position: TWidgetPosition; map: MapWrapper }) => {
   };
 
   useEffect(() => {
-    if (!map.drawTool) {
-      map.drawTool = new MapboxDraw({
+    if (!map?.drawTool && map) {
+      map.drawTool = new mapboxDraw({
         displayControlsDefault: false,
-        modes: { ...MapboxDraw.modes, draw_rectangle: DrawRectangle },
+        modes: { ...mapboxDraw.modes, draw_rectangle: DrawRectangle },
         defaultMode: 'simple_select',
       });
       map.addControl(map.drawTool, 'bottom-right');

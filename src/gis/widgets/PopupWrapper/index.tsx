@@ -71,6 +71,7 @@ const PopupWrapper = (props: TPopupWrapper) => {
     map && popup.setDOMContent(container).addTo(map);
     const ppHeader = document.getElementsByClassName('popup-header-wrap')[0];
     const ppContainer = (popup as any)?._container as HTMLElement;
+
     const mousedown = (e: any) => {
       e.preventDefault(); // 阻止事件默认行为
       defaultXY = {

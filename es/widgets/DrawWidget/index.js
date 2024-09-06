@@ -13,7 +13,8 @@ import React, { memo, useState, useRef, useEffect } from 'react';
 import DrawRectangle from 'mapbox-gl-draw-rectangle-mode';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import GisToolHelper from '../../GISToolHelper.js';
-import MapboxDraw from '@mapbox/mapbox-gl-draw';
+import mapboxDraw from '@mapbox/mapbox-gl-draw';
+import { useMap } from '../context/mapContext.js';
 import { drawToolList } from './constant.js';
 import { Marker } from 'mapbox-gl';
 import './index.css';
@@ -21,8 +22,9 @@ import './index.css';
 function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var DrawWidget = function DrawWidget(props) {
-  var position = props.position,
-    map = _mapInstanceProperty(props);
+  var _useMap = useMap(),
+    map = _mapInstanceProperty(_useMap);
+  var position = props.position;
   var controlStyle = _objectSpread({}, position);
   var _useState = useState('none'),
     _useState2 = _slicedToArray(_useState, 2);
@@ -34,15 +36,15 @@ var DrawWidget = function DrawWidget(props) {
   }]);
   var selectedModeHandle = function selectedModeHandle(type) {
     setMode(type);
-    if (map.drawTool) {
-      map.drawTool.changeMode(type);
+    if (map !== null && map !== void 0 && map.drawTool) {
+      map === null || map === void 0 || map.drawTool.changeMode(type);
     }
   };
   var clearAllHandle = function clearAllHandle() {
     setMode('simple_select');
-    if (map.drawTool) {
-      map.drawTool.deleteAll();
-      map.drawTool.changeMode('simple_select');
+    if (map !== null && map !== void 0 && map.drawTool) {
+      map === null || map === void 0 || map.drawTool.deleteAll();
+      map === null || map === void 0 || map.drawTool.changeMode('simple_select');
       markerRef.current.forEach(function (item) {
         item.remove();
       });
@@ -63,7 +65,7 @@ var DrawWidget = function DrawWidget(props) {
     markerRef.current.push(closeMarker);
     _ele.onclick = function (e) {
       e.stopPropagation();
-      map.drawTool.delete(_ele.getAttribute('id'));
+      map === null || map === void 0 || map.drawTool.delete(_ele.getAttribute('id'));
       closeMarker.remove();
     };
   };
@@ -84,10 +86,10 @@ var DrawWidget = function DrawWidget(props) {
     }
   };
   useEffect(function () {
-    if (!map.drawTool) {
-      map.drawTool = new MapboxDraw({
+    if (!(map !== null && map !== void 0 && map.drawTool) && map) {
+      map.drawTool = new mapboxDraw({
         displayControlsDefault: false,
-        modes: _objectSpread(_objectSpread({}, MapboxDraw.modes), {}, {
+        modes: _objectSpread(_objectSpread({}, mapboxDraw.modes), {}, {
           draw_rectangle: DrawRectangle
         }),
         defaultMode: 'simple_select'
