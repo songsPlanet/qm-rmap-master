@@ -1,11 +1,9 @@
-import type LayerGroupWrapper from '@/gis/wrapper/LayerGroupWrapper';
+import  { LayerGroupWrapper, LayerWrapper } from 'qm-map-wrapper';
 import { useState, useEffect, memo, useCallback } from 'react';
-import type LayerWrapper from '@/gis/wrapper/LayerWrapper';
+import { GISToolHelper, MapEvent } from 'qm-map-wrapper';
 import type { TWidgetPosition } from '../BaseWidget';
-import GisToolHelper from '@/gis/GISToolHelper';
 import { useMap } from '../context/mapContext';
 import type { DataNode } from 'antd/es/tree';
-import { MapEvent } from '@/gis/typings';
 import BaseWidget from '../BaseWidget';
 import { Tree } from 'antd';
 import React from 'react';
@@ -116,7 +114,7 @@ const LayerList = (props: { position: TWidgetPosition; icon?: string }) => {
       setData(treeData);
       setkeys(loadkeys);
     };
-    const mapLayerChangedHandle = GisToolHelper.debounce(() => {
+    const mapLayerChangedHandle = GISToolHelper.debounce(() => {
       init();
     }, 300);
     map?.on(MapEvent.MAPLAYERCHANGED, mapLayerChangedHandle);

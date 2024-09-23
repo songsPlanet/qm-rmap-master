@@ -1,10 +1,6 @@
+import { TMapLayerSetting, GISToolHelper, MapWrapper, getPulsingDot } from 'qm-map-wrapper';
 import React, { useRef, useEffect, memo, useState } from 'react';
-import { getPulsingDot } from '@/gis/animation/pulsingDot';
-import { TMapContext } from '../context/mapContext';
-import { MapContext } from '../context/mapContext';
-import { TMapLayerSettting } from '@/gis/typings';
-import MapWrapper from '../../wrapper/MapWrapper';
-import GisToolHelper from '@/gis/GISToolHelper';
+import { TMapContext, MapContext } from '../context/mapContext';
 import type { MapboxOptions } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { cloneDeep } from 'lodash';
@@ -14,7 +10,7 @@ interface TMapProps {
   mapOptions: MapboxOptions & {
     id: string;
   };
-  mapLayerSettting: TMapLayerSettting;
+  mapLayerSettting: TMapLayerSetting;
   className?: string;
   children?: React.ReactNode;
   onMapLoad?: (map: MapWrapper) => void;
@@ -49,13 +45,11 @@ function MapWidget(props: TMapProps) {
       if (contextValue) {
         contextValue.map = map;
       }
+      onMapLoad?.(map);
       // 添加动态点图标
       const redAnimationImg = getPulsingDot(map);
       map.addImage('redAnimationImg', redAnimationImg, { pixelRatio: 2 });
-      if (contextValue) {
-        contextValue.map = map;
-      }
-      onMapLoad?.(map);
+
       map.images.forEach((item: any) => {
         map.loadImage(item.url, (error: any, image: any) => {
           if (!error) {
@@ -88,7 +82,7 @@ function MapWidget(props: TMapProps) {
       console.log(e.lngLat, map.getCenter(), map.getZoom());
       console.log(map.getStyle());
     });
-    const resizeMap = GisToolHelper.debounce(() => {
+    const resizeMap = GISToolHelper.debounce(() => {
       map.resize();
     }, 10);
     const ro = new ResizeObserver(resizeMap);

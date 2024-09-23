@@ -1,12 +1,11 @@
 import React, { cloneElement, memo, useEffect, useState } from 'react';
-import MapWrapper from '../../wrapper/MapWrapper';
 import { useMap } from '../context/mapContext';
+import { MapWrapper } from 'qm-map-wrapper';
 import type { LngLatLike } from 'mapbox-gl';
 import PopupWrapper from '../PopupWrapper';
 import type { ReactElement } from 'react';
-import type mapboxgl from 'mapbox-gl';
-import { request } from '@/utils';
 import { Point } from 'mapbox-gl';
+import axios from 'axios';
 import './index.less';
 
 interface TPouperData {
@@ -58,7 +57,6 @@ const PopupPanel = (props: TPopupPanel) => {
           const title = vector.find((d) => feature.layer.id === d.id)!.title;
           const template = vector.find((d) => feature.layer.id === d.id)!.template;
           map.selectFeature(feature);
-          console.log(feature);
           setPopupData({
             properties: feature.properties,
             lngLat: ifCenter ? map.getCenter() : map.unproject(new Point(e.point.x / scale, e.point.y / scale)),
@@ -74,22 +72,24 @@ const PopupPanel = (props: TPopupPanel) => {
       if (wms) {
         const scale = (window as any).scale ?? 1;
         const url = wms.baseUrl;
-        const params = {
+        const params: any = {
           service: 'WFS',
           version: '1.0.0',
           request: 'GetFeature',
           maxFeatures: 50,
           outputFormat: 'application/json',
-          CQL_FILTER: `INTERSECTS(smgeometry,Point(${e.lngLat.lng / scale} ${e.lngLat.lat / scale}))`,
+          CQL_FILTER: `INTERSECTS(the_geom,Point(${e.lngLat.lng / scale} ${e.lngLat.lat / scale}))`,
         };
+        const queryString = new URLSearchParams(Object.entries(params)).toString();
         const lyrIds = map
           .getLayerList()
           .filter((d) => d.options.isAdd)
           .map((l) => l.options.id);
         const openLys = wms!.layers.filter((d) => lyrIds.findIndex((f) => f === d.id) > -1);
         for (let i = 0; i < openLys.length; i++) {
-          const rData = await request.get(url, { ...params, typeName: openLys[i].layerName }).then((ctx: any) => {
-            const temp = ctx || {};
+          const requestUrl = `${url}?${queryString}&typeName=${openLys[i].layerName}`;
+          const rData = await axios.get(requestUrl).then((ctx: any) => {
+            const temp = ctx.data || {};
             const flag = temp?.features?.length > 0;
             if (flag) {
               return { layerId: openLys[i].id, data: temp.features[0], lngLat: e.lngLat };

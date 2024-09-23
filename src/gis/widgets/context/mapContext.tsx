@@ -1,5 +1,6 @@
 import { useContext, createContext } from 'react';
-import type MapWrapper from '../../wrapper/MapWrapper';
+// import type MapWrapper from '../../wrapper/MapWrapper';
+import type { MapWrapper } from 'qm-map-wrapper';
 
 export interface TMapContext {
   map: MapWrapper | null;

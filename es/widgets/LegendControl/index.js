@@ -6,10 +6,9 @@ import _mapInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance
 import _filterInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/filter';
 import _findInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/find';
 import _reduceInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/reduce';
+import { GISToolHelper, MapEvent } from 'qm-map-wrapper';
 import React, { memo, useState, useCallback, useEffect } from 'react';
 import { useMap } from '../context/mapContext.js';
-import GisToolHelper from '../../GISToolHelper.js';
-import { MapEvent } from '../../typings/TEvent.js';
 import BaseWidget from '../BaseWidget/index.js';
 import './index.css';
 
@@ -110,7 +109,7 @@ var LegendControl = function LegendControl(props) {
       }, 0);
       setHeight(h + 40);
     };
-    var mapLayerChangedHandle = GisToolHelper.debounce(function () {
+    var mapLayerChangedHandle = GISToolHelper.debounce(function () {
       init();
     }, 200);
     map === null || map === void 0 || map.on(MapEvent.MAPLAYERCHANGED, mapLayerChangedHandle);

@@ -9,8 +9,8 @@ import _parseFloat from '@babel/runtime-corejs3/core-js-stable/parse-float';
 import 'core-js/modules/es.array.join.js';
 import 'core-js/modules/es.array.push.js';
 import { Form, message, Modal, Row, Col, Spin, Select, Input, Space, Button } from 'antd';
+import { GISToolHelper } from 'qm-map-wrapper';
 import React, { memo, useRef, useState } from 'react';
-import GisToolHelper from '../../GISToolHelper.js';
 import MapWidget from '../MapWidget/index.js';
 import axios from 'axios';
 
@@ -52,7 +52,7 @@ var QueryGeocode = function QueryGeocode(props) {
     onCancel === null || onCancel === void 0 || onCancel();
     handleRest();
   };
-  var fetchSearchDataByKeyWord = GisToolHelper.debounce(/*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
+  var fetchSearchDataByKeyWord = GISToolHelper.debounce(/*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
     var _context, _form$getFieldsValue, _location, params, url, searchData, pois;
     return _regeneratorRuntime.wrap(function _callee$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
@@ -103,7 +103,7 @@ var QueryGeocode = function QueryGeocode(props) {
     var _mapR$current, _mapR$current2;
     (_mapR$current = mapR.current) === null || _mapR$current === void 0 || _mapR$current.setCenter(lonlat);
     (_mapR$current2 = mapR.current) === null || _mapR$current2 === void 0 || _mapR$current2.setZoom(15);
-    var geo = GisToolHelper.createPointFeatureCollection(lonlat, {});
+    var geo = GISToolHelper.createPointFeatureCollection(lonlat, {});
     if (image) {
       var _mapR$current3;
       (_mapR$current3 = mapR.current) === null || _mapR$current3 === void 0 || _mapR$current3.selectSymbolIconFeature(geo, 'queryGeoIcon', 'icon-location');

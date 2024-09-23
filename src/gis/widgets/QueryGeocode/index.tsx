@@ -1,29 +1,24 @@
 import { Modal, Form, Input, Select, Spin, Row, Col, message, Space, Button } from 'antd';
+import { MapWrapper, TMapOptions, TMapLayerSetting, GISToolHelper } from 'qm-map-wrapper';
 import React, { useState, useRef, memo } from 'react';
-import MapWrapper from '../../wrapper/MapWrapper';
-import { TMapLayerSettting } from '@/gis/typings';
-import GisToolHelper from '../../GISToolHelper';
-import type { MapboxOptions } from 'mapbox-gl';
 import MapWidget from '../MapWidget';
 import axios from 'axios';
 
 type TQueryGeocode = {
   open: boolean;
+  tdtkey: string;
+  mapOptions: TMapOptions;
+  mapSetting: TMapLayerSetting;
   image?: {
     url: string;
-    id: string;
-  };
-  tdtkey: string;
-  onOk?: (value: any) => void;
-  onCancel?: () => void;
-  mapSetting: TMapLayerSettting;
-  mapOptions: MapboxOptions & {
     id: string;
   };
   region?: {
     bounds: number[];
     code?: number;
   };
+  onOk?: (value: any) => void;
+  onCancel?: () => void;
 };
 
 type TsearchResultPois = {
@@ -62,7 +57,7 @@ const QueryGeocode = (props: TQueryGeocode) => {
     handleRest();
   };
 
-  const fetchSearchDataByKeyWord: any = GisToolHelper.debounce(async () => {
+  const fetchSearchDataByKeyWord: any = GISToolHelper.debounce(async () => {
     try {
       const { location } = form.getFieldsValue();
       const params = {
@@ -93,7 +88,7 @@ const QueryGeocode = (props: TQueryGeocode) => {
   const addLocationLayer = (lonlat: any) => {
     mapR.current?.setCenter(lonlat);
     mapR.current?.setZoom(15);
-    const geo: any = GisToolHelper.createPointFeatureCollection(lonlat, {});
+    const geo: any = GISToolHelper.createPointFeatureCollection(lonlat, {});
     if (image) {
       mapR.current?.selectSymbolIconFeature(geo, 'queryGeoIcon', 'icon-location');
     } else {
@@ -164,7 +159,6 @@ const QueryGeocode = (props: TQueryGeocode) => {
   const mapLoadHandle = (map: MapWrapper) => {
     mapR.current = map;
     map.images.push(image!);
-
     map.on('click', (e: any) => {
       setLoading(true);
       fetchSearchDataByLonLat(e.lngLat);
@@ -224,7 +218,7 @@ const QueryGeocode = (props: TQueryGeocode) => {
         <Row>
           <Col offset={1} span={23}>
             <div style={{ height: 400, width: '100%' }}>
-              <MapWidget mapLayerSettting={mapSetting} mapOptions={mapOptions} onMapLoad={mapLoadHandle} />
+              <MapWidget mapLayerSettting={mapSetting!} mapOptions={mapOptions!} onMapLoad={mapLoadHandle} />
             </div>
           </Col>
         </Row>

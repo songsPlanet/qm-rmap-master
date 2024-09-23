@@ -1,10 +1,9 @@
-import _defineProperty from '@babel/runtime-corejs3/helpers/defineProperty';
 import _asyncToGenerator from '@babel/runtime-corejs3/helpers/asyncToGenerator';
 import _slicedToArray from '@babel/runtime-corejs3/helpers/slicedToArray';
 import _regeneratorRuntime from '@babel/runtime-corejs3/regenerator';
 import 'core-js/modules/es.array.iterator.js';
-import 'core-js/modules/es.array.push.js';
 import 'core-js/modules/es.object.to-string.js';
+import 'core-js/modules/es.regexp.to-string.js';
 import 'core-js/modules/es.string.iterator.js';
 import 'core-js/modules/web.dom-collections.for-each.js';
 import 'core-js/modules/web.dom-collections.iterator.js';
@@ -12,33 +11,16 @@ import _mapInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance
 import _filterInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/filter';
 import _findInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/find';
 import _concatInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/concat';
+import _URLSearchParams from '@babel/runtime-corejs3/core-js-stable/url-search-params';
+import _Object$entries from '@babel/runtime-corejs3/core-js-stable/object/entries';
 import _findIndexInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/find-index';
-import _Object$keys from '@babel/runtime-corejs3/core-js-stable/object/keys';
-import _Object$getOwnPropertySymbols from '@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols';
-import _Object$getOwnPropertyDescriptor from '@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor';
-import _Object$getOwnPropertyDescriptors from '@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors';
 import React, { memo, useState, useEffect, cloneElement } from 'react';
 import { useMap } from '../context/mapContext.js';
 import PopupWrapper from '../PopupWrapper/index.js';
-import '@babel/runtime-corejs3/helpers/typeof';
-import '@babel/runtime-corejs3/helpers/toConsumableArray';
-import 'core-js/modules/es.error.cause.js';
-import 'core-js/modules/es.number.to-fixed.js';
-import 'core-js/modules/es.object.has-own.js';
-import 'core-js/modules/es.object.keys.js';
-import 'core-js/modules/es.regexp.to-string.js';
-import '@babel/runtime-corejs3/core-js-stable/instance/slice';
-import '@babel/runtime-corejs3/core-js-stable/object/get-own-property-names';
-import '@babel/runtime-corejs3/core-js-stable/instance/last-index-of';
-import '@babel/runtime-corejs3/core-js-stable/promise';
-import '@babel/runtime-corejs3/core-js-stable/json/stringify';
-import request from '../../utils/axios.js';
-import '../../utils/events.js';
 import { Point } from 'mapbox-gl';
+import axios from 'axios';
 import './index.css';
 
-function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var PopupPanel = function PopupPanel(props) {
   var vector = props.vector,
     wms = props.wms,
@@ -89,7 +71,6 @@ var PopupPanel = function PopupPanel(props) {
             return feature.layer.id === d.id;
           }).template;
           map.selectFeature(feature);
-          console.log(feature);
           setPopupData({
             properties: feature.properties,
             lngLat: ifCenter ? map.getCenter() : map.unproject(new Point(e.point.x / scale, e.point.y / scale)),
@@ -102,12 +83,12 @@ var PopupPanel = function PopupPanel(props) {
     // geoserver请求
     var restLayerClicked = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(map, e) {
-        var _window$scale2, _context3, _context4, _context5, _context6, scale, url, params, lyrIds, openLys, _loop, _ret, i;
-        return _regeneratorRuntime.wrap(function _callee$(_context8) {
-          while (1) switch (_context8.prev = _context8.next) {
+        var _window$scale2, _context3, _context4, _context5, _context6, scale, url, params, queryString, lyrIds, openLys, _loop, _ret, i;
+        return _regeneratorRuntime.wrap(function _callee$(_context10) {
+          while (1) switch (_context10.prev = _context10.next) {
             case 0:
               if (!wms) {
-                _context8.next = 16;
+                _context10.next = 17;
                 break;
               }
               scale = (_window$scale2 = window.scale) !== null && _window$scale2 !== void 0 ? _window$scale2 : 1;
@@ -118,8 +99,9 @@ var PopupPanel = function PopupPanel(props) {
                 request: 'GetFeature',
                 maxFeatures: 50,
                 outputFormat: 'application/json',
-                CQL_FILTER: _concatInstanceProperty(_context3 = "INTERSECTS(smgeometry,Point(".concat(e.lngLat.lng / scale, " ")).call(_context3, e.lngLat.lat / scale, "))")
+                CQL_FILTER: _concatInstanceProperty(_context3 = "INTERSECTS(the_geom,Point(".concat(e.lngLat.lng / scale, " ")).call(_context3, e.lngLat.lat / scale, "))")
               };
+              queryString = new _URLSearchParams(_Object$entries(params)).toString();
               lyrIds = _mapInstanceProperty(_context4 = _filterInstanceProperty(_context5 = map.getLayerList()).call(_context5, function (d) {
                 return d.options.isAdd;
               })).call(_context4, function (l) {
@@ -131,16 +113,16 @@ var PopupPanel = function PopupPanel(props) {
                 }) > -1;
               });
               _loop = /*#__PURE__*/_regeneratorRuntime.mark(function _loop(i) {
-                var rData;
-                return _regeneratorRuntime.wrap(function _loop$(_context7) {
-                  while (1) switch (_context7.prev = _context7.next) {
+                var _context7, _context8;
+                var requestUrl, rData;
+                return _regeneratorRuntime.wrap(function _loop$(_context9) {
+                  while (1) switch (_context9.prev = _context9.next) {
                     case 0:
-                      _context7.next = 2;
-                      return request.get(url, _objectSpread(_objectSpread({}, params), {}, {
-                        typeName: openLys[i].layerName
-                      })).then(function (ctx) {
+                      requestUrl = _concatInstanceProperty(_context7 = _concatInstanceProperty(_context8 = "".concat(url, "?")).call(_context8, queryString, "&typeName=")).call(_context7, openLys[i].layerName);
+                      _context9.next = 3;
+                      return axios.get(requestUrl).then(function (ctx) {
                         var _temp$features;
-                        var temp = ctx || {};
+                        var temp = ctx.data || {};
                         var flag = (temp === null || temp === void 0 || (_temp$features = temp.features) === null || _temp$features === void 0 ? void 0 : _temp$features.length) > 0;
                         if (flag) {
                           return {
@@ -152,44 +134,44 @@ var PopupPanel = function PopupPanel(props) {
                           return undefined;
                         }
                       });
-                    case 2:
-                      rData = _context7.sent;
+                    case 3:
+                      rData = _context9.sent;
                       if (!rData) {
-                        _context7.next = 5;
+                        _context9.next = 6;
                         break;
                       }
-                      return _context7.abrupt("return", {
+                      return _context9.abrupt("return", {
                         v: rData
                       });
-                    case 5:
+                    case 6:
                     case "end":
-                      return _context7.stop();
+                      return _context9.stop();
                   }
                 }, _loop);
               });
               i = 0;
-            case 8:
+            case 9:
               if (!(i < openLys.length)) {
-                _context8.next = 16;
+                _context10.next = 17;
                 break;
               }
-              return _context8.delegateYield(_loop(i), "t0", 10);
-            case 10:
-              _ret = _context8.t0;
+              return _context10.delegateYield(_loop(i), "t0", 11);
+            case 11:
+              _ret = _context10.t0;
               if (!_ret) {
-                _context8.next = 13;
+                _context10.next = 14;
                 break;
               }
-              return _context8.abrupt("return", _ret.v);
-            case 13:
+              return _context10.abrupt("return", _ret.v);
+            case 14:
               i++;
-              _context8.next = 8;
+              _context10.next = 9;
               break;
-            case 16:
-              return _context8.abrupt("return", undefined);
             case 17:
+              return _context10.abrupt("return", undefined);
+            case 18:
             case "end":
-              return _context8.stop();
+              return _context10.stop();
           }
         }, _callee);
       }));
@@ -200,23 +182,23 @@ var PopupPanel = function PopupPanel(props) {
     // 添加事件监听
     map === null || map === void 0 || map.on('click', /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee2(e) {
-        var rData, _context9, _context10, feature, layerId, title, template;
-        return _regeneratorRuntime.wrap(function _callee2$(_context11) {
-          while (1) switch (_context11.prev = _context11.next) {
+        var rData, _context11, _context12, feature, layerId, title, template;
+        return _regeneratorRuntime.wrap(function _callee2$(_context13) {
+          while (1) switch (_context13.prev = _context13.next) {
             case 0:
-              _context11.next = 2;
+              _context13.next = 2;
               return restLayerClicked(map, e);
             case 2:
-              rData = _context11.sent;
+              rData = _context13.sent;
               if (!rData) {
                 vectorLayerClicked(map, e);
               } else {
                 feature = rData.data;
                 layerId = rData.layerId;
-                title = _findInstanceProperty(_context9 = wms.layers).call(_context9, function (d) {
+                title = _findInstanceProperty(_context11 = wms.layers).call(_context11, function (d) {
                   return layerId === d.id;
                 }).title;
-                template = _findInstanceProperty(_context10 = wms.layers).call(_context10, function (d) {
+                template = _findInstanceProperty(_context12 = wms.layers).call(_context12, function (d) {
                   return layerId === d.id;
                 }).template;
                 map.selectFeature(feature);
@@ -229,7 +211,7 @@ var PopupPanel = function PopupPanel(props) {
               }
             case 4:
             case "end":
-              return _context11.stop();
+              return _context13.stop();
           }
         }, _callee2);
       }));

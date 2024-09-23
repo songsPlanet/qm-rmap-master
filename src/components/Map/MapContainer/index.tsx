@@ -1,7 +1,7 @@
-import type { TMapLayerSettting } from '@/gis/typings';
-import type MapWrapper from '@/gis/wrapper/MapWrapper';
+import type { TMapLayerSetting } from 'qm-map-wrapper';
 import React, { memo, useEffect, useRef } from 'react';
 import type { MapboxOptions } from 'mapbox-gl';
+import { MapWrapper } from 'qm-map-wrapper';
 import classes from './index.module.less';
 import { MapWidget } from '@/gis';
 import { cloneDeep } from 'lodash';
@@ -11,7 +11,7 @@ interface TMapContainerProp {
     id: string;
   };
   children?: React.ReactNode;
-  mapSetting: TMapLayerSettting;
+  mapSetting: TMapLayerSetting;
   onMapLoad?: (map: MapWrapper) => void;
 }
 const MapContainer = (props: TMapContainerProp) => {

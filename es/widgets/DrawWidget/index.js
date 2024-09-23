@@ -12,7 +12,7 @@ import _filterInstanceProperty from '@babel/runtime-corejs3/core-js-stable/insta
 import React, { memo, useState, useRef, useEffect } from 'react';
 import DrawRectangle from 'mapbox-gl-draw-rectangle-mode';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import GisToolHelper from '../../GISToolHelper.js';
+import { GISToolHelper } from 'qm-map-wrapper';
 import mapboxDraw from '@mapbox/mapbox-gl-draw';
 import { useMap } from '../context/mapContext.js';
 import { drawToolList } from './constant.js';
@@ -45,6 +45,8 @@ var DrawWidget = function DrawWidget(props) {
     if (map !== null && map !== void 0 && map.drawTool) {
       map === null || map === void 0 || map.drawTool.deleteAll();
       map === null || map === void 0 || map.drawTool.changeMode('simple_select');
+      var ele = document.getElementsByClassName('measureResultClose');
+      map === null || map === void 0 || map.drawTool.delete(ele);
       markerRef.current.forEach(function (item) {
         item.remove();
       });
@@ -52,7 +54,7 @@ var DrawWidget = function DrawWidget(props) {
   };
   // 添加关闭按钮
   var addMarkerHandle = function addMarkerHandle(e) {
-    var box = GisToolHelper.getFeatureBoundingBox(e.features[0]);
+    var box = GISToolHelper.getFeatureBoundingBox(e.features[0]);
     var _ele = document.createElement('div');
     _ele.setAttribute('class', 'measureResultClose');
     _ele.setAttribute('id', e.features[0].id);

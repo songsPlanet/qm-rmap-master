@@ -11,11 +11,9 @@ import _findInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instanc
 import 'core-js/modules/es.array.map.js';
 import 'core-js/modules/es.object.to-string.js';
 import 'core-js/modules/web.dom-collections.for-each.js';
+import { MapWrapper, GISToolHelper, getPulsingDot } from 'qm-map-wrapper';
 import React, { memo, useRef, useState, useEffect } from 'react';
-import { getPulsingDot } from '../../animation/pulsingDot.js';
 import { MapContext } from '../context/mapContext.js';
-import MapWrapper from '../../wrapper/MapWrapper.js';
-import GisToolHelper from '../../GISToolHelper.js';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { cloneDeep } from 'lodash';
 import './index.css';
@@ -60,15 +58,12 @@ function MapWidget(props) {
       if (contextValue) {
         contextValue.map = map;
       }
+      onMapLoad === null || onMapLoad === void 0 || onMapLoad(map);
       // 添加动态点图标
       var redAnimationImg = getPulsingDot(map);
       map.addImage('redAnimationImg', redAnimationImg, {
         pixelRatio: 2
       });
-      if (contextValue) {
-        contextValue.map = map;
-      }
-      onMapLoad === null || onMapLoad === void 0 || onMapLoad(map);
       map.images.forEach(function (item) {
         map.loadImage(item.url, function (error, image) {
           if (!error) {
@@ -102,7 +97,7 @@ function MapWidget(props) {
       console.log(e.lngLat, map.getCenter(), map.getZoom());
       console.log(map.getStyle());
     });
-    var resizeMap = GisToolHelper.debounce(function () {
+    var resizeMap = GISToolHelper.debounce(function () {
       map.resize();
     }, 10);
     var ro = new ResizeObserver(resizeMap);

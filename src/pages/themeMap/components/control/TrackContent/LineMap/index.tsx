@@ -1,8 +1,9 @@
 import { PlayCircleOutlined, PauseOutlined, RedoOutlined } from '@ant-design/icons';
-import AnimationRoute from '@/gis/animation/AnimationRoute';
+// import AnimationRoute from '@/gis/animation/AnimationRoute';
+import { AnimationRoute, MapWrapper } from 'qm-map-wrapper';
 import { basemap } from '@/pages/themeMap/mapSetting/basemap';
 import React, { memo, useEffect, useRef } from 'react';
-import MapWrapper from '@/gis/wrapper/MapWrapper';
+// import MapWrapper from '@/gis/wrapper/MapWrapper';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import MapWidget from '@/gis/widgets/MapWidget';
 import classes from './index.module.less';

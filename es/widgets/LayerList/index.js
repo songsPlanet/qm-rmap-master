@@ -10,9 +10,8 @@ import _filterInstanceProperty from '@babel/runtime-corejs3/core-js-stable/insta
 import _includesInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/includes';
 import _findIndexInstanceProperty from '@babel/runtime-corejs3/core-js-stable/instance/find-index';
 import React, { memo, useState, useCallback, useEffect } from 'react';
-import GisToolHelper from '../../GISToolHelper.js';
+import { GISToolHelper, MapEvent } from 'qm-map-wrapper';
 import { useMap } from '../context/mapContext.js';
-import { MapEvent } from '../../typings/TEvent.js';
 import BaseWidget from '../BaseWidget/index.js';
 import { Tree } from 'antd';
 
@@ -131,7 +130,7 @@ var LayerList = function LayerList(props) {
       setData(treeData);
       setkeys(loadkeys);
     };
-    var mapLayerChangedHandle = GisToolHelper.debounce(function () {
+    var mapLayerChangedHandle = GISToolHelper.debounce(function () {
       init();
     }, 300);
     map === null || map === void 0 || map.on(MapEvent.MAPLAYERCHANGED, mapLayerChangedHandle);

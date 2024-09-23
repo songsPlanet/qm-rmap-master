@@ -1,13 +1,12 @@
-import { useState, memo, useRef, useEffect } from 'react';
+import React, { useState, memo, useRef, useEffect } from 'react';
 import DrawRectangle from 'mapbox-gl-draw-rectangle-mode';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { TWidgetPosition } from '../BaseWidget';
-import GisToolHelper from '@/gis/GISToolHelper';
+import { GISToolHelper } from 'qm-map-wrapper';
 import mapboxDraw from '@mapbox/mapbox-gl-draw';
 import { useMap } from '../context/mapContext';
 import { drawToolList } from './constant';
 import { Marker } from 'mapbox-gl';
-import React from 'react';
 import './index.less';
 
 const DrawWidget = (props: { position: TWidgetPosition }) => {
@@ -30,6 +29,8 @@ const DrawWidget = (props: { position: TWidgetPosition }) => {
     if (map?.drawTool) {
       map?.drawTool.deleteAll();
       map?.drawTool.changeMode('simple_select');
+      const ele = document.getElementsByClassName('measureResultClose');
+      map?.drawTool.delete(ele);
       markerRef.current.forEach((item: Marker) => {
         item.remove();
       });
@@ -38,7 +39,7 @@ const DrawWidget = (props: { position: TWidgetPosition }) => {
 
   // 添加关闭按钮
   const addMarkerHandle = (e: any) => {
-    let box = GisToolHelper.getFeatureBoundingBox(e.features[0]);
+    let box = GISToolHelper.getFeatureBoundingBox(e.features[0]);
     let _ele = document.createElement('div');
     _ele.setAttribute('class', 'measureResultClose');
     _ele.setAttribute('id', e.features[0].id);

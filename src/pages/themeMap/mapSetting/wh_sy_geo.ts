@@ -1,4 +1,4 @@
-import type { TLayerOptions } from '@/gis/typings';
+import type {  TLayerOptions } from 'qm-map-wrapper';
 
 export const wh_sy_geo: TLayerOptions = {
   id: 'wh_sy_geo',

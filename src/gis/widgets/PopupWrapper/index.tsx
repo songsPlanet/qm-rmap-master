@@ -1,6 +1,6 @@
 import type { LngLatLike, PopupOptions } from 'mapbox-gl';
-import React, { memo, useEffect, useMemo } from 'react';
-import MapWrapper from '../../wrapper/MapWrapper';
+import  { memo, useEffect, useMemo } from 'react';
+import { MapWrapper } from 'qm-map-wrapper';
 import { createPortal } from 'react-dom';
 import type { ReactNode } from 'react';
 import { Popup } from 'mapbox-gl';
